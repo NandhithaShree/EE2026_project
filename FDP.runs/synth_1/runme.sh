@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/tvage/Downloads/test.xpr/FDP/FDP.runs/synth_1'
+HD_PWD='C:/Projects/EE2026/project/FDP.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
