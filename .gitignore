@@ -4,6 +4,6 @@ FDP.hw/
 FDP.ip_user_files/
 FDP.runs/
 FDP.sim/
-FDP.srcs/sources_1/ip/
 *.jou
 *.log
+*.str
