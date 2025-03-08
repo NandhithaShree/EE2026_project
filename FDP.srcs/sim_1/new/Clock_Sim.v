@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 05.03.2025 16:33:05
+// Create Date: 03/05/2025 02:42:35 PM
 // Design Name: 
-// Module Name: pixel_index_to_coordinates
+// Module Name: Clock_Sim
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,12 +20,21 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module pixel_index_to_coordinates(
-    input [12:0] pixel_index,
-    output [6:0] x, [5:0] y
-);
+module Clock_Sim(
 
-    assign x = pixel_index % 96;
-    assign y = pixel_index / 96;
-
+    );
+    
+    reg sim_clk;
+    wire [7:0] JC;
+    
+    Clock clk(sim_clk, JC);
+    
+    initial begin
+        sim_clk = 0;
+    end
+    
+    always begin
+        #5 sim_clk = ~sim_clk;
+    end
+    
 endmodule

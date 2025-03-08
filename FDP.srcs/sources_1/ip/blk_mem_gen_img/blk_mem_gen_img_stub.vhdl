@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
--- Date        : Thu Mar  6 05:51:13 2025
--- Host        : GRoshni running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode synth_stub {C:/Users/65818/Documents/G ROSHNI DAKSHA/NUS/Semester 4/EE2026
---               Digital Design/Project/FDP/FDP.srcs/sources_1/ip/blk_mem_gen_img/blk_mem_gen_img_stub.vhdl}
+-- Date        : Fri Jun  9 15:41:52 2023
+-- Host        : star47 running 64-bit major release  (build 9200)
+-- Command     : write_vhdl -force -mode synth_stub {D:/Teaching Material/EE2026/ML
+--               Project/project_nn_canvas/project_nn_canvas.srcs/sources_1/ip/blk_mem_gen_img/blk_mem_gen_img_stub.vhdl}
 -- Design      : blk_mem_gen_img
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7a35tcpg236-1
