@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03/05/2025 09:10:56 PM
+// Create Date: 05.03.2025 14:26:27
 // Design Name: 
-// Module Name: Pixel_Coordinates
+// Module Name: flexible_clock_divider_test
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,12 +20,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Pixel_Coordinates(
-        input [12:0] pixel_index,
-        output [6:0] x,
-        output [5:0] y
+module flexible_clock_divider_test(
+
     );
     
-    assign x = pixel_index % 96;
-    assign y = pixel_index / 96;
+    reg basys_clock;
+    reg [31:0] m;
+    wire slow_clock;
+    
+    flexible_clock_divider dut(basys_clock, m, slow_clock);
+    
+    initial begin
+        basys_clock = 0;
+        m = 32'd7;
+    end
+        
+    always begin
+        #5; basys_clock = ~basys_clock;
+    end
+    
 endmodule
