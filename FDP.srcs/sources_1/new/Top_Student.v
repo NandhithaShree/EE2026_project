@@ -4,7 +4,7 @@
 //
 //  FILL IN THE FOLLOWING INFORMATION:
 //  STUDENT A NAME: Govindaraj Roshni Daksha
-//  STUDENT B NAME:
+//  STUDENT B NAME: Srinivasan Nandhitha Shree
 //  STUDENT C NAME: 
 //  STUDENT D NAME: Thiruvarudchelvan Vageesan
 //
@@ -25,6 +25,7 @@ module Top_Student (
     
     TaskA taskA (basys_clock, btnC, btnU, btnD, x, y, oled_A);
     TaskB taskB (basys_clock, btnC, btnU, btnD, x, y, oled_B);
+    TaskC taskC (basys_clock, btnC, x,y, pixel_data_output);
     TaskD taskD (basys_clock, btnL, btnR, btnU, btnD, x, y, oled_D);
     
     Display display (basys_clock, oled_B , x, y, JB);
