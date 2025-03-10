@@ -40,18 +40,18 @@ module TaskA_Render (
     parameter CIRCLE_Y = 31;
 
     always @ (posedge clock_25MHz) begin
-        if (!show_taskA) 
+        if ((x >= BORDER_OFFSET && x < SCREEN_WIDTH - BORDER_OFFSET - 1 && 
+            (y >= BORDER_OFFSET && y < BORDER_OFFSET + BORDER_THICKNESS || 
+            y >= SCREEN_HEIGHT - BORDER_OFFSET - BORDER_THICKNESS - 1 && y < SCREEN_HEIGHT - BORDER_OFFSET - 1)) ||
+            (y >= BORDER_OFFSET && y < SCREEN_HEIGHT - BORDER_OFFSET - 1 && 
+            (x >= BORDER_OFFSET && x < BORDER_OFFSET + BORDER_THICKNESS || 
+            x >= SCREEN_WIDTH - BORDER_OFFSET - BORDER_THICKNESS - 1 && x < SCREEN_WIDTH - BORDER_OFFSET - 1)))
+            oled_data <= BORDER_COLOR;
+        else if (!show_taskA) 
             oled_data <= BACKGROUND_COLOR;
         else begin
-            if ((x >= BORDER_OFFSET && x < SCREEN_WIDTH - BORDER_OFFSET - 1 && 
-                (y >= BORDER_OFFSET && y < BORDER_OFFSET + BORDER_THICKNESS || 
-                y >= SCREEN_HEIGHT - BORDER_OFFSET - BORDER_THICKNESS - 1 && y < SCREEN_HEIGHT - BORDER_OFFSET - 1)) ||
-                (y >= BORDER_OFFSET && y < SCREEN_HEIGHT - BORDER_OFFSET - 1 && 
-                (x >= BORDER_OFFSET && x < BORDER_OFFSET + BORDER_THICKNESS || 
-                x >= SCREEN_WIDTH - BORDER_OFFSET - BORDER_THICKNESS - 1 && x < SCREEN_WIDTH - BORDER_OFFSET - 1)))
-                oled_data <= BORDER_COLOR;
-            else if ((x - CIRCLE_X) ** 2 + (y - CIRCLE_Y) ** 2 >= (inner_diameter / 2) ** 2 &&
-                     (x - CIRCLE_X) ** 2 + (y - CIRCLE_Y) ** 2 <= ((inner_diameter + 5) / 2) ** 2)
+            if ((x - CIRCLE_X) ** 2 + (y - CIRCLE_Y) ** 2 >= (inner_diameter / 2) ** 2 &&
+                (x - CIRCLE_X) ** 2 + (y - CIRCLE_Y) ** 2 <= ((inner_diameter + 5) / 2) ** 2)
                 oled_data <= CIRCLE_COLOR;
             else
                 oled_data <= BACKGROUND_COLOR;
