@@ -11,47 +11,33 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Top_Student (
-    input basys_clock,
-    output [7:0] JB
-);
+module Top_Student (input basys_clock, input btnC, output [7:0] JB);
 
-    wire clock_6p25MHz;
-    wire clock_25MHz;
+ wire CLOCK_6p25; 
+ wire fb, sending_p, sampleP;
+ wire [12:0] pixel_index;
+ wire [15:0] pixel_data_output;
+
+ Clock clk (basys_clock, 7, CLOCK_6p25);
+ 
+ Task_C taskC (basys_clock, btnC, pixel_index, pixel_data_output);
+  
+ Oled_Display Oled_A ( 
+ .clk(CLOCK_6p25), 
+ .reset(0),
+ .frame_begin(fb), 
+ .sending_pixels(sending_p),
+.sample_pixel(sampleP), 
+.pixel_index(pixel_index), 
+.pixel_data(pixel_data_output), 
+.cs(JB[0]), 
+.sdin(JB[1]), 
+.sclk(JB[3]), 
+.d_cn(JB[4]), 
+.resn(JB[5]), 
+.vccen(JB[6]),
+.pmoden(JB[7]));
             
-    Clock slow_clock_6p25MHz (basys_clock, 7, clock_6p25MHz);
-    Clock slow_clock_25MHz (basys_clock, 2, clock_25MHz);
-    
-    wire fb, sending_pixel, sample_pixel;
-    wire [12:0] pixel_index;
-    
-    wire [6:0] x;
-    wire [5:0] y;
-    Pixel_Coordinates coords(pixel_index, x, y);
 
-    reg [15:0] oled_data ;
-    reg [15:0] red_data = 16'b11111_000000_00000;
-    reg [15:0] green_data = 16'b00000_111111_00000;
-    
-    always @(posedge clock_25MHz) begin
-        oled_data <= (x >= 10 && x <= 30 && y >= 15 && y <= 50) ? red_data : green_data;
-    end
-
-    Oled_Display oled (
-        .clk(clock_6p25MHz), 
-        .reset(0), 
-        .frame_begin(fb), 
-        .sending_pixels(sending_pixel),
-        .sample_pixel(sample_pixel), 
-        .pixel_index(pixel_index),
-        .pixel_data(oled_data), 
-        .cs(JB[0]), 
-        .sdin(JB[1]), 
-        .sclk(JB[3]), 
-        .d_cn(JB[4]), 
-        .resn(JB[5]), 
-        .vccen(JB[6]),
-        .pmoden(JB[7])
-    );
 
 endmodule
