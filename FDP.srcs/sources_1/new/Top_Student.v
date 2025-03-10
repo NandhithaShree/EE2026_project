@@ -18,8 +18,8 @@ module Top_Student (
 );    
     wire [6:0] x;
     wire [5:0] y;
-    wire [15:0] oled_data;
+    wire [15:0] oled_d;
     
-    TaskD taskD (basys_clock, btnL, btnR, btnU, btnD, x, y, oled_data);
-    Display display (basys_clock, oled_data , x, y, JB);
+    TaskD taskD (basys_clock, btnL, btnR, btnU, btnD, x, y, oled_d);
+    Display display (basys_clock, oled_d , x, y, JB);
 endmodule
