@@ -4,11 +4,9 @@ module TaskB (
     input btnC, btnU, btnD,
     input [6:0] x,
     input [5:0] y,
-    output [15:0] oled_data
+    output reg [15:0] oled_data
 );
     wire created6p25megahz, created25Mhz;
-    wire [31:0] m = 7;
-    reg [15:0] oled_data = 16'b00000_000000_00000;
 
     reg [2:0] up_state = 0;
     reg [2:0] centre_state = 0;
@@ -23,12 +21,12 @@ module TaskB (
     reg down_allow_change = 0;
 
     wire up_stable_pb, centre_stable_pb, down_stable_pb;
-    Clock(basys_clk, m, created6p25megahz);
-    counter up_counter_inst (.stable_pb(up_stable_pb), .sixp25MHzCLOCK(created6p25megahz), .push_button(btnU));
-    counter centre_counter_inst (.stable_pb(centre_stable_pb), .sixp25MHzCLOCK(created6p25megahz), .push_button(btnC));
-    counter down_counter_inst (.stable_pb(down_stable_pb), .sixp25MHzCLOCK(created6p25megahz), .push_button(btnD));
+    Clock clk_1 (basys_clk, 7, created6p25megahz);
+    TaskB_Counter up_counter_inst (.stable_pb(up_stable_pb), .sixp25MHzCLOCK(created6p25megahz), .push_button(btnU));
+    TaskB_Counter centre_counter_inst (.stable_pb(centre_stable_pb), .sixp25MHzCLOCK(created6p25megahz), .push_button(btnC));
+    TaskB_Counter down_counter_inst (.stable_pb(down_stable_pb), .sixp25MHzCLOCK(created6p25megahz), .push_button(btnD));
 
-    Clock(basys_clk, n, created25Mhz);
+    Clock clk_2 (basys_clk, 1, created25Mhz);
 
     always @(posedge created25Mhz) begin
         if (btnU && !up_pb_prev) begin 

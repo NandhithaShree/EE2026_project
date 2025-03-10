@@ -26,6 +26,6 @@ module Top_Student (
     TaskA taskA (basys_clock, btnC, btnU, btnD, x, y, oled_A);
     TaskB taskB (basys_clock, btnC, btnU, btnD, x, y, oled_B);
     TaskD taskD (basys_clock, btnL, btnR, btnU, btnD, x, y, oled_D);
-
+    
     Display display (basys_clock, oled_B , x, y, JB);
 endmodule
