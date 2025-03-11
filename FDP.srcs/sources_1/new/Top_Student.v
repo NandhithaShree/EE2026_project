@@ -15,13 +15,16 @@ module Top_Student (
     input btnU, btnC, btnD, btnL, btnR,
     input [15:0] sw,
     output [7:0] JB,
-    output [15:0] led
+    output [15:0] led,
+    output [3:0] an,
+    output [7:0] seg
 );
 
     wire [2:0] task_state;
     wire reset;
     Switch_Decoder (basys_clock, sw, task_state, reset);
     LED_Decoder (basys_clock, sw, task_state, led);
+    Seven_Segment_Initial (basys_clock, an, seg);
 
     wire [6:0] x;
     wire [5:0] y;
