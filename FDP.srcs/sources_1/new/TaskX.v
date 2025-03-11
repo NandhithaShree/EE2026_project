@@ -24,7 +24,7 @@ module TaskX(
     input basys_clk,
     input [6:0] x,
     input [5:0] y,
-    output reg oled_data
+    output reg [15:0] oled_data
 );
     wire created25Mhz;
     Clock (basys_clk, 1, created25Mhz); 
