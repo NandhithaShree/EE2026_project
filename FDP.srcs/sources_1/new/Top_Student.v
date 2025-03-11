@@ -10,9 +10,17 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-module Top_Student (input basys_clock, output [7:0] JB, input btnU, input btnC, input btnD, btnL, btnR, input [15:0] sw, output [15:0] led);
+module Top_Student (
+    input basys_clock,
+    input btnU, btnC, btnD, btnL, btnR,
+    input [15:0] sw,
+    output [7:0] JB,
+    output [15:0] led
+);
+
     wire [2:0] task_state;
-    Switch_Decoder (basys_clock, sw, task_state);
+    wire reset;
+    Switch_Decoder (basys_clock, sw, task_state, reset);
     LED_Decoder (basys_clock, sw, task_state, led);
 
     wire [6:0] x;
@@ -25,13 +33,13 @@ module Top_Student (input basys_clock, output [7:0] JB, input btnU, input btnC, 
     wire [15:0] oled_D;
     
     TaskX taskX (basys_clock, x, y, oled_X);
-    TaskA taskA (basys_clock, btnC, btnU, btnD, x, y, oled_A);
-    TaskB taskB (basys_clock, btnC, btnU, btnD, x, y, oled_B);
-    TaskC taskC (basys_clock, btnC, x,y, oled_C);
-    TaskD taskD (basys_clock, btnL, btnR, btnU, btnD, x, y, oled_D);
+    TaskA taskA (reset, basys_clock, btnC, btnU, btnD, x, y, oled_A);
+    TaskB taskB (reset, basys_clock, btnC, btnU, btnD, x, y, oled_B);
+    TaskC taskC (reset, basys_clock, btnC, x, y, oled_C);
+    TaskD taskD (reset, basys_clock, btnL, btnR, btnU, btnD, x, y, oled_D);
 
     wire [15:0] oled_data;
-    Task_Multiplexer (task_state, oled_X, oled_A, oled_B, oled_C, oled_D, oled_D);
+    Task_Multiplexer (task_state, oled_X, oled_A, oled_B, oled_C, oled_D, oled_data);
 
     Display display_inst (.basys_clock(basys_clock), .oled_data(oled_data), .x(x), .y(y), .JB(JB));
 endmodule

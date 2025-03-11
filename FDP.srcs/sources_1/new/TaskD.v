@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 
 module TaskD (
+    input reset,
     input basys_clock,
     input btn_left, btn_right, btn_up, btn_down,
     input [6:0] x,
@@ -13,6 +14,7 @@ module TaskD (
     wire [2:0] move_dir;
     
     TaskD_Input btnInput (
+        reset,
         basys_clock,
         btn_left, btn_right, btn_up, btn_down,
         move_dir

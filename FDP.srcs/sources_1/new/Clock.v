@@ -2,7 +2,7 @@ module Clock (
     input basys_clock,
     input [31:0] m,
     output reg slow_clock
-    );
+);
     
     reg [31:0] count = 0;
         

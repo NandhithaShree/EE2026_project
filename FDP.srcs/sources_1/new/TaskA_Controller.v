@@ -21,6 +21,7 @@
 
 
 module TaskA_Controller (
+    input wire reset,
     input wire basys_clock,
     input wire clock_1KHz,
     input wire btnC, btnU, btnD,
@@ -44,7 +45,10 @@ module TaskA_Controller (
         last_btnD <= btnD;
         
         if (!debounce_counter) begin
-            if (btnU && !last_btnU && inner_diameter <= MAX_DIAMETER) begin
+            if (reset) begin
+                inner_diameter = 25;
+            end
+            else if (btnU && !last_btnU && inner_diameter <= MAX_DIAMETER) begin
                 inner_diameter <= inner_diameter + DIAMETER_STEP;
                 debounce_counter <= DEBOUNCE_TIME;
             end
@@ -56,7 +60,12 @@ module TaskA_Controller (
     end
     
     always @ (posedge basys_clock) begin
-        if (btnC && !show_taskA) show_taskA <= 1;
+        if (reset) begin
+            show_taskA <= 0;
+        end
+        else if (btnC && !show_taskA) begin 
+            show_taskA <= 1;
+        end
     end
     
 endmodule

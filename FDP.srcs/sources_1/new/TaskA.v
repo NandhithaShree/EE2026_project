@@ -21,6 +21,7 @@
 
 
 module TaskA (
+    input reset,
     input basys_clock,
     input btn_center, btn_up, btn_down,
     input [6:0] x,
@@ -28,13 +29,14 @@ module TaskA (
     output [15:0] oled_data
 );
     wire clock_1KHz, clock_25MHz;
-    Clock slow_clock_1MHz (basys_clock, 99999, clock_1KHz);
+    Clock slow_clock_1KHz (basys_clock, 99999, clock_1KHz);
     Clock slow_clock_25MHz (basys_clock, 1, clock_25MHz);
     
     wire [6:0] inner_diameter;
     wire show_taskA;
     
     TaskA_Controller controller (
+        reset,
         basys_clock,
         clock_1KHz,
         btn_center, btn_up, btn_down,
