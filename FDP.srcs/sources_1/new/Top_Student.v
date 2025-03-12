@@ -3,9 +3,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //  FILL IN THE FOLLOWING INFORMATION:
-//  STUDENT A NAME: Roshni
+//  STUDENT A NAME: Govindaraj Roshni Daksha
 //  STUDENT B NAME: Srinivasan Nandhitha Shree
-//  STUDENT C NAME: Beverly
+//  STUDENT C NAME: Beverly Low
 //  STUDENT D NAME: Thiruvarudchelvan Vageesan
 //
 //////////////////////////////////////////////////////////////////////////////////
@@ -44,5 +44,5 @@ module Top_Student (
     wire [15:0] oled_data;
     Task_Multiplexer (task_state, oled_X, oled_A, oled_B, oled_C, oled_D, oled_data);
 
-    Display display_inst (.basys_clock(basys_clock), .oled_data(oled_data), .x(x), .y(y), .JB(JB));
+    Display (basys_clock, oled_data, x, y, JB);
 endmodule

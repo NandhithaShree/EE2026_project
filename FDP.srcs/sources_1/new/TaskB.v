@@ -12,53 +12,55 @@
 
 module TaskB (
     input reset,
-    input basys_clock,
+    input basys_clk,
     input btnC, btnU, btnD,
     input [6:0] x,
     input [5:0] y,
     output reg [15:0] oled_data
 );
 
-    wire created6p25megahz, created25Mhz, clock_1KHz;
-    wire [31:0] m = 16;
+ wire created6p25megahz, created25Mhz, clock_1KHz;
+    wire [31:0] m = 7;
     wire n = 1;
-    wire fb, sending_pixels, sample_pix;
+
     reg [2:0] up_state = 0;
     reg [2:0] centre_state = 0;
     reg [2:0] down_state = 0;
-    
+
     reg up_pb_prev = 0;
     reg centre_pb_prev = 0;
     reg down_pb_prev = 0;
-    
+
     reg up_allow_change = 0;
     reg centre_allow_change = 0;
     reg down_allow_change = 0;
-    
-    Clock slow_clock_6p25MHz (basys_clock, m, created6p25megahz);
+
+    wire up_stable_pb, centre_stable_pb, down_stable_pb;
+    Clock(basys_clk, m, created6p25megahz);
     Clock slow_clock_1KHz (basys_clock, 99999, clock_1KHz);
     
-    wire up_stable_pb, centre_stable_pb, down_stable_pb;
-    TaskB_Counter up_counter_inst (.stable_pb(up_stable_pb), .clock_1KHz(clock_1KHz), .push_button(btnU));
-    TaskB_Counter centre_counter_inst (.stable_pb(centre_stable_pb), .clock_1KHz(clock_1KHz), .push_button(btnC));
-    TaskB_Counter down_counter_inst (.stable_pb(down_stable_pb), .clock_1KHz(clock_1KHz), .push_button(btnD));
-    
-    
-    always @(posedge created6p25megahz) begin
+    TaskB_Counter up_counter_inst (.stable_pb(up_stable_pb), .sixp25MHzCLOCK(clock_1KHz), .push_button(btnU));
+    TaskB_Counter centre_counter_inst (.stable_pb(centre_stable_pb), .sixp25MHzCLOCK(clock_1KHz), .push_button(btnC));
+    TaskB_Counter down_counter_inst (.stable_pb(down_stable_pb), .sixp25MHzCLOCK(clock_1KHz), .push_button(btnD));
+
+    Clock(basys_clk, n, created25Mhz);
+
+    always @(posedge created25Mhz) begin
         if (btnU && !up_pb_prev) begin 
             up_allow_change <= 1;
         end else if (up_stable_pb) begin 
             up_allow_change <= 0;
         end
         up_pb_prev <= btnU;
-    
+
+      
         if (btnC && !centre_pb_prev) begin 
             centre_allow_change <= 1;
         end else if (centre_stable_pb) begin 
             centre_allow_change <= 0;
         end
         centre_pb_prev <= btnC;
-    
+
         if (btnD && !down_pb_prev) begin 
             down_allow_change <= 1;
         end else if (down_stable_pb) begin 
@@ -66,16 +68,16 @@ module TaskB (
         end
         down_pb_prev <= btnD;
     end
-    
-    always @(posedge created6p25megahz) begin
+
+    always @(posedge created25Mhz) begin
         if (reset) begin
             up_state = 0;
             centre_state = 0;
             down_state = 0;
         end
-    
+        
         oled_data = 16'b00000_000000_00000; 
-    
+
         // Top square
         if (x >= 42 && x < 55 && y >= 2 && y < 15) begin 
             case (up_state)
@@ -87,7 +89,7 @@ module TaskB (
                 3'b101: oled_data = 16'b00000_000000_00000; // Black
             endcase
         end
-    
+
         // Centre square
         if (x >= 42 && x < 55 && y >= 17 && y < 30) begin
             case (centre_state)
@@ -99,7 +101,7 @@ module TaskB (
                 3'b101: oled_data = 16'b00000_000000_00000; // Black
             endcase
         end
-    
+
         // Down square
         if (x >= 42 && x < 55 && y >= 32 && y < 45) begin 
             case (down_state)
@@ -111,7 +113,7 @@ module TaskB (
                 3'b101: oled_data = 16'b00000_000000_00000; // Black
             endcase
         end
-    
+
         // Circle logic
         if (up_state == 3'b001 && centre_state == 3'b001 && down_state == 3'b001) begin // All red
             if (((x - 48) * (x - 48)) + ((y - 54) * (y - 54)) <= 42) begin 
@@ -122,7 +124,7 @@ module TaskB (
                 oled_data = 16'b11111_101001_00000; 
             end
         end
-    
+
         if (up_stable_pb && up_allow_change) begin
             up_state <= (up_state == 3'b101) ? 3'b000 : up_state + 3'b001;
         end
@@ -133,5 +135,7 @@ module TaskB (
             down_state <= (down_state == 3'b101) ? 3'b000 : down_state + 3'b001;
         end
     end
-
 endmodule
+
+
+
