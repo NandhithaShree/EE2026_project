@@ -23,8 +23,7 @@
 module Display(
         input basys_clock,
         input [15:0] oled_data,
-        output [6:0] x,
-        output [5:0] y,
+        output [6:0] x, y,
         output [7:0] JB
     );
     

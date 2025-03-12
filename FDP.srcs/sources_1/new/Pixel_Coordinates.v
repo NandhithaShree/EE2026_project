@@ -22,8 +22,7 @@
 
 module Pixel_Coordinates(
         input [12:0] pixel_index,
-        output [6:0] x,
-        output [5:0] y
+        output [6:0] x,y
     );
     
     assign x = pixel_index % 96;

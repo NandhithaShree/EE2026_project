@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 11.03.2025 15:34:36
+// Create Date: 03/12/2025 07:39:44 PM
 // Design Name: 
-// Module Name: Phase_0
+// Module Name: Grid_Coordinates
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,14 +20,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Phase_0(
-    input clk_45Hz, 
-    input start_phase,
-    input [6:0] x, 
-    input [5:0] y, 
-    output reg [15:0] oled_data
-);
-    always @(*) begin
-        oled_data = (x >= 84 && x <= 95 && y >= 0 && y <= 10) ? 16'b11111_100000_00000 : 0;
-    end
+module Grid_Coordinates(
+        input [6:0] x,y,
+        output [4:0] grid_x,grid_y
+    );
+        assign grid_x = x / 8;
+        assign grid_y = y / 8;
 endmodule
