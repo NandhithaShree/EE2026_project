@@ -24,6 +24,7 @@
 module Renderer(
     input basys_clock,
     input [255:0] board,
+    input [63:0] moves,
     input [6:0] pixel_x, pixel_y,
     input [6:0] selected_x, selected_y,
     input [6:0] current_x, current_y,
@@ -55,6 +56,9 @@ module Renderer(
     
     wire [4:0] grid_x, grid_y;
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
+    wire [3:0] x_pos, y_pos;
+    assign x_pos = pixel_x % 8;
+    assign y_pos = pixel_y % 8;
     
     always @ (posedge basys_clock) begin
         if (grid_x >= 2 && grid_x <= 9 && grid_y <= 7) begin
@@ -64,7 +68,14 @@ module Renderer(
                 else
                     oled_data <= BLACK;
             end else begin
-                oled_data <= bg_oled;
+                if (moves[grid_y * 8 + grid_x - 2]) begin
+                    if ((x_pos - 3) ** 2 + (y_pos - 3) ** 2 <= 6)
+                        oled_data <= BLUE;
+                    else
+                        oled_data <= bg_oled;
+                end else begin
+                    oled_data <= bg_oled;
+                end
             end
         end else begin
             oled_data <= BLACK;

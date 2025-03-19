@@ -3,6 +3,8 @@
 module Top_Student (
     input basys_clock,
     input btnU, btnC, btnD, btnL, btnR,
+    input [15:0] sw,
+    output [15:0] led,
     output [7:0] JB
 );  
   
@@ -11,10 +13,23 @@ module Top_Student (
     wire [6:0] pixel_x, pixel_y;
     wire [6:0] current_x, current_y;
     reg [6:0] selected_x, selected_y;
-        
+    
+    wire [3:0] piece;
+    wire [3:0] selected_piece;
+    wire [4:0] grid_x, grid_y;
+
+    Grid_Coordinates (pixel_x, pixel_y, grid_x, grid_y);
+    Current_Piece (board, grid_x, grid_y, piece);
+    Current_Piece (board, selected_x, selected_y, selected_piece);
+    
+    wire [63:0] moves;
+    
+    assign led = moves[25:10];
+
     Renderer renderer_inst (
         .basys_clock(basys_clock),
         .board(board),
+        .moves(moves),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .selected_x(selected_x),
@@ -24,10 +39,15 @@ module Top_Student (
         .oled_data(oled_data)
     );
     
-    wire [3:0] piece;
-    wire [4:0] grid_x, grid_y;
-    Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
-    Current_Piece (board, grid_x, grid_y, piece);
+    // Game logic takes in actual board details: 0 - 7 for grid_x and grid_y
+    game_logic_mux game_logic (
+        .basys_clock(basys_clock),
+        .board(board),
+        .grid_x(selected_x - 2),
+        .grid_y(selected_y),
+        .piece(selected_piece),
+        .moves(moves)
+    );
 
     wire confirm;
     Btn_Input (basys_clock, btnU, btnC, btnD, btnL, btnR, current_x, current_y, confirm);

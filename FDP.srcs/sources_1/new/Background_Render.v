@@ -33,10 +33,10 @@ module Background_Render(
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
     
     always @ (posedge basys_clock) begin
-        if (grid_x == current_x && grid_y == current_y)
-            oled_data = GREEN;
-        else if (grid_x == selected_x && grid_y == selected_y)
+        if (grid_x == selected_x && grid_y == selected_y)
             oled_data = BLUE;
+        else if (grid_x == current_x && grid_y == current_y)
+            oled_data = GREEN;
         else if ((grid_x + grid_y) % 2) 
             oled_data = LIGHT_BROWN;  
         else 
