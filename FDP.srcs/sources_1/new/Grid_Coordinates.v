@@ -21,9 +21,15 @@
 
 
 module Grid_Coordinates(
-        input [6:0] x, y,
-        output [4:0] grid_x, grid_y
+        input  [6:0] x, y,
+        output [4:0] grid_x, grid_y,
+        output out_of_bounds
     );
-        assign grid_x = x / 8;
-        assign grid_y = y / 8;
+        parameter LOWER_X = 16;
+        parameter UPPER_X = 80;
+        parameter GRID_SIZE = 8;
+        
+        assign out_of_bounds = (x < LOWER_X || x >= UPPER_X);
+        assign grid_x = out_of_bounds ? x / GRID_SIZE : (x - LOWER_X) / GRID_SIZE;
+        assign grid_y = y / GRID_SIZE;
 endmodule
