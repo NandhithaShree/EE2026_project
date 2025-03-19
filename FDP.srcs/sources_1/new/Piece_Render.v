@@ -1,43 +1,75 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 15.03.2025 21:26:57
-// Design Name: 
-// Module Name: Piece_Render
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module Piece_Render(
     input basys_clock,
-    input [255:0] board,
+    input [3:0] piece,
     input [6:0] pixel_x, pixel_y,
-    output is_piece,
-    output [3:0] piece
+    output reg is_piece = 0
 );
-
-    Piece_Mux piece_mux_inst (
-        .piece(piece),
-        .pixel_x(pixel_x),
-        .pixel_y(pixel_y),
-        .is_piece(is_piece),
-        .basys_clock(basys_clock)
-    );
-    
-    wire [4:0] grid_x, grid_y;
-    Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
-    Current_Piece (board, grid_x, grid_y, piece);
-
+    always @ (posedge basys_clock) begin                            
+        case (piece[2:0])
+            PAWN: begin 
+                if ((pixel_x % 8 >= 2 && pixel_x % 8 <= 5 && (pixel_y % 8 == 3 )| pixel_y % 8 == 6)| 
+                    (pixel_x % 8 >= 3 && pixel_x % 8 <= 4 && pixel_y % 8 >= 2 && pixel_y % 8 <= 5))
+                begin
+                    is_piece = 1;
+                end
+            end
+            
+            KNIGHT: begin
+                // Simple knight shape
+                if ((pixel_x % 8 >= 2 && pixel_x % 8 <= 5 && (pixel_y % 8 == 1 | pixel_y % 8 == 4)) |
+                    (pixel_x % 8 >= 1 && pixel_x % 8 <= 6 && (pixel_y % 8 == 2 | pixel_y % 8 == 5 | pixel_y % 8 == 6)) |
+                    (pixel_x % 8 >= 3 && pixel_x % 8 <= 6 && pixel_y % 8 == 3) |
+                    (pixel_x % 8 >= 2 && pixel_x % 8 <= 5 && pixel_y % 8 == 4))
+                begin
+                    is_piece = 1;
+                end
+            end
+            
+            BISHOP: begin // Bishop
+                // Simple bishop shape
+                if ((pixel_x % 8 >= 2 && pixel_x % 8 <= 5 && (pixel_y % 8 == 2 )| pixel_y % 8 == 6)| 
+                    (pixel_x % 8 >= 3 && pixel_x % 8 <= 4 && pixel_y % 8 >= 1 && pixel_y % 8 <= 5)) 
+                begin
+                    is_piece = 1;
+                end
+            end
+            
+            ROOK: begin // Rook
+                // Simple rook shape
+                if (((pixel_x % 8 == 1 | pixel_x % 8 == 3 | pixel_x % 8 == 4 | pixel_x % 8 == 6) && pixel_y == 1) |
+                        (pixel_x % 8 >= 1 && pixel_x % 8 <= 6 && pixel_y % 8 == 2) |
+                        (pixel_x % 8 >= 2 && pixel_x % 8 <= 5 && pixel_y % 8 >= 3 && pixel_y % 8 <= 4) |
+                        (pixel_x % 8 >= 1 && pixel_x % 8 <= 6 && pixel_y % 8 >= 5 && pixel_y % 8 <= 6))
+                begin
+                    is_piece = 1;
+                end
+            end
+            
+            QUEEN: begin // Queen
+                // Simple queen shape
+                if (((pixel_x % 8 == 1 | pixel_x % 8 == 3 | pixel_x % 8 == 4 | pixel_x % 8 == 6) && pixel_y == 0) |
+                    (pixel_x % 8 >= 1 && pixel_x % 8 <= 6 && pixel_y % 8 == 6) |
+                    (pixel_x % 8 >= 2 && pixel_x % 8 <= 5 && (pixel_y % 8 == 2 | pixel_y % 8 == 5 | pixel_y % 8 == 1 )) |
+                    (pixel_x % 8 >= 3 && pixel_x % 8 <= 4 && pixel_y % 8 >= 3 && pixel_y % 8 <= 4)) 
+                begin
+                    is_piece = 1;
+                end
+            end
+            
+            KING: begin // King
+                // Simple king shape
+                if ((pixel_x % 8 >= 3 && pixel_x % 8 <= 4 && pixel_y % 8 >= 0 && pixel_y % 8 <= 4) |
+                    (pixel_x % 8 >= 2 && pixel_x % 8 <= 5 && (pixel_y % 8 == 1 | pixel_y % 8 == 5)) |
+                    (pixel_x % 8 >= 1 && pixel_x % 8 <= 6 && pixel_y % 8 == 6)) 
+                begin
+                    is_piece = 1;
+                end
+            end
+            
+            default:
+                is_piece = 0;
+        endcase
+    end
 endmodule

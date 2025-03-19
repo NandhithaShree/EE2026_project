@@ -30,17 +30,19 @@ module Background_Render(
 );
     
     wire [4:0] grid_x, grid_y;
-    Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
+    wire out_of_bounds;
+    Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y, out_of_bounds);
     
     always @ (posedge basys_clock) begin
-        if (grid_x == current_x && grid_y == current_y)
-            oled_data = GREEN;
+        if (out_of_bounds)
+            oled_data <= BLACK;
+        else if (grid_x == current_x && grid_y == current_y)
+            oled_data <= GREEN;
         else if (grid_x == selected_x && grid_y == selected_y)
-            oled_data = BLUE;
+            oled_data <= BLUE;
         else if ((grid_x + grid_y) % 2) 
-            oled_data = LIGHT_BROWN;  
+            oled_data <= LIGHT_BROWN;  
         else 
-            oled_data = DARK_BROWN;
+            oled_data <= DARK_BROWN;
     end
-
 endmodule

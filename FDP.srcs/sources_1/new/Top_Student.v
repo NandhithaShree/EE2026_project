@@ -4,34 +4,25 @@ module Top_Student (
     input basys_clock,
     input btnU, btnC, btnD, btnL, btnR,
     output [7:0] JB
-);  
-  
-    wire [15:0] oled_data;
+);    
     reg [255:0] board = INITIAL_BOARD; 
-    wire [6:0] pixel_x, pixel_y;
-    wire [6:0] current_x, current_y;
-    reg [6:0] selected_x, selected_y;
-        
-    Renderer renderer_inst (
-        .basys_clock(basys_clock),
-        .board(board),
-        .pixel_x(pixel_x),
-        .pixel_y(pixel_y),
-        .selected_x(selected_x),
-        .selected_y(selected_y),
-        .current_x(current_x),
-        .current_y(current_y),
-        .oled_data(oled_data)
-    );
+
+    wire [15:0] oled_data;
+    wire [6:0] pixel_x, pixel_y;        
+    Display (basys_clock, oled_data, pixel_x, pixel_y, JB);
+    
+    wire [4:0] grid_x, grid_y;
+    wire out_of_bounds;
+    Grid_Coordinates (pixel_x, pixel_y, grid_x, grid_y, out_of_bounds);
     
     wire [3:0] piece;
-    wire [4:0] grid_x, grid_y;
-    Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
     Current_Piece (board, grid_x, grid_y, piece);
 
+    wire [6:0] current_x, current_y;
     wire confirm;
     Btn_Input (basys_clock, btnU, btnC, btnD, btnL, btnR, current_x, current_y, confirm);
-    
+
+    reg [6:0] selected_x, selected_y;    
     integer from_index, to_index;
 
     always @(posedge confirm) begin
@@ -61,5 +52,17 @@ module Top_Student (
         end
     end
     
-    Display display_inst (basys_clock, oled_data, pixel_x, pixel_y, JB);
+    
+    Renderer renderer_inst (
+        .basys_clock(basys_clock),
+        .piece(piece),
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .selected_x(selected_x),
+        .selected_y(selected_y),
+        .current_x(current_x),
+        .current_y(current_y),
+        .out_of_bounds(out_of_bounds),
+        .oled_data(oled_data)
+    );
 endmodule

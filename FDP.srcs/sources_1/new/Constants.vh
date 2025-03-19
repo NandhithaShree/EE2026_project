@@ -9,6 +9,14 @@ parameter DARK_BROWN = 16'h8410;
 parameter GREEN = 16'h07E0;     
 parameter BLUE = 16'h001F;
 
+//Piece Types
+parameter PAWN = 3'b001;
+parameter KNIGHT = 3'b001;
+parameter BISHOP = 3'b010;
+parameter ROOK = 3'b011;
+parameter QUEEN = 3'b100;
+parameter KING = 3'b101;
+
 //Piece bits
 parameter EMPTY = 4'b0000;
 parameter W_PAWN = 4'b1001;
