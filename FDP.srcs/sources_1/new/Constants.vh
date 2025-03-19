@@ -1,6 +1,9 @@
+`ifndef CONSTANTS_VH
+`define CONSTANTS_VH
+
 //Colours
-parameter WHITE = 16'hFFFF;     
-parameter BLACK = 16'h0000;     
+parameter WHITE = 16'hFFFF;
+parameter BLACK = 16'h0000;
 parameter LIGHT_BROWN = 16'hD69A; 
 parameter DARK_BROWN = 16'h8410;  
 parameter GREEN = 16'h07E0;     
@@ -43,3 +46,5 @@ parameter INITIAL_BOARD = {
 // For a five bit reg, designate last value as 'NULL' since 
 // impossible for the program to reach it normally
 parameter NULL = 31;
+
+`endif // CONSTANTS_VH

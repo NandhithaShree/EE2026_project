@@ -1,9 +1,31 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 16.03.2025 21:20:22
+// Design Name: 
+// Module Name: Btn_Input
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
 module Btn_Input(
     input basys_clock,
     input btnU, btnC, btnD, btnL, btnR,
     output reg [4:0] curr_x = 3, curr_y = 1,
     output reg confirm = 0
-    );
+);
 
     parameter DEBOUNCE_LIMIT = 1_000_000;  // ~10ms debounce period
 

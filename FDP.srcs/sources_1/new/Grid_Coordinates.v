@@ -21,8 +21,8 @@
 
 
 module Grid_Coordinates(
-        input [6:0] x,y,
-        output [4:0] grid_x,grid_y
+        input [6:0] x, y,
+        output [4:0] grid_x, grid_y
     );
         assign grid_x = x / 8;
         assign grid_y = y / 8;
