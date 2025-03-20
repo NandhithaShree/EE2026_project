@@ -43,8 +43,8 @@ module Btn_Input(
                 // Handle movement
                 if (btnU && curr_y > 0) curr_y <= curr_y - 1;
                 if (btnD && curr_y < 7) curr_y <= curr_y + 1;
-                if (btnL && curr_x > 2) curr_x <= curr_x - 1;
-                if (btnR && curr_x < 9) curr_x <= curr_x + 1;
+                if (btnL && curr_x > 0) curr_x <= curr_x - 1;
+                if (btnR && curr_x < 7) curr_x <= curr_x + 1;
                 if (btnC) confirm <= 1;
             end
         end else begin

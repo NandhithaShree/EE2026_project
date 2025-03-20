@@ -36,7 +36,7 @@ module Piece_Render(
         .basys_clock(basys_clock)
     );
     
-    wire [4:0] grid_x, grid_y;
+    wire [3:0] grid_x, grid_y;
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
     Current_Piece (board, grid_x, grid_y, piece);
 

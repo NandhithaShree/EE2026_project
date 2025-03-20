@@ -43,8 +43,7 @@ parameter INITIAL_BOARD = {
     W_ROOK, W_KNIGHT, W_BISHOP, W_QUEEN, W_KING, W_BISHOP, W_KNIGHT, W_ROOK
 };
 
-// For a five bit reg, designate last value as 'NULL' since 
-// impossible for the program to reach it normally
-parameter NULL = 31;
+// For a four bit reg (grid coordinates), we designate 1000 as NULL.
+parameter NULL = 4'b1000;
 
 `endif // CONSTANTS_VH

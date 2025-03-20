@@ -23,13 +23,13 @@
 module pawn_moves (
     input basys_clock,
     input [255:0] board,
-    input [4:0] grid_x, grid_y,
+    input [3:0] grid_x, grid_y,
     input is_white,
     output reg [63:0] moves
 );
 
     wire piece_forward1, piece_forward2;
-    wire [4:0] forward1_x, forward1_y, forward2_x, forward2_y;
+    wire [3:0] forward1_x, forward1_y, forward2_x, forward2_y;
     
     assign forward1_x = grid_x;
     assign forward1_y = is_white ? (grid_y - 1) : (grid_y + 1);
@@ -40,7 +40,7 @@ module pawn_moves (
     // Check if the square in front is occupied
     Current_Piece piece_check1 (
         .board(board),
-        .x(forward1_x + 2),
+        .x(forward1_x),
         .y(forward1_y),
         .piece(piece_forward1)
     );
@@ -48,7 +48,7 @@ module pawn_moves (
     // Check if the double move square is occupied
     Current_Piece piece_check2 (
         .board(board),
-        .x(forward2_x + 2),
+        .x(forward2_x),
         .y(forward2_y),
         .piece(piece_forward2)
     );
