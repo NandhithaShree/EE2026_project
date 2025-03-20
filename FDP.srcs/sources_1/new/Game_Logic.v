@@ -26,10 +26,9 @@ module Game_Logic(
     input [3:0] grid_x, grid_y,
     output reg [63:0] moves
 );
-
     wire [3:0] selected_piece;
     Current_Piece (board, grid_x, grid_y, selected_piece);
-
+    
     wire [63:0] pawn_moves_out;
     wire [63:0] knight_moves_out;
     wire [63:0] bishop_moves_out;
