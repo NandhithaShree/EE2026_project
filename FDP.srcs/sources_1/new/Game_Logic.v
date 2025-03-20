@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module game_logic_mux(
+module Game_Logic(
     input basys_clock,
     input [255:0] board,
     input [4:0] grid_x, grid_y,

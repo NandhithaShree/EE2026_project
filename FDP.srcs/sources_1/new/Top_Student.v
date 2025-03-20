@@ -7,26 +7,31 @@ module Top_Student (
     output [15:0] led,
     output [7:0] JB
 );  
-  
     wire [15:0] oled_data;
-    reg [255:0] board = INITIAL_BOARD; 
     wire [6:0] pixel_x, pixel_y;
-    wire [6:0] current_x, current_y;
-    reg [6:0] selected_x, selected_y;
-    
-    wire [3:0] piece;
-    wire [3:0] selected_piece;
+    Display (basys_clock, oled_data, pixel_x, pixel_y, JB);
+
     wire [4:0] grid_x, grid_y;
+    wire [4:0] current_x, current_y;    
+    reg  [4:0] selected_x, selected_y;
+    Grid_Coordinates (pixel_x, pixel_y, grid_x, grid_y);   
 
-    Grid_Coordinates (pixel_x, pixel_y, grid_x, grid_y);
-    Current_Piece (board, grid_x, grid_y, piece);
-    Current_Piece (board, selected_x, selected_y, selected_piece);
-    
+    reg  [255:0] board = INITIAL_BOARD; 
     wire [63:0] moves;
+   
+    wire [3:0] piece;
+    Current_Piece (board, grid_x, grid_y, piece); 
     
-    assign led = moves[25:10];
+    Game_Logic (
+        .basys_clock(basys_clock),
+        .board(board),
+        .grid_x(selected_x - 2),
+        .grid_y(selected_y),
+        .piece(piece),
+        .moves(moves)
+    );
 
-    Renderer renderer_inst (
+    Renderer (
         .basys_clock(basys_clock),
         .board(board),
         .moves(moves),
@@ -37,16 +42,6 @@ module Top_Student (
         .current_x(current_x),
         .current_y(current_y),
         .oled_data(oled_data)
-    );
-    
-    // Game logic takes in actual board details: 0 - 7 for grid_x and grid_y
-    game_logic_mux game_logic (
-        .basys_clock(basys_clock),
-        .board(board),
-        .grid_x(selected_x - 2),
-        .grid_y(selected_y),
-        .piece(selected_piece),
-        .moves(moves)
     );
 
     wire confirm;
@@ -65,6 +60,7 @@ module Top_Student (
         else if (selected_x != NULL && selected_y != NULL) begin
             from_index = ((7 - selected_y) * 8 + (selected_x - 2)) * 4;
             to_index = ((7 - current_y) * 8 + (current_x - 2)) * 4;
+            
             // Move the piece in the board array
             board[to_index +: 4] <= board[from_index +: 4];  // Copy piece to new position
             board[from_index +: 4] <= 4'b0000;  // Clear old position
@@ -80,6 +76,4 @@ module Top_Student (
             selected_y <= current_y;
         end
     end
-    
-    Display display_inst (basys_clock, oled_data, pixel_x, pixel_y, JB);
 endmodule
