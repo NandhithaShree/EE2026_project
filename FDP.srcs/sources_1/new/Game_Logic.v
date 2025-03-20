@@ -24,9 +24,11 @@ module Game_Logic(
     input basys_clock,
     input [255:0] board,
     input [4:0] grid_x, grid_y,
-    input [3:0] piece,
     output reg [63:0] moves
 );
+
+    wire [3:0] selected_piece;
+    Current_Piece (board, grid_x, grid_y, selected_piece);
 
     wire [63:0] pawn_moves_out;
     wire [63:0] knight_moves_out;
@@ -40,7 +42,7 @@ module Game_Logic(
         .board(board),
         .grid_x(grid_x),
         .grid_y(grid_y),
-        .is_white(piece[3]),
+        .is_white(selected_piece[3]),
         .moves(pawn_moves_out)
     );
     
@@ -81,7 +83,7 @@ module Game_Logic(
 //    );
 
     always @ (posedge basys_clock) begin
-        case (piece[2:0])
+        case (selected_piece[2:0])
             3'b001: moves = pawn_moves_out;   // Pawn
             3'b010: moves = knight_moves_out; // Knight
             3'b011: moves = bishop_moves_out; // Bishop

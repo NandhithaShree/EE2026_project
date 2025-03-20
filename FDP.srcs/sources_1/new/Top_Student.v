@@ -27,7 +27,6 @@ module Top_Student (
         .board(board),
         .grid_x(selected_x - 2),
         .grid_y(selected_y),
-        .piece(piece),
         .moves(moves)
     );
 
