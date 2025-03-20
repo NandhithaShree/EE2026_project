@@ -13,7 +13,7 @@ module Top_Student (
 
     wire [4:0] grid_x, grid_y;
     wire [4:0] current_x, current_y;    
-    reg  [4:0] selected_x, selected_y;
+    reg  [4:0] selected_x = NULL, selected_y = NULL;
     Grid_Coordinates (pixel_x, pixel_y, grid_x, grid_y);   
 
     reg  [255:0] board = INITIAL_BOARD; 
@@ -56,13 +56,13 @@ module Top_Student (
         end
         
         // Case 2: Move piece if one is already selected
-        else if (selected_x != NULL && selected_y != NULL) begin
+        else if (selected_x != NULL && selected_y != NULL && piece != EMPTY) begin
             from_index = ((7 - selected_y) * 8 + (selected_x - 2)) * 4;
             to_index = ((7 - current_y) * 8 + (current_x - 2)) * 4;
             
             // Move the piece in the board array
             board[to_index +: 4] <= board[from_index +: 4];  // Copy piece to new position
-            board[from_index +: 4] <= 4'b0000;  // Clear old position
+            board[from_index +: 4] <= EMPTY;  // Clear old position
 
             // Deselect after moving
             selected_x <= NULL;
