@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 17.03.2025 15:02:22
-// Design Name: 
-// Module Name: uart_rx
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module uart_rx (
     input clk, rx,
@@ -30,39 +10,67 @@ module uart_rx (
     parameter BAUD_RATE = 115200;
     parameter CYCLES_PER_BIT = CLK_FREQ / BAUD_RATE;
 
-    reg [1:0] bit_index = 0;
+    // State definitions
+    localparam IDLE = 2'b00;
+    localparam START = 2'b01;
+    localparam DATA = 2'b10;
+    localparam STOP = 2'b11;
+    
+    reg [1:0] state = IDLE;
     reg [13:0] counter = 0;
-    reg receiving = 0;
-    reg shift_reg;
+    reg rx_sync1, rx_sync2; // For synchronizing rx input
+
+    // Double-register the input for synchronization
+    always @(posedge clk) begin
+        rx_sync1 <= rx;
+        rx_sync2 <= rx_sync1;
+    end
 
     always @(posedge clk) begin
-        if (!receiving && rx == 0) begin  
-            receiving <= 1;
-            counter <= CYCLES_PER_BIT / 2;
-            bit_index <= 0;
-            valid <= 0;
-        end
-
-        if (receiving) begin
-            if (counter >= CYCLES_PER_BIT) begin
-                counter <= 0;
-                if (bit_index == 1) begin
-                    shift_reg <= rx; 
-                    bit_index <= bit_index + 1;
-                end else if (bit_index == 2) begin  
-                    if (rx == 1) begin  
-                        data <= shift_reg;
-                        valid <= 1;
-                    end
-                    receiving <= 0;
+        valid <= 0; // Default state - valid only pulses for one cycle
+        
+        case(state)
+            IDLE: begin
+                if (rx_sync2 == 0) begin  // Detect start bit
+                    counter <= 0;
+                    state <= START;
                 end
-            end else begin
-                counter <= counter + 1;
             end
-        end else begin
-            valid <= 0;  
-        end
+            
+            START: begin
+                if (counter >= CYCLES_PER_BIT/2) begin  // Sample in middle of start bit
+                    if (rx_sync2 == 0) begin  // Confirm it's still low
+                        counter <= 0;
+                        state <= DATA;
+                    end else begin
+                        state <= IDLE;  // False start, go back to idle
+                    end
+                end else begin
+                    counter <= counter + 1;
+                end
+            end
+            
+            DATA: begin
+                if (counter >= CYCLES_PER_BIT) begin  // Sample in middle of data bit
+                    data <= rx_sync2;       // Capture the data bit
+                    counter <= 0;
+                    state <= STOP;
+                end else begin
+                    counter <= counter + 1;
+                end
+            end
+            
+            STOP: begin
+                if (counter >= CYCLES_PER_BIT) begin  // Sample in middle of stop bit
+                    if (rx_sync2 == 1) begin  // Verify stop bit
+                        valid <= 1;  // Data is valid
+                    end
+                    state <= IDLE;
+                    counter <= 0;
+                end else begin
+                    counter <= counter + 1;
+                end
+            end
+        endcase
     end
 endmodule
-
-
