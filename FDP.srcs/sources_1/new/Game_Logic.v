@@ -60,7 +60,8 @@ module Game_Logic(
         .board(board),
         .grid_x(grid_x),
         .grid_y(grid_y),
-        .moves(bishop_moves_out)
+        .moves(bishop_moves_out),
+        .selected_piece(selected_piece)
     );
 
 //    rook_moves rook (
