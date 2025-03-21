@@ -23,7 +23,7 @@
 module Game_Logic(
     input basys_clock,
     input [255:0] board,
-    input [4:0] grid_x, grid_y,
+    input [3:0] grid_x, grid_y,
     output reg [63:0] moves
 );
 
@@ -46,12 +46,14 @@ module Game_Logic(
         .moves(pawn_moves_out)
     );
     
-//    knight_moves knight (
-//        .board(board),
-//        .grid_x(grid_x),
-//        .grid_y(grid_y),
-//        .moves(knight_moves_out)
-//    );
+    knight_moves knight (
+        .basys_clock(basys_clock),
+        .board(board),
+        .grid_x(grid_x),
+        .grid_y(grid_y),
+        .moves(knight_moves_out),
+        .selected_piece(selected_piece)
+    );
 
     bishop_moves bishop (
         .basys_clock(basys_clock),

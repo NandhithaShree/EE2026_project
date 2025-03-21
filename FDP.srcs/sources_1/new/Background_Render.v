@@ -24,12 +24,12 @@
 module Background_Render(
     input basys_clock,
     input [6:0] pixel_x, pixel_y,
-    input [6:0] selected_x, selected_y,
-    input [6:0] current_x, current_y,
+    input [3:0] selected_x, selected_y,
+    input [3:0] current_x, current_y,
     output reg [15:0] oled_data
 );
     
-    wire [4:0] grid_x, grid_y;
+    wire [3:0] grid_x, grid_y;
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
     
     always @ (posedge basys_clock) begin

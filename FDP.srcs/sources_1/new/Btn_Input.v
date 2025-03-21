@@ -23,7 +23,7 @@
 module Btn_Input(
     input basys_clock,
     input btnU, btnC, btnD, btnL, btnR,
-    output reg [4:0] curr_x = 3, curr_y = 1,
+    output reg [4:0] curr_x = 1, curr_y = 2,
     output reg confirm = 0
 );
 
@@ -31,7 +31,6 @@ module Btn_Input(
 
     reg [19:0] debounce_cnt = 0;
     reg btn_pressed = 0;  // Tracks whether a button is currently pressed
-    reg btnC_prev = 0;    // Stores previous state of btnC
 
     always @(posedge basys_clock) begin
         // Detect if any button is pressed
@@ -44,16 +43,14 @@ module Btn_Input(
                 // Handle movement
                 if (btnU && curr_y > 0) curr_y <= curr_y - 1;
                 if (btnD && curr_y < 7) curr_y <= curr_y + 1;
-                if (btnL && curr_x > 2) curr_x <= curr_x - 1;
-                if (btnR && curr_x < 9) curr_x <= curr_x + 1;
-                
-                // Generate a single-cycle confirm pulse when btnC is first pressed
-                confirm <= (btnC && !btnC_prev);  // Set confirm to 1 for one clock cycle
-                btnC_prev <= btnC;  // Store previous state of btnC
+                if (btnL && curr_x > 0) curr_x <= curr_x - 1;
+                if (btnR && curr_x < 7) curr_x <= curr_x + 1;
+                if (btnC) confirm <= 1;
             end
         end else begin
+            confirm <= 0;
             debounce_cnt <= 0;
-            btn_pressed <= 0; // Reset debounce when no button is pressed
+            btn_pressed <= 0; 
         end
     end
 endmodule
