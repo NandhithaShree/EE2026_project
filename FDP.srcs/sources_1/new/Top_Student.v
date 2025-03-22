@@ -19,8 +19,8 @@ module Top_Student (
     reg  [255:0] board = INITIAL_BOARD; 
     wire [63:0] moves;
    
-    wire [3:0] piece;
-    Current_Piece (board, grid_x, grid_y, piece); 
+    wire [3:0] current_piece;
+    Current_Piece (board, current_x, current_y, current_piece); 
     
     Game_Logic (
         .basys_clock(basys_clock),
@@ -70,7 +70,7 @@ module Top_Student (
         end
         
         // Case 3: Select current square if no piece is selected
-        else begin 
+        else if (current_piece != EMPTY) begin
             selected_x <= current_x;
             selected_y <= current_y;
         end
