@@ -46,6 +46,9 @@ module Top_Student (
     wire confirm;
     Btn_Input (basys_clock, btnU, btnC, btnD, btnL, btnR, current_x, current_y, confirm);
     
+    reg player = 1; // White starts the game
+    assign led[0] = player;
+    
     integer from_index, to_index;
 
     always @(posedge confirm) begin
@@ -56,7 +59,11 @@ module Top_Student (
         end
         
         // Case 2: Move piece if one is already selected
-        else if (selected_x != NULL && selected_y != NULL) begin
+        else if (selected_x != NULL && selected_y != NULL &&
+                    moves[current_y * 8 + current_x] == 1) begin
+            // Invert the player
+            player <= ~player;
+                
             from_index = ((7 - selected_y) * 8 + (selected_x)) * 4;
             to_index = ((7 - current_y) * 8 + (current_x)) * 4;
             
@@ -70,7 +77,7 @@ module Top_Student (
         end
         
         // Case 3: Select current square if no piece is selected
-        else if (current_piece != EMPTY) begin
+        else if (current_piece != EMPTY && current_piece[3] == player) begin
             selected_x <= current_x;
             selected_y <= current_y;
         end
