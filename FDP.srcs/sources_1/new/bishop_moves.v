@@ -29,7 +29,8 @@ module bishop_moves(
 );
 
     integer i;
-    reg piece_found_tr, piece_found_tl, piece_found_br, piece_found_bl;
+    reg piece_found_tr, piece_found_tl, piece_found_br, piece_found_bl, 
+        piece_found_tr_before, piece_found_tl_before, piece_found_br_before, piece_found_bl_before;
     reg [4:0] new_x, new_y;
     
     always @(posedge basys_clock) begin
@@ -39,6 +40,10 @@ module bishop_moves(
         piece_found_tl = 0;
         piece_found_br = 0;
         piece_found_bl = 0;
+        piece_found_tr_before = 0;
+        piece_found_tl_before = 0;
+        piece_found_br_before = 0;
+        piece_found_bl_before = 0;
         
         // Check all four diagonal directions
         for (i = 1; i < 8 && !piece_found_tr; i = i + 1) begin
@@ -46,11 +51,18 @@ module bishop_moves(
             new_y = grid_y + i;
             
             if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8) begin
-                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY && 
-                    selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3])
-                    piece_found_tr = 1;
-                else
+                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY || piece_found_tr_before == 1) begin
+                    if(selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3] || piece_found_tr_before == 1) begin
+                        piece_found_tr = 1;
+                    end
+                    else begin
+                        piece_found_tr_before = 1;
+                        moves[(grid_y + i) * 8 + (grid_x + i)] = 1'b1;
+                    end
+                end
+                else begin
                     moves[(grid_y + i) * 8 + (grid_x + i)] = 1'b1;
+                end
             end
         end
         
@@ -59,11 +71,19 @@ module bishop_moves(
             new_y = grid_y + i;
             
             if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8) begin
-                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY && 
-                    selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3])
-                    piece_found_tl = 1;
-                else
+                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY || piece_found_tl_before == 1) begin
+                    if(selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3] || piece_found_tl_before == 1) begin
+                        piece_found_tl = 1;
+                    end
+                    else begin
+                        piece_found_tl_before = 1;
+                        moves[(grid_y + i) * 8 + (grid_x - i)] = 1'b1;
+                    end
+                end
+                    
+                else begin
                     moves[(grid_y + i) * 8 + (grid_x - i)] = 1'b1;
+                end
             end
         end
         
@@ -72,11 +92,18 @@ module bishop_moves(
             new_y = grid_y - i;
             
             if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8) begin
-                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY && 
-                    selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3])
-                    piece_found_br = 1;
-                else
+                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY || piece_found_br_before == 1) begin
+                    if(selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3] || piece_found_br_before == 1) begin
+                        piece_found_br = 1;
+                    end
+                    else begin
+                        piece_found_br_before = 1;
+                        moves[(grid_y - i) * 8 + (grid_x + i)] = 1'b1;
+                    end
+                end
+                else begin
                     moves[(grid_y - i) * 8 + (grid_x + i)] = 1'b1;
+                end
             end
         end
         
@@ -85,9 +112,15 @@ module bishop_moves(
             new_y = grid_y - i;
             
             if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8) begin
-                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY && 
-                    selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3])
-                    piece_found_bl = 1;
+                if (board[(((7 - new_y) * 8 + new_x) * 4)+:4] != EMPTY || piece_found_bl_before == 1) begin 
+                    if(selected_piece[3] == board[(((7 - new_y) * 8 + new_x) * 4) + 3] || piece_found_bl_before == 1) begin
+                        piece_found_bl = 1;
+                    end
+                    else begin
+                        piece_found_bl_before = 1;
+                        moves[(grid_y - i) * 8 + (grid_x - i)] = 1'b1;
+                    end
+                end
                 else
                     moves[(grid_y - i) * 8 + (grid_x - i)] = 1'b1;
             end
