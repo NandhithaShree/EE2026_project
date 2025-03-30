@@ -45,34 +45,41 @@ module Game_Logic(
         .moves(pawn_moves_out)
     );
     
-//    knight_moves knight (
-//        .board(board),
-//        .grid_x(grid_x),
-//        .grid_y(grid_y),
-//        .moves(knight_moves_out)
-//    );
+    knight_moves knight (
+        .basys_clock(basys_clock),
+        .board(board),
+        .grid_x(grid_x),
+        .grid_y(grid_y),
+        .moves(knight_moves_out),
+        .selected_piece(selected_piece)
+    );
 
     bishop_moves bishop (
         .basys_clock(basys_clock),
         .board(board),
         .grid_x(grid_x),
         .grid_y(grid_y),
-        .moves(bishop_moves_out)
+        .moves(bishop_moves_out),
+        .selected_piece(selected_piece)
     );
 
-//    rook_moves rook (
-//        .board(board),
-//        .grid_x(grid_x),
-//        .grid_y(grid_y),
-//        .moves(rook_moves_out)
-//    );
+    rook_moves rook (
+        .basys_clock(basys_clock),
+        .board(board),
+        .grid_x(grid_x),
+        .grid_y(grid_y),
+        .moves(rook_moves_out),
+        .selected_piece(selected_piece)
+    );
 
-//    queen_moves queen (
-//        .board(board),
-//        .grid_x(grid_x),
-//        .grid_y(grid_y),
-//        .moves(queen_moves_out)
-//    );
+    queen_moves queen (
+        .basys_clock(basys_clock),
+        .board(board),
+        .grid_x(grid_x),
+        .grid_y(grid_y),
+        .moves(queen_moves_out),
+        .selected_piece(selected_piece)
+    );
 
 //    king_moves king (
 //        .board(board),

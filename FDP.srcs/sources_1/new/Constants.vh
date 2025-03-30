@@ -8,6 +8,7 @@ parameter LIGHT_BROWN = 16'hD69A;
 parameter DARK_BROWN = 16'h8410;  
 parameter GREEN = 16'h07E0;     
 parameter BLUE = 16'h001F;
+parameter RED = 16'hF800;
 
 //Piece bits
 parameter EMPTY = 4'b0000;
