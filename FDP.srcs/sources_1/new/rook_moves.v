@@ -23,7 +23,7 @@
 module rook_moves(
     input basys_clock,
     input [255:0] board,
-    input [4:0] grid_x, grid_y,
+    input [3:0] grid_x, grid_y,
     input [3:0] selected_piece,
     output reg [63:0] moves
 );

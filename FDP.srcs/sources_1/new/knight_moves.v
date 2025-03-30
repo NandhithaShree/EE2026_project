@@ -23,7 +23,7 @@
 module knight_moves(
     input basys_clock,
     input [255:0] board,
-    input [4:0] grid_x, grid_y,
+    input [3:0] grid_x, grid_y,
     input [3:0] selected_piece,
     output reg [63:0] moves
 );
@@ -44,14 +44,6 @@ module knight_moves(
     integer i;
 
     reg [4:0] new_x, new_y;
-//    wire [3:0] piece;
-
-//    Current_Piece piece_check (
-//        .board(board),
-//        .x(new_x),
-//        .y(new_y),
-//        .piece(piece)
-//    );
     
     always @ (posedge basys_clock) begin
         moves = 64'b0;

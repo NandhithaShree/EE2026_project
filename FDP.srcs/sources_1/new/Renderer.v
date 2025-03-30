@@ -28,6 +28,10 @@ module Renderer(
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
+    input [3:0] king_piece,
+    input is_threatening_king,
+    input is_promotion,
+    input [1:0] selected_promotion_piece,
     output reg [15:0] oled_data
 );
 
@@ -54,6 +58,15 @@ module Renderer(
         .oled_data(bg_oled)
     );
     
+    wire [15:0] promotion_selection_oled;
+    Pawn_Promotion_Render (
+        .basys_clock(basys_clock),
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .selected_promotion_piece(selected_promotion_piece),
+        .oled_data(promotion_selection_oled)
+    );
+    
     wire [3:0] grid_x, grid_y;
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
     wire [3:0] x_pos, y_pos;
@@ -61,7 +74,9 @@ module Renderer(
     assign y_pos = pixel_y % 8;
     
     always @ (posedge basys_clock) begin
-        if (grid_x != NULL) begin
+        if (is_promotion)
+            oled_data = promotion_selection_oled;
+        else if (grid_x != NULL) begin
             if (is_piece) begin
                 if (piece[3] == 1)
                     oled_data <= WHITE;
@@ -74,7 +89,10 @@ module Renderer(
                     else
                         oled_data <= bg_oled;
                 end else begin
-                    oled_data <= bg_oled;
+                    if (piece == king_piece && is_threatening_king)
+                        oled_data <= RED;
+                    else
+                        oled_data <= bg_oled;
                 end
             end
         end else begin
