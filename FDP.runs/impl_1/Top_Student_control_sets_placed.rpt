@@ -1,0 +1,156 @@
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
+| Date         : Sat Mar 29 17:50:40 2025
+| Host         : The-Almighty-Laptop running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file Top_Student_control_sets_placed.rpt
+| Design       : Top_Student
+| Device       : xc7a35t
+----------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Number of unique control sets                            |    88 |
+| Unused register locations in slices containing registers |    52 |
++----------------------------------------------------------+-------+
+
+
+2. Histogram
+------------
+
++--------+--------------+
+| Fanout | Control Sets |
++--------+--------------+
+|      2 |            2 |
+|      8 |           64 |
+|     10 |            2 |
+|     14 |            1 |
+|    16+ |           19 |
++--------+--------------+
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |             322 |           95 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |             388 |           56 |
+| Yes          | No                    | No                     |             166 |           34 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             552 |          128 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++------------------------+-----------------------------------------------------+-------------------------------------------------------+------------------+----------------+
+|      Clock Signal      |                    Enable Signal                    |                    Set/Reset Signal                   | Slice Load Count | Bel Load Count |
++------------------------+-----------------------------------------------------+-------------------------------------------------------+------------------+----------------+
+| ~clock_6p25MHz         |                                                     |                                                       |                1 |              2 |
+|  basys_clock_IBUF_BUFG | nolabel_line65/btnC_prev_i_1_n_0                    |                                                       |                1 |              2 |
+|  confirm_BUFG          | nolabel_line65/board_reg[144]                       | nolabel_line65/board_reg[144]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[68]                        | nolabel_line65/board_reg[68]_0                        |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[8]                         | nolabel_line65/board_reg[8]_0                         |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[60]                        | nolabel_line65/board_reg[60]_0                        |                4 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[64]                        | nolabel_line65/board_reg[64]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[48]                        | nolabel_line65/board_reg[48]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[84]                        | nolabel_line65/board_reg[84]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[52]                        | nolabel_line65/board_reg[52]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[76]                        | nolabel_line65/board_reg[76]_0                        |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[96]                        | nolabel_line65/board_reg[96]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[44]                        | nolabel_line65/board_reg[44]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[208]                       | nolabel_line65/board_reg[208]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[88]                        | nolabel_line65/board_reg[88]_0                        |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[40]                        | nolabel_line65/board_reg[40]_0                        |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[80]                        | nolabel_line65/board_reg[80]_0                        |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[36]                        | nolabel_line65/board_reg[36]_0                        |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[92]                        | nolabel_line65/board_reg[92]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[4]                         | nolabel_line65/board_reg[4]_0                         |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[104]                       | nolabel_line65/board_reg[104]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[116]                       | nolabel_line65/board_reg[116]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[140]                       | nolabel_line65/board_reg[140]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[148]                       | nolabel_line65/board_reg[148]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[108]                       | nolabel_line65/board_reg[108]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[12]                        | nolabel_line65/board_reg[12]_0                        |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[136]                       | nolabel_line65/board_reg[136]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[152]                       | nolabel_line65/board_reg[152]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[132]                       | nolabel_line65/board_reg[132]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[112]                       | nolabel_line65/board_reg[112]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[100]                       | nolabel_line65/board_reg[100]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[0]                         | nolabel_line65/board_reg[0]_0                         |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[120]                       | nolabel_line65/board_reg[120]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[124]                       | nolabel_line65/board_reg[124]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[128]                       | nolabel_line65/board_reg[128]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[180]                       | nolabel_line65/board_reg[180]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[172]                       | nolabel_line65/board_reg[172]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[232]                       | nolabel_line65/board_reg[232]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[240]                       | nolabel_line65/board_reg[240]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[192]                       | nolabel_line65/board_reg[192]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[160]                       | nolabel_line65/board_reg[160]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[220]                       | nolabel_line65/board_reg[220]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[224]                       | nolabel_line65/board_reg[224]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[196]                       | nolabel_line65/board_reg[196]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[72]                        | nolabel_line65/board_reg[72]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[156]                       | nolabel_line65/board_reg[156]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[200]                       | nolabel_line65/board_reg[200]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[164]                       | nolabel_line65/board_reg[164]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[188]                       | nolabel_line65/board_reg[188]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[176]                       | nolabel_line65/board_reg[176]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[212]                       | nolabel_line65/board_reg[212]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[228]                       | nolabel_line65/board_reg[228]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[24]                        | nolabel_line65/board_reg[24]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[252]                       | nolabel_line65/board_reg[252]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[236]                       | nolabel_line65/board_reg[236]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[244]                       | nolabel_line65/board_reg[244]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[28]                        | nolabel_line65/board_reg[28]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[216]                       | nolabel_line65/board_reg[216]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[20]                        | nolabel_line65/board_reg[20]_0                        |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[248]                       | nolabel_line65/board_reg[248]_0                       |                3 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[32]                        | nolabel_line65/board_reg[32]_0                        |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[16]                        | nolabel_line65/board_reg[16]_0                        |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[168]                       | nolabel_line65/board_reg[168]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[204]                       | nolabel_line65/board_reg[204]_0                       |                1 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[184]                       | nolabel_line65/board_reg[184]_0                       |                2 |              8 |
+|  confirm_BUFG          | nolabel_line65/board_reg[56]                        | nolabel_line65/board_reg[56]_0                        |                2 |              8 |
+|  basys_clock_IBUF_BUFG | nolabel_line65/curr_x[4]_i_1_n_0                    |                                                       |                3 |             10 |
+|  basys_clock_IBUF_BUFG | nolabel_line65/curr_y[4]_i_1_n_0                    |                                                       |                3 |             10 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line49/vga_sync_unit/D[3]                     |                3 |             14 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves_reg[5]_0                    |                2 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves[59]_i_1__0_n_0              |                1 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves[63]_i_1__0_n_0              |                1 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves[62]_i_1__0_n_0              |                2 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves[60]_i_1__0_n_0              |                5 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves[58]_i_1__0_n_0              |                1 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves[56]_i_1__0_n_0              |                1 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line27/pawn/moves[57]_i_1__0_n_0              |                2 |             16 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line35/piece_render_inst/piece_mux_inst/SR[0] |                2 |             18 |
+|  basys_clock_IBUF_BUFG | nolabel_line49/vga_sync_unit/h_count_reg[9]_i_1_n_0 |                                                       |                9 |             20 |
+|  basys_clock_IBUF_BUFG | nolabel_line49/vga_sync_unit/v_count_reg0           |                                                       |                4 |             20 |
+| ~clock_6p25MHz         |                                                     | nolabel_line14/oled/frame_counter[16]_i_1_n_0         |                5 |             34 |
+|  basys_clock_IBUF_BUFG | nolabel_line65/sel                                  | nolabel_line65/clear                                  |                5 |             40 |
+|  confirm_BUFG          |                                                     | nolabel_line65/selected_y                             |                7 |             40 |
+| ~clock_6p25MHz         | nolabel_line14/oled/delay[0]_i_1_n_0                |                                                       |                5 |             40 |
+|  basys_clock_IBUF_BUFG |                                                     | nolabel_line14/slow_clock_6p25MHz/count[31]_i_1_n_0   |                9 |             64 |
+| ~clock_6p25MHz         | nolabel_line14/oled/state                           |                                                       |                9 |             64 |
+| ~clock_6p25MHz         |                                                     | nolabel_line14/oled/spi_word[39]_i_1_n_0              |               15 |             90 |
+|  basys_clock_IBUF_BUFG |                                                     |                                                       |               94 |            320 |
++------------------------+-----------------------------------------------------+-------------------------------------------------------+------------------+----------------+
+
+

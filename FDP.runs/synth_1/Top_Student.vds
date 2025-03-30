@@ -1,0 +1,888 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Sat Mar 29 17:45:19 2025
+# Process ID: 19568
+# Current directory: C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.runs/synth_1
+# Command line: vivado.exe -log Top_Student.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Top_Student.tcl
+# Log file: C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.runs/synth_1/Top_Student.vds
+# Journal file: C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source Top_Student.tcl -notrace
+Command: synth_design -top Top_Student -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 2880 
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:5]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:6]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:7]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:8]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:9]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:10]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:13]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:14]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:15]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:16]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:17]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:18]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:19]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:23]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:24]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:25]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:26]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:27]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:28]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:29]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:30]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:31]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:32]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:33]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:34]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:35]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:54]
+WARNING: [Synth 8-2644] root scope declaration is not allowed in verilog 95/2K mode [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Constants.vh:58]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 367.945 ; gain = 111.496
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'Top_Student' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:3]
+INFO: [Synth 8-6157] synthesizing module 'Display' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Display.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Clock' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Clock.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'Clock' (1#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Clock.v:1]
+INFO: [Synth 8-6157] synthesizing module 'Pixel_Coordinates' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Pixel_Coordinates.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'Pixel_Coordinates' (2#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Pixel_Coordinates.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Oled_Display' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/imports/Desktop/Oled_Display.v:36]
+	Parameter Width bound to: 96 - type: integer 
+	Parameter Height bound to: 64 - type: integer 
+	Parameter PixelCount bound to: 6144 - type: integer 
+	Parameter PixelCountWidth bound to: 13 - type: integer 
+	Parameter ClkFreq bound to: 6250000 - type: integer 
+	Parameter FrameFreq bound to: 60 - type: integer 
+	Parameter FrameDiv bound to: 104166 - type: integer 
+	Parameter FrameDivWidth bound to: 17 - type: integer 
+	Parameter PowerDelay bound to: 20 - type: integer 
+	Parameter ResetDelay bound to: 3 - type: integer 
+	Parameter VccEnDelay bound to: 20 - type: integer 
+	Parameter StartupCompleteDelay bound to: 100 - type: integer 
+	Parameter MaxDelay bound to: 100 - type: integer 
+	Parameter MaxDelayCount bound to: 625000 - type: integer 
+	Parameter StateCount bound to: 32 - type: integer 
+	Parameter StateWidth bound to: 5 - type: integer 
+	Parameter PowerUp bound to: 5'b00000 
+	Parameter Reset bound to: 5'b00001 
+	Parameter ReleaseReset bound to: 5'b00011 
+	Parameter EnableDriver bound to: 5'b00010 
+	Parameter DisplayOff bound to: 5'b00110 
+	Parameter SetRemapDisplayFormat bound to: 5'b00111 
+	Parameter SetStartLine bound to: 5'b00101 
+	Parameter SetOffset bound to: 5'b00100 
+	Parameter SetNormalDisplay bound to: 5'b01100 
+	Parameter SetMultiplexRatio bound to: 5'b01101 
+	Parameter SetMasterConfiguration bound to: 5'b01111 
+	Parameter DisablePowerSave bound to: 5'b01110 
+	Parameter SetPhaseAdjust bound to: 5'b01010 
+	Parameter SetDisplayClock bound to: 5'b01011 
+	Parameter SetSecondPrechargeA bound to: 5'b01001 
+	Parameter SetSecondPrechargeB bound to: 5'b01000 
+	Parameter SetSecondPrechargeC bound to: 5'b11000 
+	Parameter SetPrechargeLevel bound to: 5'b11001 
+	Parameter SetVCOMH bound to: 5'b11011 
+	Parameter SetMasterCurrent bound to: 5'b11010 
+	Parameter SetContrastA bound to: 5'b11110 
+	Parameter SetContrastB bound to: 5'b11111 
+	Parameter SetContrastC bound to: 5'b11101 
+	Parameter DisableScrolling bound to: 5'b11100 
+	Parameter ClearScreen bound to: 5'b10100 
+	Parameter VccEn bound to: 5'b10101 
+	Parameter DisplayOn bound to: 5'b10111 
+	Parameter PrepareNextFrame bound to: 5'b10110 
+	Parameter SetColAddress bound to: 5'b10010 
+	Parameter SetRowAddress bound to: 5'b10011 
+	Parameter WaitNextFrame bound to: 5'b10001 
+	Parameter SendPixel bound to: 5'b10000 
+	Parameter SpiCommandMaxWidth bound to: 40 - type: integer 
+	Parameter SpiCommandBitCountWidth bound to: 6 - type: integer 
+INFO: [Synth 8-226] default block is never used [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/imports/Desktop/Oled_Display.v:123]
+INFO: [Synth 8-226] default block is never used [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/imports/Desktop/Oled_Display.v:198]
+WARNING: [Synth 8-693] zero replication count - replication ignored [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/imports/Desktop/Oled_Display.v:346]
+INFO: [Synth 8-6155] done synthesizing module 'Oled_Display' (3#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/imports/Desktop/Oled_Display.v:36]
+INFO: [Synth 8-6155] done synthesizing module 'Display' (4#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Display.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Grid_Coordinates' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Grid_Coordinates.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'Grid_Coordinates' (5#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Grid_Coordinates.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Current_Piece.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'Current_Piece' (6#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Current_Piece.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Game_Logic' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Game_Logic.v:23]
+INFO: [Synth 8-6157] synthesizing module 'pawn_moves' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/pawn_moves.v:23]
+WARNING: [Synth 8-689] width (32) of port connection 'x' does not match port width (5) of module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/pawn_moves.v:43]
+WARNING: [Synth 8-689] width (1) of port connection 'piece' does not match port width (4) of module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/pawn_moves.v:45]
+WARNING: [Synth 8-689] width (32) of port connection 'x' does not match port width (5) of module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/pawn_moves.v:51]
+WARNING: [Synth 8-689] width (1) of port connection 'piece' does not match port width (4) of module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/pawn_moves.v:53]
+INFO: [Synth 8-6155] done synthesizing module 'pawn_moves' (7#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/pawn_moves.v:23]
+INFO: [Synth 8-6157] synthesizing module 'bishop_moves' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/bishop_moves.v:23]
+WARNING: [Synth 8-689] width (1) of port connection 'x' does not match port width (5) of module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/bishop_moves.v:36]
+WARNING: [Synth 8-689] width (1) of port connection 'y' does not match port width (5) of module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/bishop_moves.v:37]
+WARNING: [Synth 8-689] width (1) of port connection 'piece' does not match port width (4) of module 'Current_Piece' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/bishop_moves.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'bishop_moves' (8#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/bishop_moves.v:23]
+WARNING: [Synth 8-3848] Net knight_moves_out in module/entity Game_Logic does not have driver. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Game_Logic.v:34]
+WARNING: [Synth 8-3848] Net rook_moves_out in module/entity Game_Logic does not have driver. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Game_Logic.v:36]
+WARNING: [Synth 8-3848] Net queen_moves_out in module/entity Game_Logic does not have driver. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Game_Logic.v:37]
+WARNING: [Synth 8-3848] Net king_moves_out in module/entity Game_Logic does not have driver. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Game_Logic.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'Game_Logic' (9#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Game_Logic.v:23]
+WARNING: [Synth 8-689] width (32) of port connection 'grid_x' does not match port width (5) of module 'Game_Logic' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:30]
+INFO: [Synth 8-6157] synthesizing module 'Renderer' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Renderer.v:24]
+INFO: [Synth 8-6157] synthesizing module 'Piece_Render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Piece_Render.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Piece_Mux' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Piece_Mux.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'Piece_Mux' (10#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Piece_Mux.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'Piece_Render' (11#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Piece_Render.v:23]
+INFO: [Synth 8-6157] synthesizing module 'Background_Render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Background_Render.v:24]
+INFO: [Synth 8-6155] done synthesizing module 'Background_Render' (12#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Background_Render.v:24]
+INFO: [Synth 8-6155] done synthesizing module 'Renderer' (13#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Renderer.v:24]
+WARNING: [Synth 8-689] width (5) of port connection 'selected_x' does not match port width (7) of module 'Renderer' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:41]
+WARNING: [Synth 8-689] width (5) of port connection 'selected_y' does not match port width (7) of module 'Renderer' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:42]
+WARNING: [Synth 8-689] width (5) of port connection 'current_x' does not match port width (7) of module 'Renderer' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:43]
+WARNING: [Synth 8-689] width (5) of port connection 'current_y' does not match port width (7) of module 'Renderer' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:44]
+INFO: [Synth 8-6157] synthesizing module 'VGA_render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_render.v:24]
+	Parameter CELL_SIZE bound to: 54 - type: integer 
+	Parameter BOARD_ORIGIN_X bound to: 13 - type: integer 
+	Parameter BOARD_ORIGIN_Y bound to: 30 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'VGA_Background_Render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_Background_Render.v:24]
+INFO: [Synth 8-6155] done synthesizing module 'VGA_Background_Render' (14#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_Background_Render.v:24]
+INFO: [Synth 8-6157] synthesizing module 'VGA_Sync' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_Sync.v:23]
+	Parameter H_DISPLAY bound to: 640 - type: integer 
+	Parameter H_L_BORDER bound to: 48 - type: integer 
+	Parameter H_R_BORDER bound to: 16 - type: integer 
+	Parameter H_RETRACE bound to: 96 - type: integer 
+	Parameter H_MAX bound to: 799 - type: integer 
+	Parameter START_H_RETRACE bound to: 656 - type: integer 
+	Parameter END_H_RETRACE bound to: 751 - type: integer 
+	Parameter V_DISPLAY bound to: 480 - type: integer 
+	Parameter V_T_BORDER bound to: 10 - type: integer 
+	Parameter V_B_BORDER bound to: 33 - type: integer 
+	Parameter V_RETRACE bound to: 2 - type: integer 
+	Parameter V_MAX bound to: 524 - type: integer 
+	Parameter START_V_RETRACE bound to: 513 - type: integer 
+	Parameter END_V_RETRACE bound to: 514 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'VGA_Sync' (15#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_Sync.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'VGA_render' (16#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_render.v:24]
+WARNING: [Synth 8-689] width (5) of port connection 'selected_x' does not match port width (7) of module 'VGA_render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:54]
+WARNING: [Synth 8-689] width (5) of port connection 'selected_y' does not match port width (7) of module 'VGA_render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:55]
+WARNING: [Synth 8-689] width (5) of port connection 'current_x' does not match port width (7) of module 'VGA_render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:56]
+WARNING: [Synth 8-689] width (5) of port connection 'current_y' does not match port width (7) of module 'VGA_render' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:57]
+INFO: [Synth 8-6157] synthesizing module 'Btn_Input' [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Btn_Input.v:23]
+	Parameter DEBOUNCE_LIMIT bound to: 1000000 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'Btn_Input' (17#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Btn_Input.v:23]
+WARNING: [Synth 8-6014] Unused sequential element from_index_reg was removed.  [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:78]
+WARNING: [Synth 8-6014] Unused sequential element to_index_reg was removed.  [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:79]
+WARNING: [Synth 8-3848] Net led in module/entity Top_Student does not have driver. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'Top_Student' (18#1) [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Top_Student.v:3]
+WARNING: [Synth 8-3331] design Piece_Mux has unconnected port piece[3]
+WARNING: [Synth 8-3331] design Display has unconnected port JB[2]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[15]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[14]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[13]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[12]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[11]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[10]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[9]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[8]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[7]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[6]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[5]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[4]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[3]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[2]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[1]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[0]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[15]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[14]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[13]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[12]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[11]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[10]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[9]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[8]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[7]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[6]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[5]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[4]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[3]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[2]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[1]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[0]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:14 . Memory (MB): peak = 415.773 ; gain = 159.324
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 415.773 ; gain = 159.324
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 415.773 ; gain = 159.324
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc]
+WARNING: [Vivado 12-584] No ports matched 'seg[0]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:49]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:49]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg[1]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:50]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:50]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg[2]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:51]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:51]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg[3]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:52]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:52]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg[4]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:53]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:53]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg[5]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:54]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:54]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg[6]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:55]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:55]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'seg[7]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:57]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:57]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'an[0]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:59]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:59]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'an[1]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:60]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:60]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'an[2]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:61]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:61]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-584] No ports matched 'an[3]'. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:62]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc:62]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+Finished Parsing XDC File [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/constrs_1/new/constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/Top_Student_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/Top_Student_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 771.746 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:28 ; elapsed = 00:00:33 . Memory (MB): peak = 771.746 ; gain = 515.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:28 ; elapsed = 00:00:33 . Memory (MB): peak = 771.746 ; gain = 515.297
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:28 ; elapsed = 00:00:33 . Memory (MB): peak = 771.746 ; gain = 515.297
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5545] ROM "slow_clock0" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'Oled_Display'
+INFO: [Synth 8-5546] ROM "fsm_next_state0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5544] ROM "fsm_next_state0" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "fsm_next_state0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/pawn_moves.v:35]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Btn_Input.v:48]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Btn_Input.v:46]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 PowerUp | 00000000100000000000000000000000 |                            00000
+                   Reset | 00000000000100000000000000000000 |                            00001
+            ReleaseReset | 00000000000000000000100000000000 |                            00011
+            EnableDriver | 00000000000000000001000000000000 |                            00010
+              DisplayOff | 00000000000000000100000000000000 |                            00110
+   SetRemapDisplayFormat | 00000100000000000000000000000000 |                            00111
+            SetStartLine | 00001000000000000000000000000000 |                            00101
+               SetOffset | 10000000000000000000000000000000 |                            00100
+        SetNormalDisplay | 00000000000000000000000010000000 |                            01100
+       SetMultiplexRatio | 00000000000000000000000000100000 |                            01101
+  SetMasterConfiguration | 00000000000000000000000001000000 |                            01111
+        DisablePowerSave | 00000000000000000000000000000100 |                            01110
+          SetPhaseAdjust | 00000000000000000000000000001000 |                            01010
+         SetDisplayClock | 00000000001000000000000000000000 |                            01011
+     SetSecondPrechargeA | 00000000010000000000000000000000 |                            01001
+     SetSecondPrechargeB | 01000000000000000000000000000000 |                            01000
+     SetSecondPrechargeC | 00000010000000000000000000000000 |                            11000
+       SetPrechargeLevel | 00000001000000000000000000000000 |                            11001
+                SetVCOMH | 00000000000000010000000000000000 |                            11011
+        SetMasterCurrent | 00000000000000100000000000000000 |                            11010
+            SetContrastA | 00000000000001000000000000000000 |                            11110
+            SetContrastB | 00100000000000000000000000000000 |                            11111
+            SetContrastC | 00000000000000000000000000000001 |                            11101
+        DisableScrolling | 00000000000000000000000000000010 |                            11100
+             ClearScreen | 00000000000000000000000000010000 |                            10100
+                   VccEn | 00010000000000000000000000000000 |                            10101
+               DisplayOn | 00000000000010000000000000000000 |                            10111
+        PrepareNextFrame | 00000000000000001000000000000000 |                            10110
+           SetColAddress | 00000000000000000000010000000000 |                            10010
+           SetRowAddress | 00000000000000000000000100000000 |                            10011
+           WaitNextFrame | 00000000000000000000001000000000 |                            10001
+               SendPixel | 00000000000000000010000000000000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'Oled_Display'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:30 ; elapsed = 00:00:36 . Memory (MB): peak = 771.746 ; gain = 515.297
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 23    
+	   3 Input     32 Bit       Adders := 7     
+	   2 Input     17 Bit       Adders := 1     
+	   2 Input     10 Bit       Adders := 2     
+	   2 Input      8 Bit       Adders := 16    
+	   2 Input      6 Bit       Adders := 19    
+	   2 Input      5 Bit       Adders := 4     
+	   2 Input      2 Bit       Adders := 1     
+	   2 Input      1 Bit       Adders := 4     
++---Registers : 
+	              256 Bit    Registers := 1     
+	               64 Bit    Registers := 3     
+	               40 Bit    Registers := 1     
+	               32 Bit    Registers := 1     
+	               17 Bit    Registers := 1     
+	               16 Bit    Registers := 2     
+	               12 Bit    Registers := 2     
+	               10 Bit    Registers := 2     
+	                6 Bit    Registers := 1     
+	                5 Bit    Registers := 4     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 10    
++---Multipliers : 
+	                32x32  Multipliers := 4     
++---Muxes : 
+	   2 Input    256 Bit        Muxes := 2     
+	   2 Input     64 Bit        Muxes := 79    
+	   2 Input     40 Bit        Muxes := 3     
+	   2 Input     32 Bit        Muxes := 3     
+	  32 Input     32 Bit        Muxes := 1     
+	  32 Input     20 Bit        Muxes := 1     
+	   2 Input     17 Bit        Muxes := 1     
+	   4 Input     16 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 2     
+	   4 Input     12 Bit        Muxes := 1     
+	   2 Input     12 Bit        Muxes := 6     
+	  32 Input      6 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 2     
+	  32 Input      5 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 160   
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module Top_Student 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      8 Bit       Adders := 2     
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	              256 Bit    Registers := 1     
+	                5 Bit    Registers := 2     
++---Muxes : 
+	   2 Input    256 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 1     
+Module Clock 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+Module Oled_Display 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     17 Bit       Adders := 1     
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	               40 Bit    Registers := 1     
+	               17 Bit    Registers := 1     
+	                6 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     40 Bit        Muxes := 3     
+	  32 Input     32 Bit        Muxes := 1     
+	   2 Input     32 Bit        Muxes := 2     
+	  32 Input     20 Bit        Muxes := 1     
+	   2 Input     17 Bit        Muxes := 1     
+	  32 Input      6 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 2     
+	  32 Input      5 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 2     
+Module Current_Piece 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      8 Bit       Adders := 2     
+Module pawn_moves 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      6 Bit       Adders := 1     
+	   2 Input      5 Bit       Adders := 2     
++---Registers : 
+	               64 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     64 Bit        Muxes := 3     
+Module bishop_moves 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 14    
+	   3 Input     32 Bit       Adders := 7     
+	   2 Input      6 Bit       Adders := 14    
+	   2 Input      1 Bit       Adders := 4     
++---Registers : 
+	               64 Bit    Registers := 1     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   2 Input     64 Bit        Muxes := 76    
+	   2 Input      1 Bit        Muxes := 154   
+Module Game_Logic 
+Detailed RTL Component Info : 
++---Registers : 
+	               64 Bit    Registers := 1     
+Module Piece_Mux 
+Detailed RTL Component Info : 
++---Registers : 
+	                1 Bit    Registers := 1     
+Module Background_Render 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	               16 Bit    Registers := 1     
++---Muxes : 
+	   4 Input     16 Bit        Muxes := 1     
+Module Renderer 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 3     
++---Registers : 
+	               16 Bit    Registers := 1     
++---Multipliers : 
+	                32x32  Multipliers := 2     
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 2     
+Module VGA_Background_Render 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      6 Bit       Adders := 1     
++---Registers : 
+	               12 Bit    Registers := 1     
++---Muxes : 
+	   4 Input     12 Bit        Muxes := 1     
+Module VGA_Sync 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     10 Bit       Adders := 2     
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	               10 Bit    Registers := 2     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 2     
+Module VGA_render 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 5     
++---Registers : 
+	               12 Bit    Registers := 1     
++---Multipliers : 
+	                32x32  Multipliers := 2     
++---Muxes : 
+	   2 Input     12 Bit        Muxes := 6     
+Module Btn_Input 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      5 Bit       Adders := 2     
++---Registers : 
+	                5 Bit    Registers := 2     
+	                1 Bit    Registers := 3     
++---Muxes : 
+	   2 Input      2 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+INFO: [Synth 8-5546] ROM "oled/fsm_next_state0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "slow_clock_6p25MHz/slow_clock0" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5546] ROM "oled/fsm_next_state0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Renderer.v:72]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/Renderer.v:72]
+DSP Report: Generating DSP oled_data2, operation Mode is: A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: Generating DSP oled_data2, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: Generating DSP oled_data2, operation Mode is: A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: Generating DSP oled_data2, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: Generating DSP oled_data2, operation Mode is: A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: Generating DSP oled_data2, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: Generating DSP oled_data2, operation Mode is: A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: Generating DSP oled_data2, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+DSP Report: operator oled_data2 is absorbed into DSP oled_data2.
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_render.v:110]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 4 [C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.srcs/sources_1/new/VGA_render.v:110]
+DSP Report: Generating DSP rgb_reg3, operation Mode is: A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: Generating DSP rgb_reg3, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: Generating DSP rgb_reg3, operation Mode is: A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: Generating DSP rgb_reg3, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: Generating DSP rgb_reg3, operation Mode is: A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: Generating DSP rgb_reg3, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: Generating DSP rgb_reg3, operation Mode is: A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: Generating DSP rgb_reg3, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+DSP Report: operator rgb_reg3 is absorbed into DSP rgb_reg3.
+WARNING: [Synth 8-3331] design VGA_Background_Render has unconnected port pixel_x[2]
+WARNING: [Synth 8-3331] design VGA_Background_Render has unconnected port pixel_x[1]
+WARNING: [Synth 8-3331] design VGA_Background_Render has unconnected port pixel_x[0]
+WARNING: [Synth 8-3331] design VGA_Background_Render has unconnected port pixel_y[2]
+WARNING: [Synth 8-3331] design VGA_Background_Render has unconnected port pixel_y[1]
+WARNING: [Synth 8-3331] design VGA_Background_Render has unconnected port pixel_y[0]
+WARNING: [Synth 8-3331] design Current_Piece has unconnected port y[4]
+WARNING: [Synth 8-3331] design Current_Piece has unconnected port y[3]
+WARNING: [Synth 8-3331] design Display has unconnected port JB[2]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[15]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[14]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[13]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[12]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[11]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[10]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[9]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[8]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[7]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[6]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[5]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[4]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[3]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[2]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[1]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port led[0]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port JB[2]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[15]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[14]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[13]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[12]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[11]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[10]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[9]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[8]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[7]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[6]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[5]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[4]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[3]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[2]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[1]
+WARNING: [Synth 8-3331] design Top_Student has unconnected port sw[0]
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/background_render_inst/oled_data_reg[0]' (FD) to 'nolabel_line35/background_render_inst/oled_data_reg[2]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/background_render_inst/oled_data_reg[1]' (FD) to 'nolabel_line35/background_render_inst/oled_data_reg[3]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/background_render_inst/oled_data_reg[5]' (FD) to 'nolabel_line35/background_render_inst/oled_data_reg[6]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/background_render_inst/oled_data_reg[6]' (FD) to 'nolabel_line35/background_render_inst/oled_data_reg[8]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/background_render_inst/oled_data_reg[7]' (FD) to 'nolabel_line35/background_render_inst/oled_data_reg[9]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/background_render_inst/oled_data_reg[11]' (FD) to 'nolabel_line35/background_render_inst/oled_data_reg[13]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/background_render_inst/oled_data_reg[12]' (FD) to 'nolabel_line35/background_render_inst/oled_data_reg[14]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (nolabel_line35/\background_render_inst/oled_data_reg[13] )
+INFO: [Synth 8-3886] merging instance 'nolabel_line49/vga_background_render_inst/data_reg[0]' (FD) to 'nolabel_line49/vga_background_render_inst/data_reg[1]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line49/vga_background_render_inst/data_reg[4]' (FD) to 'nolabel_line49/vga_background_render_inst/data_reg[5]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line49/vga_background_render_inst/data_reg[8]' (FD) to 'nolabel_line49/vga_background_render_inst/data_reg[9]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (nolabel_line49/vga_background_render_inst/\data_reg[10] )
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/oled_data_reg[0]' (FDS) to 'nolabel_line35/oled_data_reg[2]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/oled_data_reg[1]' (FDS) to 'nolabel_line35/oled_data_reg[3]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/oled_data_reg[5]' (FDR) to 'nolabel_line35/oled_data_reg[8]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/oled_data_reg[6]' (FDR) to 'nolabel_line35/oled_data_reg[8]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/oled_data_reg[7]' (FDR) to 'nolabel_line35/oled_data_reg[9]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/oled_data_reg[11]' (FDR) to 'nolabel_line35/oled_data_reg[13]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line35/oled_data_reg[12]' (FDR) to 'nolabel_line35/oled_data_reg[14]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line49/rgb_reg_reg[0]' (FD) to 'nolabel_line49/rgb_reg_reg[1]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line49/rgb_reg_reg[4]' (FD) to 'nolabel_line49/rgb_reg_reg[5]'
+INFO: [Synth 8-3886] merging instance 'nolabel_line49/rgb_reg_reg[8]' (FD) to 'nolabel_line49/rgb_reg_reg[9]'
+WARNING: [Synth 8-3332] Sequential element (background_render_inst/oled_data_reg[13]) is unused and will be removed from module Renderer.
+WARNING: [Synth 8-3332] Sequential element (data_reg[10]) is unused and will be removed from module VGA_Background_Render.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:56 ; elapsed = 00:02:05 . Memory (MB): peak = 911.500 ; gain = 655.051
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping  Report (see note below)
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Renderer    | A*B            | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Renderer    | (PCIN>>17)+A*B | 16     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Renderer    | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Renderer    | (PCIN>>17)+A*B | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Renderer    | A*B            | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Renderer    | (PCIN>>17)+A*B | 16     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Renderer    | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|Renderer    | (PCIN>>17)+A*B | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | A*B            | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | (PCIN>>17)+A*B | 16     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | (PCIN>>17)+A*B | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | A*B            | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | (PCIN>>17)+A*B | 16     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGA_render  | (PCIN>>17)+A*B | 18     | 16     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:16 ; elapsed = 00:02:26 . Memory (MB): peak = 911.500 ; gain = 655.051
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:02:23 ; elapsed = 00:02:34 . Memory (MB): peak = 911.500 ; gain = 655.051
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:02:28 ; elapsed = 00:02:39 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6064] Net n_0_3048 is driving 74 big block pins (URAM, BRAM and DSP loads). Created 8 replicas of its driver. 
+INFO: [Synth 8-6064] Net \nolabel_line49/rgb_reg4 [31] is driving 74 big block pins (URAM, BRAM and DSP loads). Created 8 replicas of its driver. 
+INFO: [Synth 8-6064] Net n_0_4455 is driving 86 big block pins (URAM, BRAM and DSP loads). Created 9 replicas of its driver. 
+INFO: [Synth 8-6064] Net n_0_4660 is driving 86 big block pins (URAM, BRAM and DSP loads). Created 9 replicas of its driver. 
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:02:30 ; elapsed = 00:02:41 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:30 ; elapsed = 00:02:41 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:32 ; elapsed = 00:02:43 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:32 ; elapsed = 00:02:43 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:32 ; elapsed = 00:02:44 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:32 ; elapsed = 00:02:44 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |BUFG    |     3|
+|2     |CARRY4  |   408|
+|3     |DSP48E1 |    12|
+|4     |LUT1    |    94|
+|5     |LUT2    |   451|
+|6     |LUT3    |   967|
+|7     |LUT4    |   778|
+|8     |LUT5    |   720|
+|9     |LUT6    |  2030|
+|10    |MUXF7   |   106|
+|11    |MUXF8   |    36|
+|12    |FDE_1   |    32|
+|13    |FDRE    |   651|
+|14    |FDSE    |    28|
+|15    |IBUF    |     6|
+|16    |OBUF    |    21|
+|17    |OBUFT   |    17|
++------+--------+------+
+
+Report Instance Areas: 
++------+-------------------------------+----------------------+------+
+|      |Instance                       |Module                |Cells |
++------+-------------------------------+----------------------+------+
+|1     |top                            |                      |  6360|
+|2     |  nolabel_line14               |Display               |   666|
+|3     |    coords                     |Pixel_Coordinates     |   222|
+|4     |    oled                       |Oled_Display          |   381|
+|5     |    slow_clock_6p25MHz         |Clock                 |    63|
+|6     |  nolabel_line27               |Game_Logic            |  2415|
+|7     |    bishop                     |bishop_moves          |  2065|
+|8     |    pawn                       |pawn_moves            |   183|
+|9     |  nolabel_line35               |Renderer              |   106|
+|10    |    background_render_inst     |Background_Render     |     8|
+|11    |    piece_render_inst          |Piece_Render_0        |     2|
+|12    |      piece_mux_inst           |Piece_Mux_1           |     2|
+|13    |  nolabel_line49               |VGA_render            |  1789|
+|14    |    piece_render_inst          |Piece_Render          |   173|
+|15    |      piece_mux_inst           |Piece_Mux             |   173|
+|16    |    vga_background_render_inst |VGA_Background_Render |     9|
+|17    |    vga_sync_unit              |VGA_Sync              |  1477|
+|18    |  nolabel_line65               |Btn_Input             |   204|
++------+-------------------------------+----------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:33 ; elapsed = 00:02:44 . Memory (MB): peak = 1025.215 ; gain = 768.766
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 44 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:10 ; elapsed = 00:02:30 . Memory (MB): peak = 1025.215 ; gain = 412.793
+Synthesis Optimization Complete : Time (s): cpu = 00:02:33 ; elapsed = 00:02:44 . Memory (MB): peak = 1025.215 ; gain = 768.766
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 600 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 32 instances were transformed.
+  FDE_1 => FDRE (inverted pins: C): 32 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+92 Infos, 142 Warnings, 12 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:02:37 ; elapsed = 00:02:49 . Memory (MB): peak = 1025.215 ; gain = 781.781
+WARNING: [Constraints 18-5210] No constraint will be written out.
+INFO: [Common 17-1381] The checkpoint 'C:/Users/USER/Desktop/EE2026/Project 2.0/VGA TEST 1.xpr/FDP/FDP.runs/synth_1/Top_Student.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file Top_Student_utilization_synth.rpt -pb Top_Student_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.083 . Memory (MB): peak = 1025.215 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sat Mar 29 17:48:24 2025...
