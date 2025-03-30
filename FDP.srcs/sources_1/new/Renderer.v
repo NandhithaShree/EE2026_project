@@ -95,8 +95,6 @@ module Renderer(
                         oled_data <= bg_oled;
                 end
             end
-        end
-        
         end else begin
             oled_data <= BLACK;
         end
