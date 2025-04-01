@@ -81,6 +81,7 @@ module Game_Logic(
         .selected_piece(selected_piece)
     );
 
+
     king_moves king (
         .basys_clock(basys_clock),
         .board(board),
@@ -89,6 +90,8 @@ module Game_Logic(
         .moves(king_moves_out),
         .selected_piece(selected_piece)
     );
+    
+    
 
     always @ (posedge basys_clock) begin
         case (selected_piece[2:0])

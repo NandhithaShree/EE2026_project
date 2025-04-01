@@ -139,5 +139,3 @@ module king_moves(
         end
     end
 endmodule
-
-

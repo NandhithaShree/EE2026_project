@@ -9,7 +9,9 @@ module Top_Student (
     output [3:0] an,
     output [7:0] seg,
     output [7:0] JB,
-    output tx
+    output tx,
+    output [11:0] vga,
+    output hsync, vsync
 );  
 
     wire [15:0] oled_data;
@@ -206,4 +208,23 @@ module Top_Student (
         .selected_promotion_piece(selected_promotion_piece),
         .oled_data(oled_data)
     );
+    
+    VGA_render (
+    .clk(basys_clock), 
+    .reset(0),
+    .board(board),
+    .moves(moves),
+    .selected_x(selected_x),
+    .selected_y(selected_y),
+    .current_x(current_x),
+    .current_y(current_y),
+    .king_piece(king_piece),
+    .is_threatening_king(is_threatening_king),
+    .is_promotion(promotion_wait),
+    .selected_promotion_piece(selected_promotion_piece),
+    .hsync(hsync),
+    .vsync(vsync),
+    .rgb(vga)
+    );
+    
 endmodule

@@ -10,6 +10,15 @@ parameter GREEN = 16'h07E0;
 parameter BLUE = 16'h001F;
 parameter RED = 16'hF800;
 
+//Colours for VGA 8 Bit 
+parameter WHITE_VGA        = 12'hFFF;  // R=F, B=F, G=F
+parameter BLACK_VGA        = 12'h000;  // R=0, B=0, G=0
+parameter LIGHT_BROWN_VGA  = 12'hCCC;  // R=A, B=5, G=D
+parameter DARK_BROWN_VGA   = 12'hAAA;  // R=6, B=4, G=2
+parameter GREEN_VGA        = 12'h00F;  // R=0, B=0, G=F
+parameter BLUE_VGA         = 12'h0F0;  // R=0, B=F, G=0
+parameter RED_VGA = 12'hF00;
+
 //Piece bits
 parameter EMPTY = 4'b0000;
 parameter W_PAWN = 4'b1001;
