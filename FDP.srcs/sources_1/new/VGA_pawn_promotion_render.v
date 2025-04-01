@@ -56,6 +56,7 @@ module VGA_pawn_promotion_render(
     );
 
     always @ (posedge basys_clock) begin
+        if (x < 5 && y < 8) begin 
         if (x == 0 || y == 0 || x == 5 || y == 7)
             data = BLACK_VGA;
         else if ((y == 4 || y == 5) && (x >= 1 && x <= 4)) begin
@@ -68,6 +69,8 @@ module VGA_pawn_promotion_render(
         end
         else
             data = LIGHT_BROWN_VGA;
+        end else 
+            data = BLACK_VGA;
     end
 
 endmodule
