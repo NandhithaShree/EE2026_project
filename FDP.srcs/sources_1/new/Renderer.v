@@ -25,6 +25,7 @@ module Renderer(
     input basys_clock,
     input [255:0] board,
     input [63:0] moves,
+    input [1:0] game_state,
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
@@ -67,6 +68,12 @@ module Renderer(
         .oled_data(promotion_selection_oled)
     );
     
+    wire [15:0] start_frame_oled;
+    Start_Frame (basys_clock, pixel_x, pixel_y, start_frame_oled);
+    wire [15:0] white_win_oled, black_win_oled;
+    White_Win_Frame (basys_clock, pixel_x, pixel_y, white_win_oled);
+    Black_Win_Frame (basys_clock, pixel_x, pixel_y, black_win_oled);
+    
     wire [3:0] grid_x, grid_y;
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
     wire [3:0] x_pos, y_pos;
@@ -74,7 +81,13 @@ module Renderer(
     assign y_pos = pixel_y % 8;
     
     always @ (posedge basys_clock) begin
-        if (is_promotion)
+        if (game_state == 2'b00)
+            oled_data = start_frame_oled;
+        else if (game_state == 2'b01)
+            oled_data = white_win_oled;
+        else if (game_state == 2'b10)
+            oled_data = black_win_oled;
+        else if (is_promotion)
             oled_data = promotion_selection_oled;
         else if (grid_x != NULL) begin
             if (is_piece) begin
