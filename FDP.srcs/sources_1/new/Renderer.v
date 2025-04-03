@@ -24,7 +24,6 @@
 module Renderer(
     input basys_clock,
     input [255:0] board,
-    input [63:0] moves,
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
@@ -83,17 +82,7 @@ module Renderer(
                 else
                     oled_data <= BLACK;
             end else begin
-                if (moves[grid_y * 8 + grid_x]) begin
-                    if ((x_pos - 3) ** 2 + (y_pos - 3) ** 2 <= 6)
-                        oled_data <= BLUE;
-                    else
-                        oled_data <= bg_oled;
-                end else begin
-                    if (piece == king_piece && is_threatening_king)
-                        oled_data <= RED;
-                    else
-                        oled_data <= bg_oled;
-                end
+                oled_data <= bg_oled;
             end
         end else begin
             oled_data <= BLACK;

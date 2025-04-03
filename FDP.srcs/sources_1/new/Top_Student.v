@@ -9,9 +9,7 @@ module Top_Student (
     output [3:0] an,
     output [7:0] seg,
     output [7:0] JB,
-    output tx,
-    output [11:0] vga,
-    output hsync, vsync
+    output tx
 );  
 
     wire [15:0] oled_data;
@@ -23,31 +21,17 @@ module Top_Student (
     reg  [3:0] selected_x = NULL, selected_y = NULL;
     Grid_Coordinates (pixel_x, pixel_y, grid_x, grid_y);   
 
-    reg  [255:0] board = INITIAL_BOARD; 
-    wire [63:0] moves;
-   
+    reg  [255:0] board = INITIAL_BOARD;    
     wire [3:0] current_piece;
     Current_Piece (board, current_x, current_y, current_piece); 
     
-    Game_Logic (
-        .basys_clock(basys_clock),
-        .board(board),
-        .grid_x(selected_x),
-        .grid_y(selected_y),
-        .moves(moves)
-    );
-    
     reg player = 1; // White starts the game
     
-    // Get King grid coordinates of current player
-    // ----------------------------------------------------------------------------------------
     wire [3:0] king_piece;
     assign king_piece[2:0] = 3'b110;
     assign king_piece[3] = player;
-    wire is_threatening_king = 1;
-    //Is_Threatening_King (basys_clock, board, king_x, king_y, player, is_threatening_king);
-    // ----------------------------------------------------------------------------------------
-    
+    wire is_threatening_king = 0;
+
     integer from_index, to_index;
     reg promotion_wait = 0; // Flag to pause until a promotion piece is selected
     wire [1:0] selected_promotion_piece;
@@ -101,12 +85,11 @@ module Top_Student (
     reg processing_rx = 0;  // Flag to prevent repeated processing
 
     always @(posedge confirm) begin
-
         //Debug: Piece promotion variables
         led[0] = player;
         led[1] = promotion_wait;
         led[15:12] = sw[15:12];
-    
+        
         // If current turn, make move then transmit over uart
         if (player) begin
             if (promotion_wait) begin
@@ -130,7 +113,7 @@ module Top_Student (
             end
             
             // Case 2: Move piece if one is already selected
-            else if (selected_x != NULL && selected_y != NULL && moves[current_y * 8 + current_x] == 1) begin
+            else if (selected_x != NULL && selected_y != NULL) begin
                 from_index = ((7 - selected_y) * 8 + (selected_x)) * 4;
                 to_index = ((7 - current_y) * 8 + (current_x)) * 4;
                 
@@ -161,9 +144,10 @@ module Top_Student (
             else if (current_piece != EMPTY && current_piece[3] == player) begin
                 selected_x <= current_x;
                 selected_y <= current_y;
-            end   
+            end 
+        end
         //If not current player, listen to and receive other player's moves
-        end else begin
+        else begin
             //Debug: Manual player flip
             if (sw[0]) begin
                 player <= 1;
@@ -195,7 +179,6 @@ module Top_Student (
     Renderer (
         .basys_clock(basys_clock),
         .board(board),
-        .moves(moves),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .selected_x(selected_x),
@@ -208,23 +191,4 @@ module Top_Student (
         .selected_promotion_piece(selected_promotion_piece),
         .oled_data(oled_data)
     );
-    
-    VGA_render (
-    .clk(basys_clock), 
-    .reset(0),
-    .board(board),
-    .moves(moves),
-    .selected_x(selected_x),
-    .selected_y(selected_y),
-    .current_x(current_x),
-    .current_y(current_y),
-    .king_piece(king_piece),
-    .is_threatening_king(is_threatening_king),
-    .is_promotion(promotion_wait),
-    .selected_promotion_piece(selected_promotion_piece),
-    .hsync(hsync),
-    .vsync(vsync),
-    .rgb(vga)
-    );
-    
 endmodule
