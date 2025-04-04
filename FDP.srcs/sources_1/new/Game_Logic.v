@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 19.03.2025 14:08:26
-// Design Name: 
-// Module Name: game_logic_mux
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module Game_Logic(
     input basys_clock,
@@ -81,7 +61,6 @@ module Game_Logic(
         .selected_piece(selected_piece)
     );
 
-
     king_moves king (
         .basys_clock(basys_clock),
         .board(board),
@@ -89,9 +68,7 @@ module Game_Logic(
         .grid_y(grid_y),
         .moves(king_moves_out),
         .selected_piece(selected_piece)
-    );
-    
-    
+    );    
 
     always @ (posedge basys_clock) begin
         case (selected_piece[2:0])

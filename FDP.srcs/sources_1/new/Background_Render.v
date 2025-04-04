@@ -1,28 +1,7 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 16.03.2025 09:51:33
-// Design Name: 
-// Module Name: Background_Render
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 `include "Constants.vh"
 
 module Background_Render(
-    input basys_clock,
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
@@ -32,7 +11,7 @@ module Background_Render(
     wire [3:0] grid_x, grid_y;
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
     
-    always @ (posedge basys_clock) begin
+    always @ (*) begin
         if (grid_x == selected_x && grid_y == selected_y)
             oled_data = BLUE;
         else if (grid_x == current_x && grid_y == current_y)

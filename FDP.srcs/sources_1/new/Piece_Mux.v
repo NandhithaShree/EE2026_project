@@ -1,33 +1,12 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 16.03.2025 16:14:35
-// Design Name: 
-// Module Name: piece_mux
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies:%%%%%
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module Piece_Mux #(parameter GRID_SIZE = 8)(
-    input basys_clock,
     input [3:0] piece,
     input [6:0] pixel_x,
     input [6:0] pixel_y,
     output reg is_piece = 0
 );
-    always @ (posedge basys_clock) begin 
+    always @ (*) begin 
         is_piece = 0;
                             
         case (piece[2:0])

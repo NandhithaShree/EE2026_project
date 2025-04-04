@@ -52,7 +52,6 @@ module VGA_render
 	wire is_piece;
         wire [3:0] piece;
         Piece_Render piece_render_inst (
-            .basys_clock(clk),
             .board(board),
             .pixel_x(pixel_x),
             .pixel_y(pixel_y),

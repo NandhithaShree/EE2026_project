@@ -34,6 +34,12 @@ parameter B_ROOK = 4'b0100;
 parameter B_QUEEN = 4'b0101;
 parameter B_KING = 4'b0110;
 
+parameter START_GAME = 3'b000;
+parameter GAME = 3'b001;      
+parameter PROMOTION = 3'b010;        
+parameter REMOTE_MOVE = 3'b011;      
+parameter END_GAME = 3'b100;        
+
 parameter INITIAL_BOARD = {
     // 8th row (black pieces) - 32 bits
     B_ROOK, B_KNIGHT, B_BISHOP, B_QUEEN, B_KING, B_BISHOP, B_KNIGHT, B_ROOK,

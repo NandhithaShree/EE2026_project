@@ -1,27 +1,6 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 15.03.2025 21:26:57
-// Design Name: 
-// Module Name: Piece_Render
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module Piece_Render(
-    input basys_clock,
     input [255:0] board,
     input [6:0] pixel_x, pixel_y,
     output is_piece,
@@ -32,8 +11,7 @@ module Piece_Render(
         .piece(piece),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
-        .is_piece(is_piece),
-        .basys_clock(basys_clock)
+        .is_piece(is_piece)
     );
     
     wire [3:0] grid_x, grid_y;

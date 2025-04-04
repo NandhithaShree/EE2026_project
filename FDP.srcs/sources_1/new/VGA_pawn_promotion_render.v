@@ -48,7 +48,6 @@ module VGA_pawn_promotion_render(
     
     wire is_piece;
     Piece_Mux # (.GRID_SIZE(16))(
-        .basys_clock(basys_clock),
         .piece(piece),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
