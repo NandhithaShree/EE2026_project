@@ -21,6 +21,7 @@ parameter RED_VGA = 12'hF00;
 
 //Piece bits
 parameter EMPTY = 4'b0000;
+parameter KING = 3'b110;
 parameter W_PAWN = 4'b1001;
 parameter W_KNIGHT = 4'b1010;
 parameter W_BISHOP = 4'b1011;
@@ -35,10 +36,11 @@ parameter B_QUEEN = 4'b0101;
 parameter B_KING = 4'b0110;
 
 parameter START_GAME = 3'b000;
-parameter GAME = 3'b001;      
-parameter PROMOTION = 3'b010;        
-parameter REMOTE_MOVE = 3'b011;      
-parameter END_GAME = 3'b100;        
+parameter PLAYER_TURN = 3'b001; 
+parameter ENEMY_TURN = 3'b010;     
+parameter PROMOTION = 3'b011;        
+parameter WHITE_WIN = 3'b100;        
+parameter BLACK_WIN = 3'b101;
 
 parameter INITIAL_BOARD = {
     // 8th row (black pieces) - 32 bits
@@ -61,5 +63,115 @@ parameter INITIAL_BOARD = {
 
 // For a four bit reg (grid coordinates), we designate 1000 as NULL.
 parameter NULL = 4'b1000;
+
+parameter B = 1'b0;
+parameter W = 1'b1;
+
+parameter [1023:0] GAME_START = {
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, W, W, W, B, W, W, W, B, B, B, W, W, B, B, W, W, W, W, B, W, B, W, B, B, B, B, B,
+    B, B, B, B, W, B, B, B, B, W, B, B, W, B, W, B, B, W, B, B, B, W, B, B, W, B, W, B, B, B, B, B,
+    B, B, B, B, W, B, B, B, B, W, W, W, B, B, W, W, W, W, B, B, W, B, B, B, B, W, B, B, B, B, B, B,
+    B, B, B, B, W, B, B, B, B, W, B, W, B, B, W, B, B, W, B, W, B, B, B, B, B, W, B, B, B, B, B, B,
+    B, B, B, B, B, W, W, W, B, W, B, B, W, B, W, B, B, W, B, W, W, W, W, B, B, W, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,        
+    B, B, B, B, B, W, W, W, B, W, B, B, W, B, W, W, W, W, B, B, W, W, W, B, B, W, W, W, B, B, B, B,
+    B, B, B, B, W, B, B, B, B, W, B, B, W, B, W, B, B, B, B, W, B, B, B, B, W, B, B, B, B, B, B, B,
+    B, B, B, B, W, B, B, B, B, W, W, W, W, B, W, W, W, B, B, B, W, W, B, B, B, W, W, B, B, B, B, B,
+    B, B, B, B, W, B, B, B, B, W, B, B, W, B, W, B, B, B, B, B, B, B, W, B, B, B, B, W, B, B, B, B,
+    B, B, B, B, B, W, W, W, B, W, B, B, W, B, W, W, W, W, B, W, W, W, B, B, W, W, W, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, B, B, B, B, B,
+    B, B, B, B, B, W, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, W, B, B, B, B, B,
+    B, B, B, B, B, W, B, W, W, B, W, W, W, B, B, W, B, B, W, W, B, B, W, W, W, B, W, B, B, B, B, B,
+    B, B, B, B, B, W, B, W, B, B, B, W, B, B, W, B, W, B, W, B, W, B, B, W, B, B, W, B, B, B, B, B,
+    B, B, B, B, B, W, B, B, W, B, B, W, B, B, W, W, W, B, W, W, B, B, B, W, B, B, W, B, B, B, B, B,
+    B, B, B, B, B, W, B, W, W, B, B, W, B, B, W, B, W, B, W, B, W, B, B, W, B, B, W, B, B, B, B, B,
+    B, B, B, B, B, W, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, W, B, B, B, B, B,
+    B, B, B, B, B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B
+};
+
+
+
+parameter [1023:0] WHITE_WINS = {
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, B, W, B, W, B, W, W, W, B, W, W, W, B, B, B, B, B, B,
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, B, W, B, W, B, B, W, B, B, W, B, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, W, B, B, B, W, B, W, W, W, W, B, W, B, B, W, B, B, W, W, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, W, B, W, B, W, B, W, B, B, W, B, W, B, B, W, B, B, W, B, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, B, W, B, W, B, B, W, B, B, W, B, W, B, B, W, B, B, W, W, W, B, B, B, B, B, B, 
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,        
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, W, B, B, W, B, B, W, W, W, B, W, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, W, W, B, W, B, W, B, B, B, B, W, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, W, B, W, W, B, B, W, W, B, B, W, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, W, B, W, B, W, B, W, B, W, B, B, W, B, B, B, B, W, B, B, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, B, W, B, W, B, B, W, B, W, B, B, W, B, W, W, W, B, B, W, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, B,
+    B, W, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, W, B,
+    B, W, B, W, W, B, B, B, W, W, B, W, W, B, W, W, W, B, B, W, B, B, W, W, B, B, W, W, W, B, W, B, 
+    B, W, B, W, B, W, B, W, B, W, B, W, B, B, B, W, B, B, W, B, W, B, W, B, W, B, B, W, B, B, W, B,
+    B, W, B, W, W, B, B, W, W, B, B, B, W, B, B, W, B, B, W, W, W, B, W, W, B, B, B, W, B, B, W, B, 
+    B, W, B, W, B, W, B, B, W, W, B, W, W, B, B, W, B, B, W, B, W, B, W, B, W, B, B, W, B, B, W, B, 
+    B, W, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, W, B,
+    B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B
+};
+
+parameter [1023:0] BLACK_WINS = {
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, W, W, W, B, B, W, B, B, B, B, W, W, B, B, B, W, W, W, B, W, B, B, W, B, B, B, B, B,
+    B, B, B, B, W, B, B, W, B, W, B, B, B, W, B, B, W, B, W, B, B, B, B, W, B, W, B, B, B, B, B, B,
+    B, B, B, B, W, W, W, B, B, W, B, B, B, W, W, W, W, B, W, B, B, B, B, W, W, B, B, B, B, B, B, B,
+    B, B, B, B, W, B, B, W, B, W, B, B, B, W, B, B, W, B, W, B, B, B, B, W, B, W, B, B, B, B, B, B,
+    B, B, B, B, W, W, W, B, B, W, W, W, B, W, B, B, W, B, B, W, W, W, B, W, B, B, W, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,        
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, W, B, B, W, B, B, W, W, W, B, W, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, W, W, B, W, B, W, B, B, B, B, W, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, W, B, B, B, W, B, W, B, W, B, W, W, B, B, W, W, B, B, W, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, W, B, W, B, W, B, W, B, W, B, B, W, B, B, B, B, W, B, B, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, B, W, B, W, B, B, W, B, W, B, B, W, B, W, W, W, B, B, W, B, B, B, B, B, B, B, 
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, B,
+    B, W, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, W, B,
+    B, W, B, W, W, B, B, B, W, W, B, W, W, B, W, W, W, B, B, W, B, B, W, W, B, B, W, W, W, B, W, B, 
+    B, W, B, W, B, W, B, W, B, W, B, W, B, B, B, W, B, B, W, B, W, B, W, B, W, B, B, W, B, B, W, B,
+    B, W, B, W, W, B, B, W, W, B, B, B, W, B, B, W, B, B, W, W, W, B, W, W, B, B, B, W, B, B, W, B, 
+    B, W, B, W, B, W, B, B, W, W, B, W, W, B, B, W, B, B, W, B, W, B, W, B, W, B, B, W, B, B, W, B, 
+    B, W, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, W, B,
+    B, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B
+};
 
 `endif // CONSTANTS_VH

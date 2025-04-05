@@ -1,7 +1,7 @@
 `include "Constants.vh"
 
 module Top_Student (
-    input basys_clock,
+    input basys_clock,   
     input btnU, btnC, btnD, btnL, btnR,
     input [15:0] sw,
     input rx,
@@ -13,7 +13,8 @@ module Top_Student (
     output [11:0] vga,
     output hsync, vsync
 );  
-    reg [2:0] state = GAME;
+    reg [2:0] state = START_GAME;
+    parameter player = 1;  // 1 is white, 0 is black
 
     wire [15:0] oled_data;
     wire [6:0] pixel_x, pixel_y;
@@ -54,14 +55,6 @@ module Top_Student (
         .grid_y(selected_y),
         .moves(moves)
     );
-    
-    reg player = 1; // White starts the game
-    reg player_turn = 1; // Track whose turn it is (1 for local player, 0 for remote)
-
-    wire [3:0] king_piece;
-    assign king_piece[2:0] = 3'b110;
-    assign king_piece[3] = player;
-    wire is_threatening_king = 1;
     
     integer from_index, to_index;
     integer remote_from_index, remote_to_index;
@@ -116,6 +109,25 @@ module Top_Student (
     wire [3:0] remote_selected_y = rx_data[11:8];
     wire [3:0] remote_current_x = rx_data[7:4];
     wire [3:0] remote_current_y = rx_data[3:0];
+    
+    wire [5:0] min, sec;
+    wire timeout;
+    
+    Chess_Timer (
+        .basys_clock(basys_clock),
+        .game_state(state),
+        .min(min),
+        .sec(sec),
+        .timeout(timeout)
+    );
+    
+    Display_Timer (
+        .basys_clock(basys_clock),
+        .min(min),
+        .sec(sec),
+        .an(an),
+        .seg(seg)
+    );
 
     // Single process FSM for both state transitions and actions
     always @(posedge basys_clock) begin
@@ -129,27 +141,36 @@ module Top_Student (
         
         // Main FSM logic
         case (state)
-            GAME: begin
-                if (confirm_pressed) begin
-                    if (player_turn) begin
-                        // Player's turn actions
-                        if (selected_x == NULL && selected_y == NULL) begin
-                            // Case 1: No piece selected yet - select a piece
-                            if (current_piece != EMPTY && current_piece[3] == player) begin
-                                selected_x <= current_x;
-                                selected_y <= current_y;
-                            end
+            PLAYER_TURN: begin
+                if (timeout) begin
+                    state <= player ? BLACK_WINS : WHITE_WINS;
+                end else if (confirm_pressed) begin
+                    // Player's turn actions
+                    if (selected_x == NULL && selected_y == NULL) begin
+                        // Case 1: No piece selected yet - select a piece
+                        if (current_piece != EMPTY && current_piece[3] == player) begin
+                            selected_x <= current_x;
+                            selected_y <= current_y;
                         end
-                        else if (selected_x == current_x && selected_y == current_y) begin
-                            // Case 2: Deselect if clicking on already selected square
-                            selected_x <= NULL;
-                            selected_y <= NULL;
+                    end
+                    else if (selected_x == current_x && selected_y == current_y) begin
+                        // Case 2: Deselect if clicking on already selected square
+                        selected_x <= NULL;
+                        selected_y <= NULL;
+                    end
+                    else if (moves[current_y * 8 + current_x] == 1) begin
+                        // Case 3: Move piece if valid
+                        from_index = ((7 - selected_y) * 8 + (selected_x)) * 4;
+                        to_index = ((7 - current_y) * 8 + (current_x)) * 4;
+                        
+                        //If the captured is king, end the game
+                        if (board[to_index +: 4] == W_KING) begin
+                            state <= BLACK_WIN;
                         end
-                        else if (moves[current_y * 8 + current_x] == 1) begin
-                            // Case 3: Move piece if valid
-                            from_index = ((7 - selected_y) * 8 + (selected_x)) * 4;
-                            to_index = ((7 - current_y) * 8 + (current_x)) * 4;
-                            
+                        else if (board[to_index +: 4] == B_KING) begin
+                            state <= WHITE_WIN;
+                        end
+                        else begin
                             // Move the piece in the board array
                             board[to_index +: 4] <= board[from_index +: 4];
                             board[from_index +: 4] <= EMPTY;
@@ -162,26 +183,52 @@ module Top_Student (
                                 promotion_y <= current_y;
                                 state <= PROMOTION;
                             end else begin
-                                // Normal move completion
-                                player_turn <= 0; // Switch to opponent's turn
+                                // Normal move completion - transition to ENEMY_TURN
                                 tx_data <= {selected_x, selected_y, current_x, current_y};
                                 start_tx <= 1;
+                                state <= ENEMY_TURN;
                             end
-                            
                             // Deselect after moving
                             selected_x <= NULL;
                             selected_y <= NULL;
                         end
                     end
-                    else if (!player_turn && sw[0]) begin
-                        // Debug: Manual player turn switch with switch[0]
-                        player_turn <= 1;
+                end
+            end
+            
+            ENEMY_TURN: begin
+                // When we receive data from remote player, process it
+                if (data_ready_edge) begin
+                    // Calculate board indices for the remote move
+                    remote_from_index = ((7 - remote_selected_y) * 8 + remote_selected_x) * 4;
+                    remote_to_index = ((7 - remote_current_y) * 8 + remote_current_x) * 4;
+                    
+                    // Execute the move if valid coordinates
+                    if (remote_selected_x != NULL && remote_selected_y != NULL && 
+                        remote_current_x < 8 && remote_current_y < 8) begin
+                        
+                        // Move the piece in the board array
+                        board[remote_to_index +: 4] <= board[remote_from_index +: 4];
+                        board[remote_from_index +: 4] <= EMPTY;
+                        
+                        //If the captured is king, end the game
+                        if (board[remote_to_index +: 4] == W_KING) begin
+                            state <= BLACK_WIN;
+                        end
+                        else if (board[remote_to_index +: 4] == B_KING) begin
+                            state <= WHITE_WIN;
+                        end
+                        else begin
+                            state <= PLAYER_TURN;
+                        end
+                    end
+                    else begin
+                        state <= PLAYER_TURN;
                     end
                 end
-                
-                // Handle incoming remote moves (when it's not player's turn)
-                if (!player_turn && data_ready_edge) begin
-                    state <= REMOTE_MOVE;
+                // Debug: Allow manual transition back with switch
+                else if (sw[0]) begin
+                    state <= PLAYER_TURN;
                 end
             end
             
@@ -196,43 +243,24 @@ module Top_Student (
                         2'b11: board[to_index +: 4] <= player ? W_KNIGHT : B_KNIGHT;
                     endcase
                     
-                    player_turn <= 0; // Switch to opponent's turn
+                    // After promotion, send move data and switch to enemy turn
                     tx_data <= {selected_x, selected_y, promotion_x, promotion_y};
                     start_tx <= 1;
-                    state <= GAME;
+                    state <= ENEMY_TURN;
                 end
             end
             
-            REMOTE_MOVE: begin
-                // Calculate board indices for the remote move
-                remote_from_index = ((7 - remote_selected_y) * 8 + remote_selected_x) * 4;
-                remote_to_index = ((7 - remote_current_y) * 8 + remote_current_x) * 4;
-                
-                // Execute the move if valid coordinates
-                if (remote_selected_x != NULL && remote_selected_y != NULL && 
-                    remote_current_x < 8 && remote_current_y < 8) begin
-                    
-                    // Move the piece in the board array
-                    board[remote_to_index +: 4] <= board[remote_from_index +: 4];
-                    board[remote_from_index +: 4] <= EMPTY;
-                    player_turn <= 1; // Switch back to player's turn
-                end
-                
-                state <= GAME;
-            end
-            
-            END_GAME: begin
-                // Future implementation for game over state
+            START_GAME,
+            WHITE_WIN,
+            BLACK_WIN: begin
                 if (confirm_pressed) begin
-                    // Reset game
                     board <= INITIAL_BOARD;
-                    player <= 1;
-                    player_turn <= 1;
                     selected_x <= NULL;
                     selected_y <= NULL;
-                    state <= GAME;
+                    state <= PLAYER_TURN; // Start with player's turn
                 end
             end
+            
         endcase
     end
     
@@ -249,4 +277,5 @@ module Top_Student (
         .selected_promotion_piece(selected_promotion_piece),
         .oled_data(oled_data)
     );
+
 endmodule
