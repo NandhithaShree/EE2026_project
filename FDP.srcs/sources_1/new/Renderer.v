@@ -36,8 +36,30 @@ module Renderer(
     );
 
     wire [15:0] start_oled;
-
-    wire [15:0] end_oled;
+    Frame_Renderer (
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .FRAME(GAME_START),
+        .oled_data(start_oled)
+    );
+    
+    wire [15:0] white_win_oled;
+    Frame_Renderer (
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .FRAME(WHITE_WINS),
+        .oled_data(white_win_oled)
+    );
+    
+    
+    wire [15:0] black_win_oled;
+    Frame_Renderer (
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .FRAME(BLACK_WINS),
+        .oled_data(black_win_oled)
+    );
+    
 
     always @ (*) begin
         if (grid_x == NULL || grid_y == NULL) begin
@@ -45,11 +67,11 @@ module Renderer(
         end
         else begin
             case(state)
-                START_GAME: oled_data = game_oled;
-                GAME: oled_data = game_oled;
+                START_GAME: oled_data = start_oled;
+                PLAYER_TURN, ENEMY_TURN: oled_data = game_oled;
                 PROMOTION: oled_data = promotion_oled;
-                REMOTE_MOVE: oled_data = game_oled;
-                END_GAME: oled_data = game_oled;
+                WHITE_WIN: oled_data = white_win_oled;
+                BLACK_WIN: oled_data = black_win_oled;
             endcase
         end
     end
