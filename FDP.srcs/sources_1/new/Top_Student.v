@@ -5,6 +5,7 @@ module Top_Student (
     input btnU, btnC, btnD, btnL, btnR,
     input [15:0] sw,
     input rx,
+    inout PS2Clk, PS2Data,
     output reg [15:0] led,
     output [3:0] an,
     output [7:0] seg,
@@ -63,19 +64,85 @@ module Top_Student (
     reg [3:0] promotion_x, promotion_y;
     
     wire confirm;
-    Btn_Input btn_input_inst (
+    
+//    wire btn_confirm;
+//    Btn_Input btn_input_inst (
+//        .basys_clock(basys_clock),
+//        .btnU(btnU),
+//        .btnC(btnC),
+//        .btnD(btnD),
+//        .btnL(btnL),
+//        .btnR(btnR),
+//        .is_promotion(state == PROMOTION),
+//        .selected_promotion_piece(selected_promotion_piece),
+//        .curr_x(current_x),
+//        .curr_y(current_y),
+//        .confirm(btn_confirm)
+//    );
+    
+    reg reset;
+    reg [11:0] value;
+    reg setx, sety, setmax_x = 0, setmax_y = 0;
+    
+    wire [11:0] mouse_xpos, mouse_ypos;
+    wire [3:0] zpos;
+    wire left, middle, right, new_event;
+    
+    reg [1:0] setMouseMax = 2'b00;
+    always @(posedge basys_clock) begin
+        case (setMouseMax)
+            2'b00: begin
+                value <= 12'd79;
+                setmax_x <= 1;
+                setmax_y <= 0;
+                setMouseMax = setMouseMax + 1;
+            end
+            2'b01: begin
+                value <= 12'd63;
+                setmax_y = 1;
+                setmax_x = 0;
+                setMouseMax = setMouseMax + 1;
+            end
+            default: begin
+                setmax_x = 0;
+                setmax_y = 0;
+            end
+        endcase
+    end
+    
+    MouseCtl(
+        .clk(basys_clock),
+        .rst(0),
+        .value(value),
+        .setx(0),
+        .sety(0),
+        .setmax_x(setmax_x),
+        .setmax_y(setmax_y),
+        .xpos(mouse_xpos),
+        .ypos(mouse_ypos),
+        .zpos(zpos),
+        .left(left),
+        .middle(middle),
+        .right(right),
+        .new_event(new_event),
+        .ps2_clk(PS2Clk),
+        .ps2_data(PS2Data)
+    );
+    
+    wire mouse_confirm;
+    Mouse_Input mouse_input_inst (
         .basys_clock(basys_clock),
-        .btnU(btnU),
-        .btnC(btnC),
-        .btnD(btnD),
-        .btnL(btnL),
-        .btnR(btnR),
+        .left(left),
+        .xpos(mouse_xpos),
+        .ypos(mouse_ypos),
         .is_promotion(state == PROMOTION),
         .selected_promotion_piece(selected_promotion_piece),
         .curr_x(current_x),
         .curr_y(current_y),
-        .confirm(confirm)
+        .confirm(mouse_confirm)
     );
+    
+    assign confirm = mouse_confirm;
     
     // Edge detection for button and signals
     reg confirm_prev = 0;
@@ -128,6 +195,7 @@ module Top_Student (
         .an(an),
         .seg(seg)
     );
+   
 
     // Single process FSM for both state transitions and actions
     always @(posedge basys_clock) begin
@@ -267,6 +335,8 @@ module Top_Student (
     Renderer renderer_inst (
         .board(board),
         .moves(moves),
+        .mouse_xpos(mouse_xpos),
+        .mouse_ypos(mouse_ypos),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .selected_x(selected_x),

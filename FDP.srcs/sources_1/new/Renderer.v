@@ -4,6 +4,7 @@
 module Renderer(
     input [255:0] board,
     input [63:0] moves,
+    input [11:0] mouse_xpos, mouse_ypos,
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
@@ -27,6 +28,7 @@ module Renderer(
         .current_y(current_y),
         .oled_data(game_oled)
     );
+    
     wire [15:0] promotion_oled;
     Promotion_Renderer (
         .pixel_x(pixel_x),
@@ -60,10 +62,22 @@ module Renderer(
         .oled_data(black_win_oled)
     );
     
+    wire [15:0] mouse_oled;
+    Mouse_Renderer (
+        .xpos(mouse_xpos),
+        .ypos(mouse_ypos),
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .oled_data(mouse_oled)
+    );
+    
 
     always @ (*) begin
         if (grid_x == NULL || grid_y == NULL) begin
             oled_data = BLACK;
+        end
+        else if (mouse_oled != 16'h0001) begin
+            oled_data = mouse_oled;
         end
         else begin
             case(state)
