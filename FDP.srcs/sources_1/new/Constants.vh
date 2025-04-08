@@ -42,6 +42,13 @@ parameter PROMOTION = 3'b011;
 parameter WHITE_WIN = 3'b100;        
 parameter BLACK_WIN = 3'b101;
 
+parameter PLAY_START = 3'b000;
+parameter PLAY_END = 3'b001;
+parameter PLAY_MOVE = 3'b010;
+parameter PLAY_PROMOTION = 3'b011;
+parameter PLAY_EAT = 3'b100;
+parameter IDLE = 3'b101;
+
 parameter INITIAL_BOARD = {
     // 8th row (black pieces) - 32 bits
     B_ROOK, B_KNIGHT, B_BISHOP, B_QUEEN, B_KING, B_BISHOP, B_KNIGHT, B_ROOK,

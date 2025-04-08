@@ -12,7 +12,10 @@ module Top_Student (
     output [7:0] JB,
     output tx,
     output [11:0] vga,
-    output hsync, vsync
+    output hsync, vsync,
+    output DIN,         // Audio out to PmodAMP2
+    output wire GAIN,       // Gain control
+    output wire SD  
 );  
     reg [2:0] state = START_GAME;
     parameter player = 1;  // 1 is white, 0 is black
@@ -24,7 +27,10 @@ module Top_Student (
         .oled_data(oled_data), 
         .x(pixel_x), 
         .y(pixel_y), 
-        .JB(JB)
+        .JB(JB),
+        .hsync(hsync),
+        .vsync(vsync),
+        .vga_data(vga)
     );
 
     wire [3:0] grid_x, grid_y;
@@ -92,13 +98,13 @@ module Top_Student (
     always @(posedge basys_clock) begin
         case (setMouseMax)
             2'b00: begin
-                value <= 12'd79;
+                value <= 12'd559; //value is here
                 setmax_x <= 1;
                 setmax_y <= 0;
                 setMouseMax = setMouseMax + 1;
             end
             2'b01: begin
-                value <= 12'd63;
+                value <= 12'd447;
                 setmax_y = 1;
                 setmax_x = 0;
                 setMouseMax = setMouseMax + 1;
@@ -195,6 +201,8 @@ module Top_Student (
         .an(an),
         .seg(seg)
     );
+    
+    reg [2:0] sound; //start with start
    
 
     // Single process FSM for both state transitions and actions
@@ -206,6 +214,7 @@ module Top_Student (
         
         // Default reset for transient signals
         start_tx <= 0;
+        sound <= IDLE;
         
         // Main FSM logic
         case (state)
@@ -239,6 +248,13 @@ module Top_Student (
                             state <= WHITE_WIN;
                         end
                         else begin
+                        
+                            if (board[to_index +: 4] != EMPTY) begin 
+                                sound <= PLAY_EAT; //if it is eating a piece play
+                            end else begin 
+                                sound <= PLAY_MOVE;
+                            end
+                                 
                             // Move the piece in the board array
                             board[to_index +: 4] <= board[from_index +: 4];
                             board[from_index +: 4] <= EMPTY;
@@ -279,6 +295,12 @@ module Top_Student (
                         board[remote_to_index +: 4] <= board[remote_from_index +: 4];
                         board[remote_from_index +: 4] <= EMPTY;
                         
+                        if (board[remote_to_index +: 4] != EMPTY) begin 
+                            sound <= PLAY_EAT;
+                        end else begin 
+                            sound <= PLAY_MOVE;
+                        end
+                        
                         //If the captured is king, end the game
                         if (board[remote_to_index +: 4] == W_KING) begin
                             state <= BLACK_WIN;
@@ -301,8 +323,10 @@ module Top_Student (
             end
             
             PROMOTION: begin
+                
                 if (confirm_pressed) begin
                     to_index = ((7 - promotion_y) * 8 + (promotion_x)) * 4;
+                    sound <= PLAY_PROMOTION; //Play sound when pressed
                     
                     case (selected_promotion_piece)
                         2'b00: board[to_index +: 4] <= player ? W_QUEEN : B_QUEEN;
@@ -318,9 +342,19 @@ module Top_Student (
                 end
             end
             
-            START_GAME,
+            START_GAME: begin 
+            sound <= PLAY_START; //when game start, play sound
+                if (confirm_pressed) begin
+                     board <= INITIAL_BOARD;
+                     selected_x <= NULL;
+                     selected_y <= NULL;
+                     state <= PLAYER_TURN; // Start with player's turn
+                end
+            end
+            
             WHITE_WIN,
             BLACK_WIN: begin
+            sound <= PLAY_END;
                 if (confirm_pressed) begin
                     board <= INITIAL_BOARD;
                     selected_x <= NULL;
@@ -346,6 +380,14 @@ module Top_Student (
         .state(state),  
         .selected_promotion_piece(selected_promotion_piece),
         .oled_data(oled_data)
+    );
+    
+    PMOD PMOD_Inst (
+    .clk(basys_clock),
+    .sound(sound),
+    .DIN(DIN),
+    .GAIN(GAIN),
+    .SD(SD)
     );
 
 endmodule
