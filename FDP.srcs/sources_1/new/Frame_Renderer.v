@@ -4,7 +4,7 @@
 module Frame_Renderer (
     input [6:0] pixel_x, pixel_y,
     input [2047:0] FRAME,
-    input hover_restart,
+    input hover,
     output reg [15:0] oled_data        
 );
     localparam H_START = 16;  // Starting X position (centered on 96-pixel wide display)
@@ -28,7 +28,7 @@ module Frame_Renderer (
             case (pixel_color)
                 B: oled_data = BLACK;
                 W: oled_data = WHITE;
-                G: oled_data = hover_restart ? LIGHT_BROWN : WHITE;
+                G: oled_data = hover ? LIGHT_BROWN : WHITE;
                 default: oled_data = BLACK;  // fallback
             endcase
         else

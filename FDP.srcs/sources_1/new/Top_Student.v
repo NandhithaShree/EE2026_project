@@ -90,7 +90,8 @@ module Top_Student (
     reg [11:0] value;
     reg setx, sety, setmax_x = 0, setmax_y = 0;
     
-    wire [11:0] mouse_xpos, mouse_ypos;
+    wire [11:0] temp_mouse_xpos, mouse_xpos, mouse_ypos;
+    assign mouse_xpos = (temp_mouse_xpos < 12'd16) ? 12'd16 : temp_mouse_xpos; // Set minimum value for mouseX
     wire [3:0] zpos;
     wire left, middle, right, new_event;
     
@@ -98,13 +99,13 @@ module Top_Student (
     always @(posedge basys_clock) begin
         case (setMouseMax)
             2'b00: begin
-                value <= 12'd559; //value is here
+                value <= 12'd79; //value is here
                 setmax_x <= 1;
                 setmax_y <= 0;
                 setMouseMax = setMouseMax + 1;
             end
             2'b01: begin
-                value <= 12'd447;
+                value <= 12'd63;
                 setmax_y = 1;
                 setmax_x = 0;
                 setMouseMax = setMouseMax + 1;
@@ -124,7 +125,7 @@ module Top_Student (
         .sety(0),
         .setmax_x(setmax_x),
         .setmax_y(setmax_y),
-        .xpos(mouse_xpos),
+        .xpos(temp_mouse_xpos),
         .ypos(mouse_ypos),
         .zpos(zpos),
         .left(left),
@@ -148,8 +149,9 @@ module Top_Student (
         .confirm(mouse_confirm)
     );
     
-    wire hover_restart;
-    assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
+    wire hover_start, hover_restart;
+    assign hover_start = mouse_xpos >= 26 && mouse_xpos <= 69 && mouse_ypos >= 42 && mouse_ypos <= 57;
+    assign hover_restart = mouse_xpos >= 18 && mouse_xpos <= 77 && mouse_ypos >= 42 && mouse_ypos <= 57;
     assign confirm = mouse_confirm;
     
     // Edge detection for button and signals
@@ -345,7 +347,7 @@ module Top_Student (
             
             START_GAME: begin 
                 sound <= PLAY_START; //when game start, play sound
-                if (confirm_pressed) begin
+                if (confirm_pressed && hover_start) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
                      selected_y <= NULL;
@@ -369,6 +371,7 @@ module Top_Student (
         .moves(moves),
         .mouse_xpos(mouse_xpos),
         .mouse_ypos(mouse_ypos),
+        .hover_start(hover_start),
         .hover_restart(hover_restart),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
