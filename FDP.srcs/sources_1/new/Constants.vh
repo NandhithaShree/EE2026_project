@@ -9,6 +9,10 @@ parameter DARK_BROWN = 16'h8410;
 parameter GREEN = 16'h07E0;     
 parameter BLUE = 16'h001F;
 parameter RED = 16'hF800;
+parameter LIGHT_GREEN = 16'b10010_111011_10010; //green for stem
+parameter LIGHT_PINK = 16'b11111_110000_11001; //pink for flower
+parameter DIRT_RED = 16'b10011_010100_00101; //reddish brown for dirt
+parameter GREY = 16'b11010_110100_11010; //light grey for skull
 
 //Colours for VGA 8 Bit 
 parameter WHITE_VGA        = 12'hFFF;  // R=F, B=F, G=F
@@ -64,10 +68,14 @@ parameter INITIAL_BOARD = {
 // For a four bit reg (grid coordinates), we designate 1000 as NULL.
 parameter NULL = 4'b1000;
 
-parameter B = 1'b0;
-parameter W = 1'b1;
+parameter [2:0] B = 3'b000;
+parameter [2:0] W = 3'b001;
+parameter [2:0] G = 3'b010; //green for stem
+parameter [2:0] P = 3'b011; //pink for flower
+parameter [2:0] R = 3'b100; //reddish brown for dirt
+parameter [2:0] S = 3'b101; //light grey for skull
 
-parameter [1023:0] GAME_START = {
+parameter [3071:0] GAME_START = {
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, B, B, W, W, W, B, W, W, W, B, B, B, W, W, B, B, W, W, W, W, B, W, B, W, B, B, B, B, B,
@@ -104,7 +112,7 @@ parameter [1023:0] GAME_START = {
 
 
 
-parameter [1023:0] WHITE_WINS = {
+parameter [3071:0] WHITE_WINS = {
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, B, B, B, W, B, B, B, W, B, W, B, B, W, B, W, B, W, W, W, B, W, W, W, B, B, B, B, B, B,
@@ -139,7 +147,7 @@ parameter [1023:0] WHITE_WINS = {
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B
 };
 
-parameter [1023:0] BLACK_WINS = {
+parameter [3071:0] BLACK_WINS = {
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, B, W, W, W, B, B, W, B, B, B, B, W, W, B, B, B, W, W, W, B, W, B, B, W, B, B, B, B, B,
@@ -173,5 +181,42 @@ parameter [1023:0] BLACK_WINS = {
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B
 };
+
+parameter [3071:0] DEAD_SCREEN = {
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, P, B, B, P, B, B, P, B, B, B, S, S, S, S, S, S, S, B, B, B, P, B, P, B, B, B, P, B, B,
+    B, B, B, P, P, P, P, B, P, P, B, B, S, S, S, S, S, S, S, S, S, B, B, P, P, P, P, B, P, P, B, B,
+    B, B, B, B, P, P, P, P, P, B, B, S, S, S, S, S, S, S, S, S, S, S, B, B, P, P, P, P, P, B, B, B,
+    B, B, B, B, P, P, P, P, P, B, B, S, S, B, B, S, S, S, B, B, S, S, B, B, P, P, P, P, P, B, B, B,
+    B, B, B, B, P, P, P, P, P, B, B, S, S, B, B, S, S, S, B, B, S, S, B, B, P, P, P, P, P, B, B, B,
+    B, B, B, B, B, P, P, P, B, B, B, S, S, S, S, S, B, S, S, S, S, S, B, B, B, P, P, P, B, B, B, B,
+    B, B, B, B, B, B, G, B, B, B, B, B, S, S, S, B, B, B, S, S, S, B, B, B, B, B, G, B, B, B, B, B,
+    B, B, B, B, B, B, G, B, B, B, B, B, S, S, S, S, S, S, S, S, S, B, B, B, B, B, G, B, B, B, B, B,
+    B, B, B, B, B, G, G, B, B, B, B, B, B, S, B, S, B, S, B, S, B, B, B, B, B, B, G, G, B, B, B, B,
+    B, B, B, B, B, G, B, B, B, B, B, B, B, S, B, S, B, S, B, S, B, B, B, B, B, B, B, G, B, B, B, B,
+    B, B, B, B, B, G, B, B, B, B, B, B, B, S, S, S, S, S, S, S, B, B, B, B, B, B, B, G, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, S, S, S, S, S, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
+    R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B
+};
+
+
 
 `endif // CONSTANTS_VH

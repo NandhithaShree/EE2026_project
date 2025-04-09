@@ -15,6 +15,16 @@ module Top_Student (
 );  
     reg [2:0] state = START_GAME;
     parameter player = 1;  // 1 is white, 0 is black
+    reg [3:0] W_dead_pawns = 0;
+    reg [3:0] B_dead_pawns = 0;
+    reg [3:0] W_dead_queens = 0;
+    reg [3:0] B_dead_queens = 0;
+    reg [3:0] W_dead_rooks = 0;
+    reg [3:0] B_dead_rooks = 0;
+    reg [3:0] W_dead_bishops = 0;
+    reg [3:0] B_dead_bishops = 0;
+    reg [3:0] W_dead_knights = 0;
+    reg [3:0] B_dead_knights = 0;
 
     wire [15:0] oled_data;
     wire [6:0] pixel_x, pixel_y;
@@ -221,6 +231,36 @@ module Top_Student (
                         else begin
                             state <= PLAYER_TURN;
                         end
+                        if (board[remote_to_index +: 4] == W_PAWN) begin
+                            W_dead_pawns <= W_dead_pawns + 1;
+                        end
+                        if (board[remote_to_index +: 4] == B_PAWN) begin
+                            B_dead_pawns <= B_dead_pawns + 1;
+                        end
+                        if (board[remote_to_index +: 4] == W_QUEEN) begin
+                            W_dead_queens <= W_dead_queens + 1;
+                        end
+                        if (board[remote_to_index +: 4] == B_QUEEN) begin
+                            B_dead_queens <= B_dead_queens + 1;
+                        end
+                        if (board[remote_to_index +: 4] == W_ROOK) begin
+                            W_dead_rooks <= W_dead_rooks + 1;
+                        end
+                        if (board[remote_to_index +: 4] == B_ROOK) begin
+                            B_dead_rooks <= B_dead_rooks + 1;
+                        end
+                        if (board[remote_to_index +: 4] == W_KNIGHT) begin
+                            W_dead_knights <= W_dead_knights + 1;
+                        end
+                        if (board[remote_to_index +: 4] == B_KNIGHT) begin
+                            B_dead_knights <= B_dead_knights + 1;
+                        end
+                        if (board[remote_to_index +: 4] == W_BISHOP) begin
+                            W_dead_bishops <= W_dead_bishops + 1;
+                        end
+                        if (board[remote_to_index +: 4] == B_BISHOP) begin
+                            B_dead_bishops <= B_dead_bishops + 1;
+                        end
                     end
                     else begin
                         state <= PLAYER_TURN;
@@ -275,7 +315,16 @@ module Top_Student (
         .current_y(current_y),
         .state(state),  
         .selected_promotion_piece(selected_promotion_piece),
+        .W_dead_pawns(W_dead_pawns),
+        .B_dead_pawns(B_dead_pawns),
+        .W_dead_queens(W_dead_queens),
+        .B_dead_queens(B_dead_queens),
+        .W_dead_rooks(W_dead_rooks),
+        .B_dead_rooks(B_dead_rooks),
+        .W_dead_bishops(W_dead_bishops),
+        .B_dead_bishops(B_dead_bishops),
+        .W_dead_knights(W_dead_knights),
+        .B_dead_knights(B_dead_knights),
         .oled_data(oled_data)
     );
-
 endmodule
