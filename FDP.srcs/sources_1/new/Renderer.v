@@ -4,6 +4,8 @@
 module Renderer(
     input [255:0] board,
     input [63:0] moves,
+    input [11:0] mouse_xpos, mouse_ypos,
+    input hover_restart,
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
@@ -42,6 +44,14 @@ module Renderer(
         .B_dead_knights(B_dead_knights),
         . oled_data(game_oled)
     );
+    
+    wire [15:0] promotion_oled;
+    Promotion_Renderer (
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .selected_promotion_piece(selected_promotion_piece),
+        .oled_data(promotion_oled)
+    );
 
     wire [15:0] start_oled;
     Frame_Renderer (
@@ -56,6 +66,7 @@ module Renderer(
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .FRAME(WHITE_WINS),
+        .hover_restart(hover_restart),
         .oled_data(white_win_oled)
     );
     
@@ -65,7 +76,17 @@ module Renderer(
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .FRAME(BLACK_WINS),
+        .hover_restart(hover_restart),
         .oled_data(black_win_oled)
+    );
+    
+    wire [15:0] mouse_oled;
+    Mouse_Renderer (
+        .xpos(mouse_xpos),
+        .ypos(mouse_ypos),
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .oled_data(mouse_oled)
     );
     
 
@@ -73,10 +94,13 @@ module Renderer(
         if (grid_x == NULL || grid_y == NULL) begin
             oled_data = BLACK;
         end
+        else if (mouse_oled != 16'h0001) begin
+            oled_data = mouse_oled;
+        end
         else begin
             case(state)
                 START_GAME: oled_data = white_win_oled;//start_oled;
-                PLAYER_TURN, ENEMY_TURN: oled_data = black_win_oled;//start_oled;
+                PLAYER_TURN, ENEMY_TURN: oled_data = game_oled;
                 PROMOTION: oled_data = game_oled;
                 WHITE_WIN: oled_data = white_win_oled;
                 BLACK_WIN: oled_data = black_win_oled;

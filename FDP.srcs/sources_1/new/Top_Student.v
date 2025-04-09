@@ -5,13 +5,17 @@ module Top_Student (
     input btnU, btnC, btnD, btnL, btnR,
     input [15:0] sw,
     input rx,
+    inout PS2Clk, PS2Data,
     output reg [15:0] led,
     output [3:0] an,
     output [7:0] seg,
     output [7:0] JB,
     output tx,
     output [11:0] vga,
-    output hsync, vsync
+    output hsync, vsync,
+    output DIN,         // Audio out to PmodAMP2
+    output wire GAIN,       // Gain control
+    output wire SD  
 );  
     reg [2:0] state = START_GAME;
     parameter player = 1;  // 1 is white, 0 is black
@@ -33,7 +37,10 @@ module Top_Student (
         .oled_data(oled_data), 
         .x(pixel_x), 
         .y(pixel_y), 
-        .JB(JB)
+        .JB(JB),
+        .hsync(hsync),
+        .vsync(vsync),
+        .vga_data(vga)
     );
 
     wire [3:0] grid_x, grid_y;
@@ -73,19 +80,87 @@ module Top_Student (
     reg [3:0] promotion_x, promotion_y;
     
     wire confirm;
-    Btn_Input btn_input_inst (
+    
+//    wire btn_confirm;
+//    Btn_Input btn_input_inst (
+//        .basys_clock(basys_clock),
+//        .btnU(btnU),
+//        .btnC(btnC),
+//        .btnD(btnD),
+//        .btnL(btnL),
+//        .btnR(btnR),
+//        .is_promotion(state == PROMOTION),
+//        .selected_promotion_piece(selected_promotion_piece),
+//        .curr_x(current_x),
+//        .curr_y(current_y),
+//        .confirm(btn_confirm)
+//    );
+    
+    reg reset;
+    reg [11:0] value;
+    reg setx, sety, setmax_x = 0, setmax_y = 0;
+    
+    wire [11:0] mouse_xpos, mouse_ypos;
+    wire [3:0] zpos;
+    wire left, middle, right, new_event;
+    
+    reg [1:0] setMouseMax = 2'b00;
+    always @(posedge basys_clock) begin
+        case (setMouseMax)
+            2'b00: begin
+                value <= 12'd559; //value is here
+                setmax_x <= 1;
+                setmax_y <= 0;
+                setMouseMax = setMouseMax + 1;
+            end
+            2'b01: begin
+                value <= 12'd447;
+                setmax_y = 1;
+                setmax_x = 0;
+                setMouseMax = setMouseMax + 1;
+            end
+            default: begin
+                setmax_x = 0;
+                setmax_y = 0;
+            end
+        endcase
+    end
+    
+    MouseCtl(
+        .clk(basys_clock),
+        .rst(0),
+        .value(value),
+        .setx(0),
+        .sety(0),
+        .setmax_x(setmax_x),
+        .setmax_y(setmax_y),
+        .xpos(mouse_xpos),
+        .ypos(mouse_ypos),
+        .zpos(zpos),
+        .left(left),
+        .middle(middle),
+        .right(right),
+        .new_event(new_event),
+        .ps2_clk(PS2Clk),
+        .ps2_data(PS2Data)
+    );
+    
+    wire mouse_confirm;
+    Mouse_Input mouse_input_inst (
         .basys_clock(basys_clock),
-        .btnU(btnU),
-        .btnC(btnC),
-        .btnD(btnD),
-        .btnL(btnL),
-        .btnR(btnR),
+        .left(left),
+        .xpos(mouse_xpos),
+        .ypos(mouse_ypos),
         .is_promotion(state == PROMOTION),
         .selected_promotion_piece(selected_promotion_piece),
         .curr_x(current_x),
         .curr_y(current_y),
-        .confirm(confirm)
+        .confirm(mouse_confirm)
     );
+    
+    wire hover_restart;
+    assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
+    assign confirm = mouse_confirm;
     
     // Edge detection for button and signals
     reg confirm_prev = 0;
@@ -138,6 +213,9 @@ module Top_Student (
         .an(an),
         .seg(seg)
     );
+    
+    reg [2:0] sound; //start with start
+   
 
     // Single process FSM for both state transitions and actions
     always @(posedge basys_clock) begin
@@ -148,12 +226,13 @@ module Top_Student (
         
         // Default reset for transient signals
         start_tx <= 0;
+        sound <= IDLE;
         
         // Main FSM logic
         case (state)
             PLAYER_TURN: begin
                 if (timeout) begin
-                    state <= player ? BLACK_WINS : WHITE_WINS;
+                    state <= player ? BLACK_WIN : WHITE_WIN;
                 end else if (confirm_pressed) begin
                     // Player's turn actions
                     if (selected_x == NULL && selected_y == NULL) begin
@@ -181,6 +260,13 @@ module Top_Student (
                             state <= WHITE_WIN;
                         end
                         else begin
+                        
+                            if (board[to_index +: 4] != EMPTY) begin 
+                                sound <= PLAY_EAT; //if it is eating a piece play
+                            end else begin 
+                                sound <= PLAY_MOVE;
+                            end
+                                 
                             // Move the piece in the board array
                             board[to_index +: 4] <= board[from_index +: 4];
                             board[from_index +: 4] <= EMPTY;
@@ -220,6 +306,12 @@ module Top_Student (
                         // Move the piece in the board array
                         board[remote_to_index +: 4] <= board[remote_from_index +: 4];
                         board[remote_from_index +: 4] <= EMPTY;
+                        
+                        if (board[remote_to_index +: 4] != EMPTY) begin 
+                            sound <= PLAY_EAT;
+                        end else begin 
+                            sound <= PLAY_MOVE;
+                        end
                         
                         //If the captured is king, end the game
                         if (board[remote_to_index +: 4] == W_KING) begin
@@ -275,6 +367,7 @@ module Top_Student (
             PROMOTION: begin
                 if (confirm_pressed) begin
                     to_index = ((7 - promotion_y) * 8 + (promotion_x)) * 4;
+                    sound <= PLAY_PROMOTION; //Play sound when pressed
                     
                     case (selected_promotion_piece)
                         2'b00: board[to_index +: 4] <= player ? W_QUEEN : B_QUEEN;
@@ -290,14 +383,21 @@ module Top_Student (
                 end
             end
             
-            START_GAME,
+            START_GAME: begin 
+                sound <= PLAY_START; //when game start, play sound
+                if (confirm_pressed) begin
+                     board <= INITIAL_BOARD;
+                     selected_x <= NULL;
+                     selected_y <= NULL;
+                     state <= PLAYER_TURN; // Start with player's turn
+                end
+            end
+            
             WHITE_WIN,
             BLACK_WIN: begin
-                if (confirm_pressed) begin
-                    board <= INITIAL_BOARD;
-                    selected_x <= NULL;
-                    selected_y <= NULL;
-                    state <= PLAYER_TURN; // Start with player's turn
+                sound <= PLAY_END;
+                if (confirm_pressed && hover_restart) begin
+                    state <= START_GAME;
                 end
             end
             
@@ -307,6 +407,9 @@ module Top_Student (
     Renderer renderer_inst (
         .board(board),
         .moves(moves),
+        .mouse_xpos(mouse_xpos),
+        .mouse_ypos(mouse_ypos),
+        .hover_restart(hover_restart),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .selected_x(selected_x),
@@ -326,5 +429,12 @@ module Top_Student (
         .W_dead_knights(W_dead_knights),
         .B_dead_knights(B_dead_knights),
         .oled_data(oled_data)
+    );
+    PMOD PMOD_Inst (
+        .clk(basys_clock),
+        .sound(sound),
+        .DIN(DIN),
+        .GAIN(GAIN),
+        .SD(SD)
     );
 endmodule
