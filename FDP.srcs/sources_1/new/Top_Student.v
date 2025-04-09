@@ -148,6 +148,8 @@ module Top_Student (
         .confirm(mouse_confirm)
     );
     
+    wire hover_restart;
+    assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
     assign confirm = mouse_confirm;
     
     // Edge detection for button and signals
@@ -220,7 +222,7 @@ module Top_Student (
         case (state)
             PLAYER_TURN: begin
                 if (timeout) begin
-                    state <= player ? BLACK_WINS : WHITE_WINS;
+                    state <= player ? BLACK_WIN : WHITE_WIN;
                 end else if (confirm_pressed) begin
                     // Player's turn actions
                     if (selected_x == NULL && selected_y == NULL) begin
@@ -323,7 +325,6 @@ module Top_Student (
             end
             
             PROMOTION: begin
-                
                 if (confirm_pressed) begin
                     to_index = ((7 - promotion_y) * 8 + (promotion_x)) * 4;
                     sound <= PLAY_PROMOTION; //Play sound when pressed
@@ -343,7 +344,7 @@ module Top_Student (
             end
             
             START_GAME: begin 
-            sound <= PLAY_START; //when game start, play sound
+                sound <= PLAY_START; //when game start, play sound
                 if (confirm_pressed) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
@@ -354,12 +355,9 @@ module Top_Student (
             
             WHITE_WIN,
             BLACK_WIN: begin
-            sound <= PLAY_END;
-                if (confirm_pressed) begin
-                    board <= INITIAL_BOARD;
-                    selected_x <= NULL;
-                    selected_y <= NULL;
-                    state <= PLAYER_TURN; // Start with player's turn
+                sound <= PLAY_END;
+                if (confirm_pressed && hover_restart) begin
+                    state <= START_GAME;
                 end
             end
             
@@ -371,6 +369,7 @@ module Top_Student (
         .moves(moves),
         .mouse_xpos(mouse_xpos),
         .mouse_ypos(mouse_ypos),
+        .hover_restart(hover_restart),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .selected_x(selected_x),
@@ -383,11 +382,11 @@ module Top_Student (
     );
     
     PMOD PMOD_Inst (
-    .clk(basys_clock),
-    .sound(sound),
-    .DIN(DIN),
-    .GAIN(GAIN),
-    .SD(SD)
+        .clk(basys_clock),
+        .sound(sound),
+        .DIN(DIN),
+        .GAIN(GAIN),
+        .SD(SD)
     );
 
 endmodule

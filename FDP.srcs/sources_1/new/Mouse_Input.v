@@ -17,11 +17,18 @@ module Mouse_Input(
     reg [3:0] promotion_wait = 0;
 
     always @ (posedge basys_clock) begin
-        curr_x <= (xpos / 8) - 2;
-        curr_y <= ypos / 8;
+        curr_x = (xpos / 8) - 2;
+        curr_y = ypos / 8;
         
         if (left) confirm <= 1;
         else confirm <= 0;
+        
+        if (is_promotion && (curr_y == 4 || curr_y == 5)) begin
+            if (curr_x == 0 || curr_x == 1) selected_promotion_piece <= 2'b00;
+            else if (curr_x == 2 || curr_x == 3) selected_promotion_piece <= 2'b01;
+            else if (curr_x == 4 || curr_x == 5) selected_promotion_piece <= 2'b10;
+            else if (curr_x == 6 || curr_x == 7) selected_promotion_piece <= 2'b11;
+        end
         
         if (is_promotion) begin
             promotion_cnt <= promotion_cnt + 1;
@@ -29,8 +36,8 @@ module Mouse_Input(
                 promotion_cnt <= 0;
                 promotion_wait <= promotion_wait + 1;
             end
-            if (promotion_wait >= 4'd5) begin
-                selected_promotion_piece <= 2'd00;
+            if (promotion_wait >= 4'd10) begin
+                selected_promotion_piece <= 2'b00;
                 confirm <= 1;
             end
         end else begin

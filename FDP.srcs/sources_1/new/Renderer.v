@@ -5,6 +5,7 @@ module Renderer(
     input [255:0] board,
     input [63:0] moves,
     input [11:0] mouse_xpos, mouse_ypos,
+    input hover_restart,
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
@@ -50,6 +51,7 @@ module Renderer(
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .FRAME(WHITE_WINS),
+        .hover_restart(hover_restart),
         .oled_data(white_win_oled)
     );
     
@@ -59,6 +61,7 @@ module Renderer(
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .FRAME(BLACK_WINS),
+        .hover_restart(hover_restart),
         .oled_data(black_win_oled)
     );
     

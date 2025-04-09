@@ -3,7 +3,8 @@
 
 module Frame_Renderer (
     input [6:0] pixel_x, pixel_y,
-    input [1023:0] FRAME,
+    input [2047:0] FRAME,
+    input hover_restart,
     output reg [15:0] oled_data        
 );
     localparam H_START = 16;  // Starting X position (centered on 96-pixel wide display)
@@ -19,11 +20,17 @@ module Frame_Renderer (
     wire [4:0] scaled_y = pixel_y / SCALE;
     
     // Calculate the frame index with horizontal flip
-    wire [9:0] frame_index = (31 - scaled_y) * 32 + (31 - scaled_x);   
+    wire [10:0] frame_index = ((31 - scaled_y) * 32 + (31 - scaled_x)) * 2;  
+    wire [1:0] pixel_color = FRAME[frame_index +: 2];
         
     always @(pixel_x, pixel_y) begin 
         if (in_bounds)
-            oled_data = (FRAME[frame_index] == B) ? WHITE : BLACK;
+            case (pixel_color)
+                B: oled_data = BLACK;
+                W: oled_data = WHITE;
+                G: oled_data = hover_restart ? LIGHT_BROWN : WHITE;
+                default: oled_data = BLACK;  // fallback
+            endcase
         else
             oled_data = BLACK;
     end
