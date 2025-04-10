@@ -1,3 +1,4 @@
+
 module Uart_RX (
     input basys_clock,        
     input rx,                 // UART RX pin
@@ -36,15 +37,19 @@ module Uart_RX (
         rx_sync2 <= rx_sync1;
     end
     
+    // Flag for frame error detection
+    reg frame_error = 0;
+    
     always @(posedge basys_clock) begin
         // Default state for data_ready (only high for one cycle)
         data_ready <= 1'b0;
         
         case (state)
             IDLE_STATE: begin
-                // Reset counters
+                // Reset counters and errors
                 clock_counter <= 0;
                 bit_counter <= 0;
+                frame_error <= 0;
                 
                 // Detect start bit (high to low transition)
                 if (rx_sync2 == START_BIT) begin
@@ -98,6 +103,11 @@ module Uart_RX (
                         data_out <= rx_buffer;
                         // Set data_ready flag for one clock cycle
                         data_ready <= 1'b1;
+                    end else begin
+                        // Frame error detected - stop bit not found
+                        frame_error <= 1;
+                        // We could add code here to handle the error, such as
+                        // setting an error flag that other modules can check
                     end
                     
                     // Return to idle state to wait for next transmission

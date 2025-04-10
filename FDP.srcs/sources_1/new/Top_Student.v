@@ -1,5 +1,3 @@
-`include "Constants.vh"
-
 module Top_Student (
     input basys_clock,   
     input btnU, btnC, btnD, btnL, btnR,
@@ -18,7 +16,14 @@ module Top_Student (
     output wire SD  
 );  
     reg [2:0] state = START_GAME;
-    parameter player = 0;  // 1 is white, 0 is black
+    wire player; 
+    assign player = sw[15];  // 1 is white, 0 is black
+
+    // Define packet type constants for clarity
+    parameter PKT_TYPE_START = 2'b00;
+    parameter PKT_TYPE_PROMOTION = 2'b01;
+    parameter PKT_TYPE_TIMEOUT = 2'b10;
+    parameter PKT_TYPE_MOVE = 2'b11;
 
     wire [15:0] oled_data;
     wire [6:0] pixel_x, pixel_y;
@@ -100,22 +105,22 @@ module Top_Student (
                 value <= 12'd559; //value is here
                 setmax_x <= 1;
                 setmax_y <= 0;
-                setMouseMax = setMouseMax + 1;
+                setMouseMax <= setMouseMax + 1; // Changed to non-blocking assignment
             end
             2'b01: begin
                 value <= 12'd447;
-                setmax_y = 1;
-                setmax_x = 0;
-                setMouseMax = setMouseMax + 1;
+                setmax_y <= 1; // Changed to non-blocking assignment
+                setmax_x <= 0; // Changed to non-blocking assignment
+                setMouseMax <= setMouseMax + 1; // Changed to non-blocking assignment
             end
             default: begin
-                setmax_x = 0;
-                setmax_y = 0;
+                setmax_x <= 0; // Changed to non-blocking assignment
+                setmax_y <= 0; // Changed to non-blocking assignment
             end
         endcase
     end
     
-    MouseCtl(
+    MouseCtl mouse_ctl_inst (  // Added module instance name
         .clk(basys_clock),
         .rst(0),
         .value(value),
@@ -134,19 +139,6 @@ module Top_Student (
         .ps2_data(PS2Data)
     );
     
-//    wire mouse_confirm;
-//    Mouse_Input mouse_input_inst (
-//        .basys_clock(basys_clock),
-//        .left(left),
-//        .xpos(mouse_xpos),
-//        .ypos(mouse_ypos),
-//        .is_promotion(state == PROMOTION),
-//        .selected_promotion_piece(selected_promotion_piece),
-//        .curr_x(current_x),
-//        .curr_y(current_y),
-//        .confirm(confirm)
-//    );
-    
     wire hover_restart;
     assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
     
@@ -154,14 +146,20 @@ module Top_Student (
     reg confirm_prev = 0;
     wire confirm_pressed = confirm && !confirm_prev;
     
-    reg data_ready_prev = 0;
-    reg data_ready_edge;
-    
-    //UART components
-    reg [31:0] tx_data;
-    wire [31:0] rx_data;
+    //UART components - CHANGED FROM 20 to 32 BITS
+    reg [19:0] uart_payload;   // The actual payload data (20 bits)
+    wire [31:0] tx_data;       // Full packet with signature and checksum
     reg start_tx = 0;
     wire data_ready;
+    wire [31:0] rx_data;
+    
+    // Calculate checksum for outgoing data
+    wire [3:0] tx_checksum = uart_payload[3:0] ^ uart_payload[7:4] ^ 
+                           uart_payload[11:8] ^ uart_payload[15:12] ^ 
+                           uart_payload[19:16];
+    
+    // Assemble full packet with signature and checksum
+    assign tx_data = {tx_checksum, 8'hAA, uart_payload};
     
     Uart_TX uart_tx_inst (
         .basys_clock(basys_clock),
@@ -177,7 +175,16 @@ module Top_Student (
         .data_ready(data_ready)
     );
     
-    // Extract move coordinates from received data
+    // UART packet validation
+    wire [7:0] rx_signature = rx_data[27:20];
+    wire rx_valid_signature = (rx_signature == 8'hAA);
+    wire [3:0] rx_checksum = rx_data[31:28];
+    wire [3:0] calculated_checksum = rx_data[3:0] ^ rx_data[7:4] ^ rx_data[11:8] ^ rx_data[15:12] ^ 
+                                   rx_data[19:16] ^ rx_data[23:20] ^ rx_data[27:24];
+    wire rx_valid_checksum = (rx_checksum == calculated_checksum);
+    wire rx_valid_packet = rx_valid_signature && rx_valid_checksum;
+    
+    // Extract move coordinates from received data (payload is in bits 19:0)
     wire [1:0] remote_promotion = rx_data[19:18];
     wire [1:0] remote_type = rx_data[17:16];
     wire [3:0] remote_selected_x = rx_data[15:12];
@@ -185,10 +192,14 @@ module Top_Student (
     wire [3:0] remote_current_x = rx_data[7:4];
     wire [3:0] remote_current_y = rx_data[3:0];
     
+    // Edge detection for UART data_ready
+    reg data_ready_prev = 0;
+    wire data_ready_edge = data_ready && !data_ready_prev && rx_valid_packet; // Only trigger on valid packets
+    
     wire [5:0] min, sec;
     wire timeout;
     
-    Chess_Timer (
+    Chess_Timer chess_timer_inst (  // Added module instance name
         .basys_clock(basys_clock),
         .game_state(state),
         .min(min),
@@ -196,7 +207,7 @@ module Top_Student (
         .timeout(timeout)
     );
     
-    Display_Timer (
+    Display_Timer display_timer_inst (  // Added module instance name
         .basys_clock(basys_clock),
         .min(min),
         .sec(sec),
@@ -206,26 +217,31 @@ module Top_Student (
     
     reg [2:0] sound; //start with start
    
+    // Debug LED outputs
+    always @(posedge basys_clock) begin
+        led[0] <= rx_valid_signature;     // Signature valid
+        led[1] <= rx_valid_checksum;      // Checksum valid
+        led[2] <= data_ready;             // Raw data ready
+        led[3] <= data_ready_edge;        // Valid data ready edge
+        led[15:4] <= rx_data[19:8];       // Display packet type and from coordinates
+    end
 
     // Single process FSM for both state transitions and actions
     always @(posedge basys_clock) begin
         // Edge detection updates
         confirm_prev <= confirm;
         data_ready_prev <= data_ready;
-        data_ready_edge <= data_ready && !data_ready_prev;
         
         // Default reset for transient signals
         start_tx <= 0;
         sound <= IDLE;
-        
-        led[15:0] <= rx_data[19:4];
         
         // Main FSM logic
         case (state)
             PLAYER_TURN: begin
                 if (timeout & !sw[1]) begin
                     state <= player ? BLACK_WIN : WHITE_WIN;
-                    tx_data <= {12'h000, 2'b00, 2'b10, selected_x, selected_y, current_x, current_y};
+                    uart_payload <= {2'b00, PKT_TYPE_TIMEOUT, selected_x, selected_y, current_x, current_y};
                     start_tx <= 1;
                 end else if (confirm_pressed) begin
                     // Player's turn actions
@@ -249,9 +265,15 @@ module Top_Student (
                         //If the captured is king, end the game
                         if (board[to_index +: 4] == W_KING) begin
                             state <= BLACK_WIN;
+                            // Send game end move to opponent
+                            uart_payload <= {2'b00, PKT_TYPE_MOVE, selected_x, selected_y, current_x, current_y};
+                            start_tx <= 1;
                         end
                         else if (board[to_index +: 4] == B_KING) begin
                             state <= WHITE_WIN;
+                            // Send game end move to opponent
+                            uart_payload <= {2'b00, PKT_TYPE_MOVE, selected_x, selected_y, current_x, current_y};
+                            start_tx <= 1;
                         end
                         else begin
                         
@@ -274,7 +296,7 @@ module Top_Student (
                                 state <= PROMOTION;
                             end else begin
                                 // Normal move completion - transition to ENEMY_TURN
-                                tx_data <= {12'h0000, 2'b00, 2'b11, selected_x, selected_y, current_x, current_y};
+                                uart_payload <= {2'b00, PKT_TYPE_MOVE, selected_x, selected_y, current_x, current_y};
                                 start_tx <= 1;
                                 state <= ENEMY_TURN;
                             end
@@ -288,49 +310,66 @@ module Top_Student (
             
             ENEMY_TURN: begin
                 // When we receive data from remote player, process it
-                if (data_ready_edge && remote_type != 2'b00) begin
-                    
-                    //Timeout event
-                    if (remote_type == 2'b10) begin
-                        state <= player ? WHITE_WIN : BLACK_WIN;
-                    end else begin
-                        // Calculate board indices for the remote move
-                        remote_from_index = ((7 - remote_selected_y) * 8 + remote_selected_x) * 4;
-                        remote_to_index = ((7 - remote_current_y) * 8 + remote_current_x) * 4;
+                if (data_ready_edge) begin
+                    case (remote_type)
+                        PKT_TYPE_START: begin
+                            // Remote player wants to start a new game
+                            board <= INITIAL_BOARD;
+                            selected_x <= NULL;
+                            selected_y <= NULL;
+                            state <= player ? PLAYER_TURN : ENEMY_TURN;
+                            sound <= PLAY_START;
+                        end
                         
-                        // Execute the move if valid coordinates
-                        if (remote_selected_x != NULL && remote_selected_y != NULL && 
-                            remote_current_x < 8 && remote_current_y < 8) begin
-                            //If the captured is king, end the game
-                            if (board[remote_to_index +: 4] == W_KING) begin
-                                state <= BLACK_WIN;
-                            end
-                            else if (board[remote_to_index +: 4] == B_KING) begin
-                                state <= WHITE_WIN;
-                            end
-                            else begin  
-                                // Move the piece in the board array
-                                board[remote_to_index +: 4] <= board[remote_from_index +: 4];
-                                board[remote_from_index +: 4] <= EMPTY;
-                                
-                                if (remote_type == 2'b01) begin
-                                    case (remote_promotion)
-                                        2'b00: board[remote_to_index +: 4] <= player ? B_QUEEN : W_QUEEN;
-                                        2'b01: board[remote_to_index +: 4] <= player ? B_ROOK : W_ROOK;
-                                        2'b10: board[remote_to_index +: 4] <= player ? B_BISHOP : W_BISHOP;
-                                        2'b11: board[remote_to_index +: 4] <= player ? B_KNIGHT : W_KNIGHT;
-                                    endcase
-                                    sound <= PLAY_PROMOTION;
-                                end else if (board[remote_to_index +: 4] != EMPTY) begin 
-                                    sound <= PLAY_EAT;
-                                end else begin 
-                                    sound <= PLAY_MOVE;
-                                end
+                        PKT_TYPE_TIMEOUT: begin
+                            // Remote player timed out
+                            state <= player ? WHITE_WIN : BLACK_WIN;
+                            sound <= PLAY_END;
+                        end
+                        
+                        PKT_TYPE_PROMOTION, PKT_TYPE_MOVE: begin
+                            // Calculate board indices for the remote move
+                            remote_from_index = ((7 - remote_selected_y) * 8 + remote_selected_x) * 4;
+                            remote_to_index = ((7 - remote_current_y) * 8 + remote_current_x) * 4;
                             
-                                state <= PLAYER_TURN;
+                            // Execute the move if valid coordinates
+                            if (remote_selected_x != NULL && remote_selected_y != NULL && 
+                                remote_current_x < 8 && remote_current_y < 8) begin
+                                
+                                //If the captured is king, end the game
+                                if (board[remote_to_index +: 4] == W_KING) begin
+                                    state <= BLACK_WIN;
+                                    sound <= PLAY_END;
+                                end
+                                else if (board[remote_to_index +: 4] == B_KING) begin
+                                    state <= WHITE_WIN;
+                                    sound <= PLAY_END;
+                                end
+                                else begin  
+                                    // Move the piece in the board array
+                                    board[remote_to_index +: 4] <= board[remote_from_index +: 4];
+                                    board[remote_from_index +: 4] <= EMPTY;
+                                    
+                                    // Handle promotion if needed
+                                    if (remote_type == PKT_TYPE_PROMOTION) begin
+                                        case (remote_promotion)
+                                            2'b00: board[remote_to_index +: 4] <= player ? B_QUEEN : W_QUEEN;
+                                            2'b01: board[remote_to_index +: 4] <= player ? B_ROOK : W_ROOK;
+                                            2'b10: board[remote_to_index +: 4] <= player ? B_BISHOP : W_BISHOP;
+                                            2'b11: board[remote_to_index +: 4] <= player ? B_KNIGHT : W_KNIGHT;
+                                        endcase
+                                        sound <= PLAY_PROMOTION;
+                                    end else if (board[remote_to_index +: 4] != EMPTY) begin 
+                                        sound <= PLAY_EAT;
+                                    end else begin 
+                                        sound <= PLAY_MOVE;
+                                    end
+                                
+                                    state <= PLAYER_TURN;
+                                end
                             end
-                        end      
-                    end
+                        end
+                    endcase
                 end
                 // Debug: Allow manual transition back with switch
                 else if (sw[0]) begin
@@ -351,7 +390,7 @@ module Top_Student (
                     endcase
                     
                     // After promotion, send move data and switch to enemy turn
-                    tx_data <= {12'h000, selected_promotion_piece, 2'b01, selected_x, selected_y, promotion_x, promotion_y};
+                    uart_payload <= {selected_promotion_piece, PKT_TYPE_PROMOTION, selected_x, selected_y, promotion_x, promotion_y};
                     start_tx <= 1;
                     state <= ENEMY_TURN;
                 end
@@ -359,12 +398,21 @@ module Top_Student (
             
             START_GAME: begin 
                 sound <= PLAY_START; //when game start, play sound
-                if (confirm_pressed || data_ready_edge) begin
+                if (confirm_pressed) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
                      selected_y <= NULL;
                      state <= player ? PLAYER_TURN : ENEMY_TURN;
-                     tx_data <= {12'h000, 2'b11, 2'b00};
+                     uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
+                     start_tx <= 1;
+                end else if (data_ready_edge && remote_type == PKT_TYPE_START) begin
+                     // Remote player started the game
+                     board <= INITIAL_BOARD;
+                     selected_x <= NULL;
+                     selected_y <= NULL;
+                     state <= player ? PLAYER_TURN : ENEMY_TURN;
+                     // Acknowledge game start
+                     uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
                      start_tx <= 1;
                 end
             end
@@ -374,6 +422,9 @@ module Top_Student (
                 sound <= PLAY_END;
                 if (confirm_pressed && hover_restart) begin
                     state <= START_GAME;
+                    // Notify opponent of restart
+                    uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
+                    start_tx <= 1;
                 end
             end
             

@@ -63,17 +63,21 @@ module Uart_TX (
                         tx <= START_BIT;  // Send start bit
                     end
                     else if (bit_counter >= 1 && bit_counter <= 32) begin
-                        tx <= tx_data[bit_counter-1];  // Send data bits
+                        tx <= tx_data[bit_counter-1];  // Send data bits, LSB first
                     end
                     else if (bit_counter == 33) begin
                         tx <= STOP_BIT;  // Send stop bit
+                        bit_counter <= bit_counter + 1;  // Increment to exit condition
                     end
                     else begin
                         // Transmission complete
                         state <= WAIT_STATE;
                     end
                     
-                    bit_counter <= bit_counter + 1;
+                    // Only increment bit counter if we're not at the last bit
+                    if (bit_counter <= 33) begin
+                        bit_counter <= bit_counter + 1;
+                    end
                 end
             end
         endcase
