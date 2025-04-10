@@ -9,7 +9,7 @@ module Top_Student (
     output reg [15:0] led,
     output [3:0] an,
     output [7:0] seg,
-    output [7:0] JB,
+    output [7:0] JC,
     output tx,
     output [11:0] vga,
     output hsync, vsync,
@@ -18,7 +18,7 @@ module Top_Student (
     output wire SD  
 );  
     reg [2:0] state = START_GAME;
-    parameter player = 1;  // 1 is white, 0 is black
+    parameter player = 0;  // 1 is white, 0 is black
 
     wire [15:0] oled_data;
     wire [6:0] pixel_x, pixel_y;
@@ -27,7 +27,7 @@ module Top_Student (
         .oled_data(oled_data), 
         .x(pixel_x), 
         .y(pixel_y), 
-        .JB(JB),
+        .JB(JC),
         .hsync(hsync),
         .vsync(vsync),
         .vga_data(vga)
@@ -71,20 +71,19 @@ module Top_Student (
     
     wire confirm;
     
-//    wire btn_confirm;
-//    Btn_Input btn_input_inst (
-//        .basys_clock(basys_clock),
-//        .btnU(btnU),
-//        .btnC(btnC),
-//        .btnD(btnD),
-//        .btnL(btnL),
-//        .btnR(btnR),
-//        .is_promotion(state == PROMOTION),
-//        .selected_promotion_piece(selected_promotion_piece),
-//        .curr_x(current_x),
-//        .curr_y(current_y),
-//        .confirm(btn_confirm)
-//    );
+    Btn_Input btn_input_inst (
+        .basys_clock(basys_clock),
+        .btnU(btnU),
+        .btnC(btnC),
+        .btnD(btnD),
+        .btnL(btnL),
+        .btnR(btnR),
+        .is_promotion(state == PROMOTION),
+        .selected_promotion_piece(selected_promotion_piece),
+        .curr_x(current_x),
+        .curr_y(current_y),
+        .confirm(confirm)
+    );
     
     reg reset;
     reg [11:0] value;
@@ -135,22 +134,21 @@ module Top_Student (
         .ps2_data(PS2Data)
     );
     
-    wire mouse_confirm;
-    Mouse_Input mouse_input_inst (
-        .basys_clock(basys_clock),
-        .left(left),
-        .xpos(mouse_xpos),
-        .ypos(mouse_ypos),
-        .is_promotion(state == PROMOTION),
-        .selected_promotion_piece(selected_promotion_piece),
-        .curr_x(current_x),
-        .curr_y(current_y),
-        .confirm(mouse_confirm)
-    );
+//    wire mouse_confirm;
+//    Mouse_Input mouse_input_inst (
+//        .basys_clock(basys_clock),
+//        .left(left),
+//        .xpos(mouse_xpos),
+//        .ypos(mouse_ypos),
+//        .is_promotion(state == PROMOTION),
+//        .selected_promotion_piece(selected_promotion_piece),
+//        .curr_x(current_x),
+//        .curr_y(current_y),
+//        .confirm(confirm)
+//    );
     
     wire hover_restart;
     assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
-    assign confirm = mouse_confirm;
     
     // Edge detection for button and signals
     reg confirm_prev = 0;
@@ -180,6 +178,8 @@ module Top_Student (
     );
     
     // Extract move coordinates from received data
+    wire [1:0] remote_promotion = rx_data[19:18];
+    wire [1:0] remote_type = rx_data[17:16];
     wire [3:0] remote_selected_x = rx_data[15:12];
     wire [3:0] remote_selected_y = rx_data[11:8];
     wire [3:0] remote_current_x = rx_data[7:4];
@@ -218,11 +218,15 @@ module Top_Student (
         start_tx <= 0;
         sound <= IDLE;
         
+        led[15:0] <= rx_data[19:4];
+        
         // Main FSM logic
         case (state)
             PLAYER_TURN: begin
-                if (timeout) begin
+                if (timeout & !sw[1]) begin
                     state <= player ? BLACK_WIN : WHITE_WIN;
+                    tx_data <= {12'h000, 2'b00, 2'b10, selected_x, selected_y, current_x, current_y};
+                    start_tx <= 1;
                 end else if (confirm_pressed) begin
                     // Player's turn actions
                     if (selected_x == NULL && selected_y == NULL) begin
@@ -270,7 +274,7 @@ module Top_Student (
                                 state <= PROMOTION;
                             end else begin
                                 // Normal move completion - transition to ENEMY_TURN
-                                tx_data <= {selected_x, selected_y, current_x, current_y};
+                                tx_data <= {12'h0000, 2'b00, 2'b11, selected_x, selected_y, current_x, current_y};
                                 start_tx <= 1;
                                 state <= ENEMY_TURN;
                             end
@@ -284,38 +288,48 @@ module Top_Student (
             
             ENEMY_TURN: begin
                 // When we receive data from remote player, process it
-                if (data_ready_edge) begin
-                    // Calculate board indices for the remote move
-                    remote_from_index = ((7 - remote_selected_y) * 8 + remote_selected_x) * 4;
-                    remote_to_index = ((7 - remote_current_y) * 8 + remote_current_x) * 4;
+                if (data_ready_edge && remote_type != 2'b00) begin
                     
-                    // Execute the move if valid coordinates
-                    if (remote_selected_x != NULL && remote_selected_y != NULL && 
-                        remote_current_x < 8 && remote_current_y < 8) begin
+                    //Timeout event
+                    if (remote_type == 2'b10) begin
+                        state <= player ? WHITE_WIN : BLACK_WIN;
+                    end else begin
+                        // Calculate board indices for the remote move
+                        remote_from_index = ((7 - remote_selected_y) * 8 + remote_selected_x) * 4;
+                        remote_to_index = ((7 - remote_current_y) * 8 + remote_current_x) * 4;
                         
-                        // Move the piece in the board array
-                        board[remote_to_index +: 4] <= board[remote_from_index +: 4];
-                        board[remote_from_index +: 4] <= EMPTY;
-                        
-                        if (board[remote_to_index +: 4] != EMPTY) begin 
-                            sound <= PLAY_EAT;
-                        end else begin 
-                            sound <= PLAY_MOVE;
-                        end
-                        
-                        //If the captured is king, end the game
-                        if (board[remote_to_index +: 4] == W_KING) begin
-                            state <= BLACK_WIN;
-                        end
-                        else if (board[remote_to_index +: 4] == B_KING) begin
-                            state <= WHITE_WIN;
-                        end
-                        else begin
-                            state <= PLAYER_TURN;
-                        end
-                    end
-                    else begin
-                        state <= PLAYER_TURN;
+                        // Execute the move if valid coordinates
+                        if (remote_selected_x != NULL && remote_selected_y != NULL && 
+                            remote_current_x < 8 && remote_current_y < 8) begin
+                            //If the captured is king, end the game
+                            if (board[remote_to_index +: 4] == W_KING) begin
+                                state <= BLACK_WIN;
+                            end
+                            else if (board[remote_to_index +: 4] == B_KING) begin
+                                state <= WHITE_WIN;
+                            end
+                            else begin  
+                                // Move the piece in the board array
+                                board[remote_to_index +: 4] <= board[remote_from_index +: 4];
+                                board[remote_from_index +: 4] <= EMPTY;
+                                
+                                if (remote_type == 2'b01) begin
+                                    case (remote_promotion)
+                                        2'b00: board[remote_to_index +: 4] <= player ? B_QUEEN : W_QUEEN;
+                                        2'b01: board[remote_to_index +: 4] <= player ? B_ROOK : W_ROOK;
+                                        2'b10: board[remote_to_index +: 4] <= player ? B_BISHOP : W_BISHOP;
+                                        2'b11: board[remote_to_index +: 4] <= player ? B_KNIGHT : W_KNIGHT;
+                                    endcase
+                                    sound <= PLAY_PROMOTION;
+                                end else if (board[remote_to_index +: 4] != EMPTY) begin 
+                                    sound <= PLAY_EAT;
+                                end else begin 
+                                    sound <= PLAY_MOVE;
+                                end
+                            
+                                state <= PLAYER_TURN;
+                            end
+                        end      
                     end
                 end
                 // Debug: Allow manual transition back with switch
@@ -337,7 +351,7 @@ module Top_Student (
                     endcase
                     
                     // After promotion, send move data and switch to enemy turn
-                    tx_data <= {selected_x, selected_y, promotion_x, promotion_y};
+                    tx_data <= {12'h000, selected_promotion_piece, 2'b01, selected_x, selected_y, promotion_x, promotion_y};
                     start_tx <= 1;
                     state <= ENEMY_TURN;
                 end
@@ -345,11 +359,13 @@ module Top_Student (
             
             START_GAME: begin 
                 sound <= PLAY_START; //when game start, play sound
-                if (confirm_pressed) begin
+                if (confirm_pressed || data_ready_edge) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
                      selected_y <= NULL;
-                     state <= PLAYER_TURN; // Start with player's turn
+                     state <= player ? PLAYER_TURN : ENEMY_TURN;
+                     tx_data <= {12'h000, 2'b11, 2'b00};
+                     start_tx <= 1;
                 end
             end
             
