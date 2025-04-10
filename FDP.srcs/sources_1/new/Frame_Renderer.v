@@ -4,7 +4,7 @@
 module Frame_Renderer (
     input [6:0] pixel_x, pixel_y,
     input [3071:0] FRAME,
-    input hover_restart,
+    input hover,
     output reg [15:0] oled_data        
 );
     
@@ -33,7 +33,7 @@ module Frame_Renderer (
                 P: oled_data = LIGHT_PINK;
                 R: oled_data = DIRT_RED;
                 S: oled_data = GREY;
-                H: oled_data = hover_restart ? LIGHT_BROWN : WHITE;
+                H: oled_data = hover ? LIGHT_BROWN : WHITE;
                 default: oled_data = BLACK;  // fallback
             endcase
         else
