@@ -216,15 +216,6 @@ module Top_Student (
     );
     
     reg [2:0] sound; //start with start
-   
-    // Debug LED outputs
-    always @(posedge basys_clock) begin
-        led[0] <= rx_valid_signature;     // Signature valid
-        led[1] <= rx_valid_checksum;      // Checksum valid
-        led[2] <= data_ready;             // Raw data ready
-        led[3] <= data_ready_edge;        // Valid data ready edge
-        led[15:4] <= rx_data[19:8];       // Display packet type and from coordinates
-    end
 
     // Single process FSM for both state transitions and actions
     always @(posedge basys_clock) begin
@@ -239,6 +230,7 @@ module Top_Student (
         // Main FSM logic
         case (state)
             PLAYER_TURN: begin
+                led[15:11] <= 0;
                 if (timeout & !sw[1]) begin
                     state <= player ? BLACK_WIN : WHITE_WIN;
                     uart_payload <= {2'b00, PKT_TYPE_TIMEOUT, selected_x, selected_y, current_x, current_y};
@@ -299,10 +291,10 @@ module Top_Student (
                                 uart_payload <= {2'b00, PKT_TYPE_MOVE, selected_x, selected_y, current_x, current_y};
                                 start_tx <= 1;
                                 state <= ENEMY_TURN;
+                                // Deselect after moving
+                                selected_x <= NULL;
+                                selected_y <= NULL;
                             end
-                            // Deselect after moving
-                            selected_x <= NULL;
-                            selected_y <= NULL;
                         end
                     end
                 end
@@ -331,11 +323,10 @@ module Top_Student (
                             // Calculate board indices for the remote move
                             remote_from_index = ((7 - remote_selected_y) * 8 + remote_selected_x) * 4;
                             remote_to_index = ((7 - remote_current_y) * 8 + remote_current_x) * 4;
-                            
                             // Execute the move if valid coordinates
                             if (remote_selected_x != NULL && remote_selected_y != NULL && 
                                 remote_current_x < 8 && remote_current_y < 8) begin
-                                
+                                led[13] <= 1;
                                 //If the captured is king, end the game
                                 if (board[remote_to_index +: 4] == W_KING) begin
                                     state <= BLACK_WIN;
@@ -349,7 +340,7 @@ module Top_Student (
                                     // Move the piece in the board array
                                     board[remote_to_index +: 4] <= board[remote_from_index +: 4];
                                     board[remote_from_index +: 4] <= EMPTY;
-                                    
+                                    led[12] <= 1;
                                     // Handle promotion if needed
                                     if (remote_type == PKT_TYPE_PROMOTION) begin
                                         case (remote_promotion)
@@ -358,6 +349,7 @@ module Top_Student (
                                             2'b10: board[remote_to_index +: 4] <= player ? B_BISHOP : W_BISHOP;
                                             2'b11: board[remote_to_index +: 4] <= player ? B_KNIGHT : W_KNIGHT;
                                         endcase
+                                        led[11] <= 1;
                                         sound <= PLAY_PROMOTION;
                                     end else if (board[remote_to_index +: 4] != EMPTY) begin 
                                         sound <= PLAY_EAT;
@@ -390,9 +382,12 @@ module Top_Student (
                     endcase
                     
                     // After promotion, send move data and switch to enemy turn
-                    uart_payload <= {selected_promotion_piece, PKT_TYPE_PROMOTION, selected_x, selected_y, promotion_x, promotion_y};
+                    // After promotion, send move data and switch to enemy turn
+                    uart_payload <= {selected_promotion_piece, PKT_TYPE_PROMOTION, selected_x, selected_y, promotion_x, promotion_y};                    
                     start_tx <= 1;
                     state <= ENEMY_TURN;
+                    selected_x <= NULL;
+                    selected_y <= NULL;
                 end
             end
             
@@ -406,28 +401,26 @@ module Top_Student (
                      uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
                      start_tx <= 1;
                 end else if (data_ready_edge && remote_type == PKT_TYPE_START) begin
-                     // Remote player started the game
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
                      selected_y <= NULL;
                      state <= player ? PLAYER_TURN : ENEMY_TURN;
-                     // Acknowledge game start
-                     uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
-                     start_tx <= 1;
                 end
             end
             
             WHITE_WIN,
             BLACK_WIN: begin
                 sound <= PLAY_END;
-                if (confirm_pressed && hover_restart) begin
+                if (confirm_pressed) begin
                     state <= START_GAME;
                     // Notify opponent of restart
                     uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
                     start_tx <= 1;
+                end else if (data_ready_edge && remote_type == PKT_TYPE_START) begin
+                     state <= START_GAME;
                 end
             end
-            
+           
         endcase
     end
     
