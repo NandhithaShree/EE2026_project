@@ -19,11 +19,23 @@ module Top_Student (
 );  
     reg [2:0] state = START_GAME;
     parameter player = 1;  // 1 is white, 0 is black
+    reg [3:0] W_dead_pawns = 0;
+    reg [3:0] B_dead_pawns = 0;
+    reg [3:0] W_dead_queens = 0;
+    reg [3:0] B_dead_queens = 0;
+    reg [3:0] W_dead_rooks = 0;
+    reg [3:0] B_dead_rooks = 0;
+    reg [3:0] W_dead_bishops = 0;
+    reg [3:0] B_dead_bishops = 0;
+    reg [3:0] W_dead_knights = 0;
+    reg [3:0] B_dead_knights = 0;
 
     wire [15:0] oled_data;
+    wire [15:0] real_oled_data;
     wire [6:0] pixel_x, pixel_y;
     Display display_inst (
-        .basys_clock(basys_clock), 
+        .basys_clock(basys_clock),
+        .real_oled_data(real_oled_data),
         .oled_data(oled_data), 
         .x(pixel_x), 
         .y(pixel_y), 
@@ -148,7 +160,8 @@ module Top_Student (
         .confirm(mouse_confirm)
     );
     
-    wire hover_restart;
+    wire hover_start, hover_restart;
+    assign hover_start = mouse_xpos >= 26 && mouse_xpos <= 69 && mouse_ypos >= 42 && mouse_ypos <= 57;
     assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
     assign confirm = mouse_confirm;
     
@@ -369,6 +382,7 @@ module Top_Student (
         .moves(moves),
         .mouse_xpos(mouse_xpos),
         .mouse_ypos(mouse_ypos),
+        .hover_start(hover_start),
         .hover_restart(hover_restart),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
@@ -379,6 +393,34 @@ module Top_Student (
         .state(state),  
         .selected_promotion_piece(selected_promotion_piece),
         .oled_data(oled_data)
+    );
+    
+    oled_Renderer renderer_inst_oled (
+        .board(board),
+        .moves(moves),
+        .mouse_xpos(mouse_xpos),
+        .mouse_ypos(mouse_ypos),
+        .hover_start(hover_start),
+        .hover_restart(hover_restart),
+        .pixel_x(pixel_x),
+        .pixel_y(pixel_y),
+        .selected_x(selected_x),
+        .selected_y(selected_y),
+        .current_x(current_x),
+        .current_y(current_y),
+        .state(state),  
+        .selected_promotion_piece(selected_promotion_piece),
+        .W_dead_pawns(W_dead_pawns),
+        .B_dead_pawns(B_dead_pawns),
+        .W_dead_queens(W_dead_queens),
+        .B_dead_queens(B_dead_queens),
+        .W_dead_rooks(W_dead_rooks),
+        .B_dead_rooks(B_dead_rooks),
+        .W_dead_bishops(W_dead_bishops),
+        .B_dead_bishops(B_dead_bishops),
+        .W_dead_knights(W_dead_knights),
+        .B_dead_knights(B_dead_knights),
+        .oled_data(real_oled_data)
     );
     
     PMOD PMOD_Inst (

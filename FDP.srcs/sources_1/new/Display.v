@@ -23,6 +23,7 @@
 module Display(
     input basys_clock,
     input [15:0] oled_data,
+    input [15:0] real_oled_data,
     output [6:0] x, y,
     output [7:0] JB,
     output hsync, vsync,
@@ -43,7 +44,7 @@ module Display(
         .sending_pixels(sending_pixel),
         .sample_pixel(sample_pixel), 
         .pixel_index(pixel_index),
-        .pixel_data(oled_data), 
+        .pixel_data(real_oled_data), 
         .cs(JB[0]), 
         .sdin(JB[1]), 
         .sclk(JB[3]), 
@@ -54,31 +55,31 @@ module Display(
     );
         
     
-    /*
-    wire video_on, p_tick;
-    wire [9:0] vga_x, vga_y;
     
-    assign x = vga_x / 7;
-    assign y = vga_y / 7;
+//    wire video_on, p_tick;
+//    wire [9:0] vga_x, vga_y;
+    
+//    assign x = vga_x / 7;
+//    assign y = vga_y / 7;
 
-    VGA_Sync vga_sync_unit (
-       .clk(basys_clock),
-       .reset(0),
-       .hsync(hsync),
-       .vsync(vsync),
-       .video_on(video_on),
-       .p_tick(p_tick),
-       .x(vga_x),
-       .y(vga_y)
-    );
+//    VGA_Sync vga_sync_unit (
+//       .clk(basys_clock),
+//       .reset(0),
+//       .hsync(hsync),
+//       .vsync(vsync),
+//       .video_on(video_on),
+//       .p_tick(p_tick),
+//       .x(vga_x),
+//       .y(vga_y)
+//    );
 
-    wire [11:0] rgb_mapped; //map colour
-    VGA_colour_mapping colour_mapper (
-        .oled_data(oled_data),
-        .vga_data(rgb_mapped)
-    );
+//    wire [11:0] rgb_mapped; //map colour
+//    VGA_colour_mapping colour_mapper (
+//        .oled_data(oled_data),
+//        .vga_data(rgb_mapped)
+//    );
 
-    assign vga_data = video_on ? rgb_mapped : 12'h000; //assign 
-    */
+//    assign vga_data = video_on ? rgb_mapped : 12'h000; //assign 
+    
 
 endmodule
