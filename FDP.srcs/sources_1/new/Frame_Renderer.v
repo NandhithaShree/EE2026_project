@@ -21,8 +21,8 @@ module Frame_Renderer (
     wire [4:0] scaled_y = pixel_y / SCALE;
     
     // Calculate the frame index with horizontal flip
-    wire [10:0] frame_index = ((31 - scaled_y) * 32 + (31 - scaled_x)) * 2;  
-    wire [1:0] pixel_color = FRAME[frame_index +: 3];
+    wire [9:0] frame_index = (31 - scaled_y) * 32 + (31 - scaled_x);
+    wire [1:0] pixel_color = FRAME[frame_index*3 +: 3];   
         
     always @(pixel_x, pixel_y) begin 
         if (in_bounds)

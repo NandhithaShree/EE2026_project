@@ -58,6 +58,7 @@ module Renderer(
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .FRAME(GAME_START),
+        .hover_restart(0),
         .oled_data(start_oled)
     );
     
@@ -99,7 +100,7 @@ module Renderer(
         end
         else begin
             case(state)
-                START_GAME: oled_data = white_win_oled;//start_oled;
+                START_GAME: oled_data = start_oled;//start_oled;
                 PLAYER_TURN, ENEMY_TURN: oled_data = game_oled;
                 PROMOTION: oled_data = game_oled;
                 WHITE_WIN: oled_data = white_win_oled;

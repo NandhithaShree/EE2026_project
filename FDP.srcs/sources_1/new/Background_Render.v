@@ -20,5 +20,5 @@ module Background_Render(
 //        end
 //    end
 
-Frame_Renderer (pixel_x, pixel_y, DEAD_SCREEN, oled_data);
+Frame_Renderer (pixel_x, pixel_y, DEAD_SCREEN, 0, oled_data);
 endmodule
