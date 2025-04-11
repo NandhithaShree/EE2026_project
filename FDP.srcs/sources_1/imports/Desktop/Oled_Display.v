@@ -33,7 +33,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-module Oled_Display(clk, reset, frame_begin, sending_pixels,
+module Oled_Driver(clk, reset, frame_begin, sending_pixels,
   sample_pixel, pixel_index, pixel_data, cs, sdin, sclk, d_cn, resn, vccen,
   pmoden);
 localparam Width = 96;

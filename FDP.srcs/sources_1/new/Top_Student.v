@@ -18,6 +18,18 @@ module Top_Student (
     reg [2:0] state = START_GAME;
     wire player; 
     assign player = sw[15];  // 1 is white, 0 is black
+    
+    reg [3:0] W_dead_pawns = 0;
+    reg [3:0] B_dead_pawns = 0;
+    reg [3:0] W_dead_queens = 0;
+    reg [3:0] B_dead_queens = 0;
+    reg [3:0] W_dead_rooks = 0;
+    reg [3:0] B_dead_rooks = 0;
+    reg [3:0] W_dead_bishops = 0;
+    reg [3:0] B_dead_bishops = 0;
+    reg [3:0] W_dead_knights = 0;
+    reg [3:0] B_dead_knights = 0;
+
 
     // Define packet type constants for clarity
     parameter PKT_TYPE_START = 2'b00;
@@ -26,11 +38,12 @@ module Top_Student (
     parameter PKT_TYPE_MOVE = 2'b11;
 
     wire [15:0] oled_data;
+    wire [15:0] vga_data;
     wire [6:0] pixel_x, pixel_y;
     
     VGA_Display display_inst (
         .basys_clock(basys_clock), 
-        .oled_data(oled_data), 
+        .oled_data(vga_data), 
         .x(pixel_x), 
         .y(pixel_y), 
         .hsync(hsync),
@@ -268,6 +281,21 @@ module Top_Student (
                         from_index = ((7 - selected_y) * 8 + (selected_x)) * 4;
                         to_index = ((7 - current_y) * 8 + (current_x)) * 4;
                         
+                        if (board[to_index +: 4] != EMPTY) begin
+                            case (board[to_index +: 4])
+                                B_PAWN: B_dead_pawns <= B_dead_pawns + 1;
+                                W_PAWN: W_dead_pawns <= W_dead_pawns + 1;
+                                B_KNIGHT: B_dead_knights <= B_dead_knights + 1;
+                                W_KNIGHT: W_dead_knights <= W_dead_knights + 1;
+                                B_BISHOP: B_dead_bishops <= B_dead_bishops + 1;
+                                W_BISHOP: W_dead_bishops <= W_dead_bishops + 1;
+                                B_ROOK: B_dead_rooks <= B_dead_rooks + 1;
+                                W_ROOK: W_dead_rooks <= W_dead_rooks + 1;
+                                B_QUEEN: B_dead_queens <= B_dead_queens + 1;
+                                W_QUEEN: W_dead_queens <= W_dead_queens + 1;
+                            endcase
+                        end                        
+                        
                         //If the captured is king, end the game
                         if (board[to_index +: 4] == W_KING) begin
                             state <= BLACK_WIN;
@@ -325,6 +353,12 @@ module Top_Student (
                             selected_y <= NULL;
                             state <= player ? PLAYER_TURN : ENEMY_TURN;
                             sound <= PLAY_START;
+                            // Reset dead pieces counters
+                            W_dead_pawns <= 0; B_dead_pawns <= 0;
+                            W_dead_queens <= 0; B_dead_queens <= 0;
+                            W_dead_rooks <= 0; B_dead_rooks <= 0;
+                            W_dead_bishops <= 0; B_dead_bishops <= 0;
+                            W_dead_knights <= 0; B_dead_knights <= 0;
                         end
                         
                         PKT_TYPE_TIMEOUT: begin
@@ -367,6 +401,18 @@ module Top_Student (
                                         sound <= PLAY_PROMOTION;
                                     end else if (board[remote_to_index +: 4] != EMPTY) begin 
                                         sound <= PLAY_EAT;
+                                        case (board[remote_to_index +: 4])
+                                            B_PAWN: B_dead_pawns <= B_dead_pawns + 1;
+                                            W_PAWN: W_dead_pawns <= W_dead_pawns + 1;
+                                            B_KNIGHT: B_dead_knights <= B_dead_knights + 1;
+                                            W_KNIGHT: W_dead_knights <= W_dead_knights + 1;
+                                            B_BISHOP: B_dead_bishops <= B_dead_bishops + 1;
+                                            W_BISHOP: W_dead_bishops <= W_dead_bishops + 1;
+                                            B_ROOK: B_dead_rooks <= B_dead_rooks + 1;
+                                            W_ROOK: W_dead_rooks <= W_dead_rooks + 1;
+                                            B_QUEEN: B_dead_queens <= B_dead_queens + 1;
+                                            W_QUEEN: W_dead_queens <= W_dead_queens + 1;
+                                        endcase
                                     end else begin 
                                         sound <= PLAY_MOVE;
                                     end
@@ -438,7 +484,7 @@ module Top_Student (
         endcase
     end
     
-    Renderer renderer_inst (
+    VGA_Renderer vga_renderer_inst (
         .board(board),
         .moves(moves),
         .mouse_xpos(mouse_xpos),
@@ -452,7 +498,7 @@ module Top_Student (
         .current_y(current_y),
         .state(state),  
         .selected_promotion_piece(selected_promotion_piece),
-        .oled_data(oled_data)
+        .oled_data(vga_data)
     );
     
     PMOD PMOD_Inst (
@@ -461,6 +507,21 @@ module Top_Student (
         .DIN(DIN),
         .GAIN(GAIN),
         .SD(SD)
+    );
+    
+    Dead_Piece_Display dead_display_inst (
+        basys_clock,
+        W_dead_pawns,
+        B_dead_pawns,
+        W_dead_queens,
+        B_dead_queens,
+        W_dead_rooks,
+        B_dead_rooks,
+        W_dead_bishops,
+        B_dead_bishops,
+        W_dead_knights,
+        B_dead_knights,
+        JC
     );
 
 endmodule

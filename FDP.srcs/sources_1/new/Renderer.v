@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 `include "Constants.vh"
 
-module Renderer(
+module VGA_Renderer(
     input [255:0] board,
     input [63:0] moves,
     input [11:0] mouse_xpos, mouse_ypos,

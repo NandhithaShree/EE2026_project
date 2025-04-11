@@ -211,14 +211,14 @@ GG,  B,  B,  B,  B,  B,  B,  B,  B, GG, GG,  B,  B,  B,  B,  B,  B,  B,  B,  B, 
 };
 
 parameter [4095:0] DEAD_SCREEN = {
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
-    W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
+    LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
     R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
     B, B, B, P, B, B, P, B, B, P, B, B, B, S, S, S, S, S, S, S, B, B, B, P, B, P, B, B, B, P, B, B,
@@ -235,14 +235,14 @@ parameter [4095:0] DEAD_SCREEN = {
     B, B, B, B, B, B, B, B, B, B, B, B, B, B, S, S, S, S, S, B, B, B, B, B, B, B, B, B, B, B, B, B,
     R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
     R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG,
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG,
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG,
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG,
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG,
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG,
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG,
+    DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG, DG
 };
 
 `endif // CONSTANTS_VH
