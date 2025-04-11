@@ -3,7 +3,7 @@
 
 module Frame_Renderer (
     input [6:0] pixel_x, pixel_y,
-    input [3071:0] FRAME,
+    input [4095:0] FRAME,
     input hover,
     output reg [15:0] oled_data        
 );
