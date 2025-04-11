@@ -90,10 +90,10 @@ module pawn_moves (
             end
             
             // Diagonal captures
-            if (left_diag_x >= 0 && piece_left_diag != EMPTY && piece_left_diag[3] != is_white)
+            if (grid_x > 0 && left_diag_x >= 0 && piece_left_diag != EMPTY && piece_left_diag[3] != is_white)
                 moves[diag_y * 8 + left_diag_x] = 1'b1;
                 
-            if (right_diag_x < 8 && piece_right_diag != EMPTY && piece_right_diag[3] != is_white)
+            if (grid_x < 7 && right_diag_x < 8 && piece_right_diag != EMPTY && piece_right_diag[3] != is_white)
                 moves[diag_y * 8 + right_diag_x] = 1'b1;
         end
     end

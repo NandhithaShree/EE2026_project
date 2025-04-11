@@ -5,7 +5,7 @@ module VGA_Renderer(
     input [255:0] board,
     input [63:0] moves,
     input [11:0] mouse_xpos, mouse_ypos,
-    input hover_restart,
+    input hover,
     input [6:0] pixel_x, pixel_y,
     input [3:0] selected_x, selected_y,
     input [3:0] current_x, current_y,
@@ -44,6 +44,7 @@ module VGA_Renderer(
     Frame_Renderer (
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
+        .hover(hover),
         .FRAME(GAME_START),
         .oled_data(start_oled)
     );

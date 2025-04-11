@@ -220,7 +220,7 @@ parameter [4095:0] DEAD_SCREEN = {
     LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
     LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG, LG,
     R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
-    B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,
+    R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R,
     B, B, B, P, B, B, P, B, B, P, B, B, B, S, S, S, S, S, S, S, B, B, B, P, B, P, B, B, B, P, B, B,
     B, B, B, P, P, P, P, B, P, P, B, B, S, S, S, S, S, S, S, S, S, B, B, P, P, P, P, B, P, P, B, B,
     B, B, B, B, P, P, P, P, P, B, B, S, S, S, S, S, S, S, S, S, S, S, B, B, P, P, P, P, P, B, B, B,

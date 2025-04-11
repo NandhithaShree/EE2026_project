@@ -33,7 +33,7 @@ module Frame_Renderer (
                 P: oled_data = LIGHT_PINK;
                 R: oled_data = DIRT_RED;
                 S: oled_data = GREY;
-                H: oled_data = hover ? DARK_BROWN_SCREEN_VGA : WHITE;
+                H: oled_data = hover ? DARK_BROWN_SCREEN : WHITE;
                 LG: oled_data = LIGHT_GREEN_SCREEN;
                 DG: oled_data = DARK_GREEN_SCREEN;
                 GG: oled_data = GREEN_GREEN_SCREEN;

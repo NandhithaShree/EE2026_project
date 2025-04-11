@@ -107,7 +107,8 @@ module Top_Student (
     reg [11:0] value;
     reg setx, sety, setmax_x = 0, setmax_y = 0;
     
-    wire [11:0] mouse_xpos, mouse_ypos;
+    wire [11:0] temp_mouse_xpos, mouse_xpos, mouse_ypos;
+    assign mouse_xpos = (temp_mouse_xpos < 12'd16) ? 12'd16 : temp_mouse_xpos;
     wire [3:0] zpos;
     wire left, middle, right, new_event;
     
@@ -115,13 +116,13 @@ module Top_Student (
     always @(posedge basys_clock) begin
         case (setMouseMax)
             2'b00: begin
-                value <= 12'd559; //value is here
+                value <= 12'd79; //value is here
                 setmax_x <= 1;
                 setmax_y <= 0;
                 setMouseMax <= setMouseMax + 1; // Changed to non-blocking assignment
             end
             2'b01: begin
-                value <= 12'd447;
+                value <= 12'd63;
                 setmax_y <= 1; // Changed to non-blocking assignment
                 setmax_x <= 0; // Changed to non-blocking assignment
                 setMouseMax <= setMouseMax + 1; // Changed to non-blocking assignment
@@ -141,7 +142,7 @@ module Top_Student (
         .sety(0),
         .setmax_x(setmax_x),
         .setmax_y(setmax_y),
-        .xpos(mouse_xpos),
+        .xpos(temp_mouse_xpos),
         .ypos(mouse_ypos),
         .zpos(zpos),
         .left(left),
@@ -166,8 +167,8 @@ module Top_Student (
     );    
     
     
-    wire hover_restart;
-    assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
+    wire hover;
+    assign hover = mouse_xpos >= 26 && mouse_xpos <= 69 && mouse_ypos >= 42 && mouse_ypos <= 57;
     
     // Edge detection for button and signals
     reg confirm_prev = 0;
@@ -453,13 +454,24 @@ module Top_Student (
             
             START_GAME: begin 
                 sound <= PLAY_START; //when game start, play sound
-                if (confirm_pressed) begin
+                if (confirm_pressed && hover) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
                      selected_y <= NULL;
                      state <= player ? PLAYER_TURN : ENEMY_TURN;
                      uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
                      start_tx <= 1;
+                     
+                     W_dead_pawns <= 0;
+                     B_dead_pawns <= 0;
+                     W_dead_queens <= 0;
+                     B_dead_queens <= 0;
+                     W_dead_rooks <= 0;
+                     B_dead_rooks <= 0;
+                     W_dead_bishops <= 0;
+                     B_dead_bishops <= 0;
+                     W_dead_knights <= 0;
+                     B_dead_knights <= 0;
                 end else if (data_ready_edge && remote_type == PKT_TYPE_START) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
@@ -489,7 +501,7 @@ module Top_Student (
         .moves(moves),
         .mouse_xpos(mouse_xpos),
         .mouse_ypos(mouse_ypos),
-        .hover_restart(hover_restart),
+        .hover(hover),
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .selected_x(selected_x),

@@ -13,6 +13,9 @@ module Promotion_Renderer(
     parameter WHITE = 16'hFFFF;
     parameter BLACK = 16'h0000;
     parameter GREEN = 16'h07E0;     
+    parameter DARK_BROWN_SCREEN  = 16'hD7A0; 
+    parameter LIGHT_BROWN_SCREEN = 16'hEDD6; 
+
 
     parameter [2047:0] PAWN_PROMOTION = {
         W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, 
@@ -73,13 +76,13 @@ module Promotion_Renderer(
         if (in_bounds)
             case (pixel_color)
                 B: oled_data = BLACK;
-                W: oled_data = WHITE;
+                W: oled_data = DARK_BROWN_SCREEN;
                 G: begin
                     if ((x == 0 || x == 1) && selected_promotion_piece == 2'b00) oled_data = GREEN;
                     else if ((x == 2 || x == 3) && selected_promotion_piece == 2'b01) oled_data = GREEN;
                     else if ((x == 4 || x == 5) && selected_promotion_piece == 2'b10) oled_data = GREEN;
                     else if ((x == 6 || x == 7) && selected_promotion_piece == 2'b11) oled_data = GREEN;
-                    else oled_data = LIGHT_BROWN;
+                    else oled_data = LIGHT_BROWN_SCREEN;
                 end
                 default: oled_data = BLACK;  // fallback
             endcase
