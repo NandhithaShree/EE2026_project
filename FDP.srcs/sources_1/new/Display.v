@@ -28,33 +28,33 @@ module Display(
     output hsync, vsync,
     output [11:0] vga_data
 );
-    wire clock_6p25MHz;
-    Clock slow_clock_6p25MHz (basys_clock, 7, clock_6p25MHz);
+//    wire clock_6p25MHz;
+//    Clock slow_clock_6p25MHz (basys_clock, 7, clock_6p25MHz);
     
-    wire fb, sending_pixel, sample_pixel;
+//    wire fb, sending_pixel, sample_pixel;
     
-    wire [12:0] pixel_index;
-    Pixel_Coordinates coords(pixel_index, x, y);
+//    wire [12:0] pixel_index;
+//    Pixel_Coordinates coords(pixel_index, x, y);
     
-    Oled_Display oled (
-        .clk(clock_6p25MHz), 
-        .reset(0), 
-        .frame_begin(fb), 
-        .sending_pixels(sending_pixel),
-        .sample_pixel(sample_pixel), 
-        .pixel_index(pixel_index),
-        .pixel_data(oled_data), 
-        .cs(JB[0]), 
-        .sdin(JB[1]), 
-        .sclk(JB[3]), 
-        .d_cn(JB[4]), 
-        .resn(JB[5]), 
-        .vccen(JB[6]),
-        .pmoden(JB[7])
-    );
+//    Oled_Display oled (
+//        .clk(clock_6p25MHz), 
+//        .reset(0), 
+//        .frame_begin(fb), 
+//        .sending_pixels(sending_pixel),
+//        .sample_pixel(sample_pixel), 
+//        .pixel_index(pixel_index),
+//        .pixel_data(oled_data), 
+//        .cs(JB[0]), 
+//        .sdin(JB[1]), 
+//        .sclk(JB[3]), 
+//        .d_cn(JB[4]), 
+//        .resn(JB[5]), 
+//        .vccen(JB[6]),
+//        .pmoden(JB[7])
+//    );
         
     
-    /*
+    
     wire video_on, p_tick;
     wire [9:0] vga_x, vga_y;
     
@@ -79,6 +79,6 @@ module Display(
     );
 
     assign vga_data = video_on ? rgb_mapped : 12'h000; //assign 
-    */
+    
 
 endmodule

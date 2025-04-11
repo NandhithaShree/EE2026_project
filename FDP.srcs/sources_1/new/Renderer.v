@@ -51,7 +51,6 @@ module Renderer(
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .FRAME(WHITE_WINS),
-        .hover_restart(hover_restart),
         .oled_data(white_win_oled)
     );
     
@@ -61,7 +60,6 @@ module Renderer(
         .pixel_x(pixel_x),
         .pixel_y(pixel_y),
         .FRAME(BLACK_WINS),
-        .hover_restart(hover_restart),
         .oled_data(black_win_oled)
     );
     

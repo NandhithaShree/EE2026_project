@@ -74,21 +74,21 @@ module Top_Student (
     wire [1:0] selected_promotion_piece;
     reg [3:0] promotion_x, promotion_y;
     
-    wire confirm;
+//    wire confirm;
     
-    Btn_Input btn_input_inst (
-        .basys_clock(basys_clock),
-        .btnU(btnU),
-        .btnC(btnC),
-        .btnD(btnD),
-        .btnL(btnL),
-        .btnR(btnR),
-        .is_promotion(state == PROMOTION),
-        .selected_promotion_piece(selected_promotion_piece),
-        .curr_x(current_x),
-        .curr_y(current_y),
-        .confirm(confirm)
-    );
+//    Btn_Input btn_input_inst (
+//        .basys_clock(basys_clock),
+//        .btnU(btnU),
+//        .btnC(btnC),
+//        .btnD(btnD),
+//        .btnL(btnL),
+//        .btnR(btnR),
+//        .is_promotion(state == PROMOTION),
+//        .selected_promotion_piece(selected_promotion_piece),
+//        .curr_x(current_x),
+//        .curr_y(current_y),
+//        .confirm(confirm)
+//    );
     
     reg reset;
     reg [11:0] value;
@@ -138,6 +138,20 @@ module Top_Student (
         .ps2_clk(PS2Clk),
         .ps2_data(PS2Data)
     );
+
+    wire confirm;
+    Mouse_Input mouse_input_inst (
+        .basys_clock(basys_clock),
+        .left(left),
+        .xpos(mouse_xpos),
+        .ypos(mouse_ypos),
+        .is_promotion(state == PROMOTION),
+        .selected_promotion_piece(selected_promotion_piece),
+        .curr_x(current_x),
+        .curr_y(current_y),
+        .confirm(confirm)
+    );    
+    
     
     wire hover_restart;
     assign hover_restart = mouse_xpos >= 2 && mouse_xpos <= 61 && mouse_ypos >= 42 && mouse_ypos <= 57;
