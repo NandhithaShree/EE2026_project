@@ -454,6 +454,16 @@ module Top_Student (
             
             START_GAME: begin 
                 sound <= PLAY_START; //when game start, play sound
+                W_dead_pawns <= 0;
+                B_dead_pawns <= 0;
+                W_dead_queens <= 0;
+                B_dead_queens <= 0;
+                W_dead_rooks <= 0;
+                B_dead_rooks <= 0;
+                W_dead_bishops <= 0;
+                B_dead_bishops <= 0;
+                W_dead_knights <= 0;
+                B_dead_knights <= 0;
                 if (confirm_pressed && hover) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
@@ -462,16 +472,7 @@ module Top_Student (
                      uart_payload <= {16'h0000, PKT_TYPE_START, 2'b00};
                      start_tx <= 1;
                      
-                     W_dead_pawns <= 0;
-                     B_dead_pawns <= 0;
-                     W_dead_queens <= 0;
-                     B_dead_queens <= 0;
-                     W_dead_rooks <= 0;
-                     B_dead_rooks <= 0;
-                     W_dead_bishops <= 0;
-                     B_dead_bishops <= 0;
-                     W_dead_knights <= 0;
-                     B_dead_knights <= 0;
+                     
                 end else if (data_ready_edge && remote_type == PKT_TYPE_START) begin
                      board <= INITIAL_BOARD;
                      selected_x <= NULL;
