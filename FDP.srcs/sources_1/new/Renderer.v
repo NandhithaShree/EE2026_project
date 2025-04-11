@@ -13,8 +13,10 @@ module Renderer(
     input [2:0] state,
     output reg [15:0] oled_data
 );
+    
     wire [3:0] grid_x, grid_y;
     Grid_Coordinates grid_coordinates_inst (pixel_x, pixel_y, grid_x, grid_y);
+    
     wire [15:0] game_oled;
     Game_Renderer (
         .board(board),

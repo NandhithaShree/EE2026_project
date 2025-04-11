@@ -1,11 +1,18 @@
 `timescale 1ns / 1ps
-`include "Constants.vh"
 
 module Promotion_Renderer(
     input [6:0] pixel_x, pixel_y,
     input [1:0] selected_promotion_piece,
     output reg [15:0] oled_data
 );
+
+    parameter W = 2'b00;
+    parameter B = 2'b01;
+    parameter G = 2'b10;
+    
+    parameter WHITE = 16'hFFFF;
+    parameter BLACK = 16'h0000;
+    parameter GREEN = 16'h07E0;     
 
     parameter [2047:0] PAWN_PROMOTION = {
         W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, 

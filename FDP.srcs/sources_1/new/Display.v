@@ -59,7 +59,7 @@ module Display(
     wire [9:0] vga_x, vga_y;
     
     assign x = vga_x / 7;
-    assign y = (vga_y - 20) / 7;
+    assign y = (vga_y - 1) / 7;
 
     VGA_Sync vga_sync_unit (
        .clk(basys_clock),
