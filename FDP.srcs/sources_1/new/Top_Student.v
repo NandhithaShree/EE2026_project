@@ -27,12 +27,12 @@ module Top_Student (
 
     wire [15:0] oled_data;
     wire [6:0] pixel_x, pixel_y;
-    Display display_inst (
+    
+    VGA_Display display_inst (
         .basys_clock(basys_clock), 
         .oled_data(oled_data), 
         .x(pixel_x), 
         .y(pixel_y), 
-        .JB(JC),
         .hsync(hsync),
         .vsync(vsync),
         .vga_data(vga)
